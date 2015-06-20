@@ -2,7 +2,7 @@
 require_once (__DIR__) . '/psr4.php';
 
 $psr4AutoLoader = new Psr4AutoloaderClass();
-$psr4AutoLoader->addNamespace('LolAPI', (__DIR__.'/../../../LolAPI'));
+$psr4AutoLoader->addNamespace('LolAPI', (__DIR__.'/../../../src/LolAPI'));
 $psr4AutoLoader->register();
 
 function getConfig()
