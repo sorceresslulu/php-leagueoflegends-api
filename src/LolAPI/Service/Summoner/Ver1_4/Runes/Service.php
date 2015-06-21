@@ -5,7 +5,7 @@ use LolAPI\AbstractService;
 
 class Service extends AbstractService
 {
-    public function fetch(Request $request, $returnRawResponse = false) {
+    public function fetch(Request $request) {
         $urlParams = array(
             'api_key' => $request->getApiKey()->toParam()
         );
@@ -20,11 +20,7 @@ class Service extends AbstractService
         $response = $this->getAPIHandler()->exec($serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            if($returnRawResponse) {
-                return $response;
-            }else{
-                return $this->createResponse(json_decode($response->getResponse(), true));
-            }
+            return $this->createResponse(json_decode($response->getResponse(), true));
         }else{
             throw $this->createSummonerException($response->getHttpCode());
         }
