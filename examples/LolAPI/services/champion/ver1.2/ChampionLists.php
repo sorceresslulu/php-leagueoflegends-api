@@ -9,7 +9,7 @@ $apiHandler = new LolAPI\Handler\CURL\Handler();
 $service = new LolAPI\Service\Champion\Ver1_2\ChampionList\Service($apiHandler);
 $request = new LolAPI\Service\Champion\Ver1_2\ChampionList\Request($apiKey, $region, true);
 
-function processRequest(LolAPI\Service\Champion\Ver1_2\ChampionList\Response $response) {
+function processRequest(LolAPI\Service\Champion\Ver1_2\ChampionList\QueryResult $response) {
     foreach($response->getChampionDTOs() as $championDTO) {
         println(sprintf("Champion #%d", $championDTO->getId()));
         println(sprintf("Active: %s", ($championDTO->isActive() ? 'true' : 'false')), 1);
@@ -20,6 +20,7 @@ function processRequest(LolAPI\Service\Champion\Ver1_2\ChampionList\Response $re
     }
 }
 
-$response = $service->fetch($request);
+$query = $service->createQuery($request);
+$queryResult = $query->execute();
 
-processRequest($response);
+processRequest($queryResult);

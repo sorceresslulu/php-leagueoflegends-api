@@ -2,7 +2,7 @@
 namespace LolAPI\Service\Champion\Ver1_2\Champion;
 
 use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\Champion\Ver1_2\Champion\Response\ChampionDTO;
+use LolAPI\Service\Champion\Ver1_2\Champion\QueryResult\ChampionDTO;
 
 class QueryResult
 {

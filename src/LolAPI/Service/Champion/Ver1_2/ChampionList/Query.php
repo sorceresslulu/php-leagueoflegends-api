@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\Champion\Ver1_2\Champion;
+namespace LolAPI\Service\Champion\Ver1_2\ChampionList;
 
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
@@ -49,16 +49,24 @@ class Query
     {
         $request = $this->getRequest();
 
-        $urlParams = array(
-            'api_key' => $request->getApiKey()->toParam(),
-            'id' => $request->getChampionId()
-        );
+        if($request->fetchNotFreeToPlayChampionsOnly()) {
+            $urlParams = array(
+                'freeToPlay' => "false"
+            );
+        }else if($request->fetchFreeToPlayChampionsOnly()) {
+            $urlParams = array(
+                'freeToPlay' => "true"
+            );
+        }else{
+            $urlParams = array();
+        }
+
+        $urlParams['api_key'] = $request->getApiKey()->toParam();
 
         $serviceUrl = sprintf(
-            'https://%s.api.pvp.net/api/lol/%s/v1.2/champion/%d',
+            'https://%s.api.pvp.net/api/lol/%s/v1.2/champion',
             rawurlencode($request->getRegion()->getDomain()),
-            rawurlencode($request->getRegion()->getDirectory()),
-            rawurlencode($request->getChampionId())
+            rawurlencode($request->getRegion()->getDirectory())
         );
 
         $response = $this->getHandler()->exec($serviceUrl, $urlParams);
@@ -82,14 +90,19 @@ class Query
 
     private function createQueryResult(ResponseInterface $response) {
         $jsonResponse = $response->parseJSON();
+        $champions = array();
 
-        return new QueryResult($response, new ChampionDTO(
-            (int) $jsonResponse['id'],
-            (bool) $jsonResponse['active'],
-            (bool) $jsonResponse['botEnabled'],
-            (bool) $jsonResponse['botMmEnabled'],
-            (bool) $jsonResponse['freeToPlay'],
-            (bool) $jsonResponse['rankedPlayEnabled']
-        ));
+        foreach($jsonResponse['champions'] as $champion) {
+            $champions[] = new ChampionDTO(
+                (int) $champion['id'],
+                (bool) $champion['active'],
+                (bool) $champion['botEnabled'],
+                (bool) $champion['botMmEnabled'],
+                (bool) $champion['freeToPlay'],
+                (bool) $champion['rankedPlayEnabled']
+            );
+        }
+
+        return new QueryResult($response, $champions);
     }
 }

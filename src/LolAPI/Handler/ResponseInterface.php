@@ -16,6 +16,12 @@ interface ResponseInterface
     public function getResponse();
 
     /**
+     * Returns JSON
+     * @return array
+     */
+    public function parseJSON();
+
+    /**
      * Returns true if HTTP code equals to 200
      * @return bool
      */

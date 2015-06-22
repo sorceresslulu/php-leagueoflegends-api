@@ -47,6 +47,23 @@ class Response implements ResponseInterface
     }
 
     /**
+     * Returns JSON
+     * @return array
+     * @throws \Exception
+     */
+    public function parseJSON()
+    {
+        $result = json_decode($this->getResponse(), true);
+
+        if(json_last_error()) {
+            throw new \Exception('Failed to parse JSON');
+        }
+
+        return $result;
+    }
+
+
+    /**
      * Returns true if HTTP code equals to 200
      * @return bool
      */

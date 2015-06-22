@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\Champion\Ver1_2\Champion\Response;
+namespace LolAPI\Service\Champion\Ver1_2\Champion\QueryResult;
 
 class ChampionDTO
 {
