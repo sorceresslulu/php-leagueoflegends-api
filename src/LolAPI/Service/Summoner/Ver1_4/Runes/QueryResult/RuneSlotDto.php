@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\Summoner\Ver1_4\Runes\Response;
+namespace LolAPI\Service\Summoner\Ver1_4\Runes\QueryResult;
 
 class RuneSlotDto
 {

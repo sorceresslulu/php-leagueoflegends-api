@@ -6,7 +6,7 @@ use LolAPI\AbstractService;
 class Service extends AbstractService
 {
     /**
-     * Create and returns a new "summoner.name"  query
+     * Create and returns a new "summoner.name" query
      * @param Request $request
      * @return Query
      */
