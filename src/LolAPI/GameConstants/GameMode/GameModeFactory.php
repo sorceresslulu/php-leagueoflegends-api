@@ -19,7 +19,7 @@ class GameModeFactory
      * @param bool $throwExceptionsOnUnknownCode
      * @return GameModeInterface
      */
-    public static function createFromString($stringCode, $throwExceptionsOnUnknownCode = false) {
+    public static function createFromStringCode($stringCode, $throwExceptionsOnUnknownCode = false) {
         switch($stringCode) {
             default:
                 if($throwExceptionsOnUnknownCode) {

@@ -171,6 +171,15 @@ class FeaturedGameInfo
     }
 
     /**
+     * Returns true if game has a list of banned champions
+     * @return bool
+     */
+    public function hasBannedChampions()
+    {
+        return count($this->bannedChampions) > 0;
+    }
+
+    /**
      * Returns observer information
      * @return Observer
      */
@@ -186,5 +195,14 @@ class FeaturedGameInfo
     public function getParticipants()
     {
         return $this->participants;
+    }
+
+    /**
+     * Returns true if game has a list of participants
+     * @return bool
+     */
+    public function hasParticipants()
+    {
+        return count($this->participants) > 0;
     }
 }
