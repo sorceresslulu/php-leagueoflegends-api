@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\Stats\Ver1_3\BySummoner;
+namespace LolAPI\Service\Stats\Ver1_3\Summary;
 
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
@@ -11,13 +11,13 @@ use LolAPI\Service\Exceptions\ServiceUnavailableException;
 use LolAPI\Service\Exceptions\StatsDataNotFoundException;
 use LolAPI\Service\Exceptions\UnauthorizedException;
 use LolAPI\Service\Exceptions\UnknownResponseException;
-use LolAPI\Service\Stats\Ver1_3\BySummoner\QueryResult\AggregatedStatsDto;
-use LolAPI\Service\Stats\Ver1_3\BySummoner\QueryResult\ChampionStatsDto;
-use LolAPI\Service\Stats\Ver1_3\BySummoner\QueryResult\RankedStatsDto;
+use LolAPI\Service\Stats\Ver1_3\Summary\QueryResult\AggregatedStatsDto;
+use LolAPI\Service\Stats\Ver1_3\Summary\QueryResult\PlayerStatsSummaryDto;
+use LolAPI\Service\Stats\Ver1_3\Summary\QueryResult\PlayerStatsSummaryListDto;
 
 class Query
 {
-    const QUERY_TYPE = "stats-ver1.3-by-summoner";
+    const QUERY_TYPE = "stats-ver1.3-summary";
 
     /**
      * Lol API Handler
@@ -32,7 +32,7 @@ class Query
     private $request;
 
     /**
-     * Stats.BySummoner query
+     * Stats.Summary Query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
      */
@@ -78,7 +78,7 @@ class Query
         }
 
         $serviceUrl = sprintf(
-            'https://%s.api.pvp.net/api/lol/%s/v1.3/stats/by-summoner/%d/ranked',
+            'https://%s.api.pvp.net/api/lol/%s/v1.3/stats/by-summoner/%d/summary',
             rawurlencode($request->getRegion()->getDomain()),
             rawurlencode($request->getRegion()->getDirectory()),
             rawurlencode($request->getSummonerId())
@@ -103,6 +103,7 @@ class Query
         }
     }
 
+
     /**
      * Builds and returns QueryResult object
      * @param ResponseInterface $response
@@ -111,21 +112,20 @@ class Query
     private function createQueryResult(ResponseInterface $response)
     {
         $jsonResponse = $response->parseJSON();
-        $champions = array();
+        $playerStatSummaries = array();
 
-        foreach($jsonResponse['champions'] as $arrChampion) {
-            $champions[] = new ChampionStatsDto(
-                (int) $arrChampion['id'],
-                new AggregatedStatsDto($arrChampion['stats'])
+        foreach($jsonResponse['playerStatSummaries'] as $arrPlayerStatSummaries) {
+            $playerStatSummaries[] = new PlayerStatsSummaryDto(
+                $arrPlayerStatSummaries['playerStatSummaryType'],
+                new AggregatedStatsDto($arrPlayerStatSummaries['aggregatedStats']),
+                isset($arrPlayerStatSummaries['losses']) ? $arrPlayerStatSummaries['losses'] : null,
+                $arrPlayerStatSummaries['wins'],
+                $arrPlayerStatSummaries['playerStatSummaryType']
             );
         }
 
-        $rankedStatsDTO = new RankedStatsDto(
-            (int) $jsonResponse['summonerId'],
-            (int) $jsonResponse['modifyDate'],
-            $champions
-        );
+        $playerStatsSummaryListDTO = new PlayerStatsSummaryListDto((int) $jsonResponse['summonerId'], $playerStatSummaries);
 
-        return new QueryResult($response, $rankedStatsDTO);
+        return new QueryResult($response, $playerStatsSummaryListDTO);
     }
 }
