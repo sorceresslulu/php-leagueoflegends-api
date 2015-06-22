@@ -35,6 +35,7 @@ function processQueryResult(LolAPI\Service\FeaturedGame\Ver1_0\QueryResult $quer
                 println(sprintf("ChampionId: %d", $bannedChampion->getChampionId()), 2);
                 println(sprintf("PickTurn: %d", $bannedChampion->getPickTurn()), 2);
                 println(sprintf("TeamId: %d", $bannedChampion->getTeamId()), 2);
+                println(' ', 2);
             }
         }
 
@@ -48,10 +49,12 @@ function processQueryResult(LolAPI\Service\FeaturedGame\Ver1_0\QueryResult $quer
                 println(sprintf("ProfileIconId: %s", $participant->getProfileIconId()), 2);
                 println(sprintf("SpellId1: %s", $participant->getSpell1Id()), 2);
                 println(sprintf("SpellId2: %s", $participant->getSpell2Id()), 2);
-                println(sprintf("SummonerName: %s", $participant->getSummonerName()), 2);
                 println(sprintf("IsBot: %s", ($participant->isBot() ? 'true' : 'false')), 2);
+                println(' ', 2);
             }
         }
+
+        println('----------', 1);
     }
 }
 
