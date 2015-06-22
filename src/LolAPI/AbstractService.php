@@ -41,4 +41,18 @@ abstract class AbstractService
             case 503: return new ServiceUnavailableException;
         }
     }
+
+    protected function createChampionException($errorCode)
+    {
+        switch($errorCode) {
+            default:
+                return new UnknownResponseException;
+
+            case 400: return new BadRequestException;
+            case 401: return new UnauthorizedException;
+            case 429: return new RateLimitExceedException;
+            case 500: return new InternalServerException;
+            case 503: return new ServiceUnavailableException;
+        }
+    }
 }
