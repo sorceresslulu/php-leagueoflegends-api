@@ -8,6 +8,8 @@ use LolAPI\Service\Exceptions\UnknownResponseException;
 
 class Query
 {
+    const QUERY_TYPE = "featured-game-ver1.0";
+
     /**
      * Lol API Handler
      * @var HandlerInterface
@@ -61,7 +63,7 @@ class Query
             rawurlencode($request->getRegion()->getDirectory())
         );
 
-        $response = $this->getLolAPIHandler()->exec($serviceUrl, $urlParams);
+        $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
             $queryResultBuilder = new QueryResultBuilder();

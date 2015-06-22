@@ -17,6 +17,8 @@ use LolAPI\Service\Exceptions\ForbiddenException;
 
 class Query
 {
+    const QUERY_TYPE = "lol-status-ver1.0-shard-status";
+
     /**
      * Lol API Handler
      * @var HandlerInterface
@@ -72,7 +74,7 @@ class Query
             rawurlencode($request->getRegion()->getCode())
         );
 
-        $response = $this->getLolAPIHandler()->exec($serviceUrl, array());
+        $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, array());
 
         if($response->isSuccessful()) {
             return $this->createQueryResult($response);

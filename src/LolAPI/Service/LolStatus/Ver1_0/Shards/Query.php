@@ -11,6 +11,8 @@ use LolAPI\Service\LolStatus\Ver1_0\Shards\QueryResult\Shard;
 
 class Query
 {
+    const QUERY_TYPE = "lol-status-ver1.0-shards";
+
     /**
      * Lol API Handler
      * @var HandlerInterface
@@ -41,7 +43,7 @@ class Query
      */
     public function execute()
     {
-        $response = $this->getLolAPIHandler()->exec("http://status.leagueoflegends.com/shards", array());
+        $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, "http://status.leagueoflegends.com/shards", array());
 
         if($response->isSuccessful()) {
             return $this->createQueryResult($response);

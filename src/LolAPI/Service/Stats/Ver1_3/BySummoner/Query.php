@@ -17,6 +17,8 @@ use LolAPI\Service\Stats\Ver1_3\BySummoner\QueryResult\RankedStatsDto;
 
 class Query
 {
+    const QUERY_TYPE = "stats-ver1.3-by-summoner";
+
     /**
      * Lol API Handler
      * @var HandlerInterface
@@ -82,7 +84,7 @@ class Query
             rawurlencode($request->getSummonerId())
         );
 
-        $response = $this->getLolAPIHandler()->exec($serviceUrl, $urlParams);
+        $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
             return $this->createQueryResult($response);

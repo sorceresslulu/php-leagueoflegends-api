@@ -17,6 +17,8 @@ use LolAPI\Service\Exceptions\UnknownResponseException;
 
 class Query
 {
+    const QUERY_TYPE = "summoner-ver1.4-masteries";
+
     /**
      * Lol API Handler
      * @var HandlerInterface
@@ -78,7 +80,7 @@ class Query
             rawurlencode(implode(',', $request->getSummonerIds()))
         );
 
-        $response = $this->getLolAPIHandler()->exec($serviceUrl, $urlParams);
+        $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
             return $this->createQueryResult($response);

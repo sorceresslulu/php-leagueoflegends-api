@@ -15,6 +15,8 @@ use LolAPI\Service\Exceptions\UnknownResponseException;
 
 class Query
 {
+    const QUERY_TYPE = "champion-ver1.2-champion";
+
     /**
      * Lol API Handler
      * @var HandlerInterface
@@ -76,7 +78,7 @@ class Query
             rawurlencode($request->getChampionId())
         );
 
-        $response = $this->getLolAPIHandler()->exec($serviceUrl, $urlParams);
+        $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
             return $this->createQueryResult($response);
