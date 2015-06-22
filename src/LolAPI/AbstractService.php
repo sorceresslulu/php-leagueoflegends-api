@@ -36,4 +36,5 @@ namespace LolAPI\Service\Exceptions {
     class RateLimitExceedException extends LolAPIException {}
     class InternalServerException extends LolAPIException {}
     class ServiceUnavailableException extends LolAPIException {}
+    class ForbiddenException extends LolAPIException {}
 }
