@@ -4,7 +4,7 @@ namespace LolAPI\Service\Summoner\Ver1_4\Masteries;
 class Service extends \LolAPI\AbstractService
 {
     /**
-     * Create and returns masteries query
+     * Create and returns a new "summoner.masteries" query
      * @param Request $request
      * @return Query
      */

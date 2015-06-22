@@ -1,12 +1,10 @@
 <?php
-namespace LolAPI\Service\Summoner\Ver1_4\Masteries;
+namespace LolAPI\Service\Summoner\Ver1_4\Name;
 
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\Exceptions\LolAPIException;
-use LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult\MasteryDTO;
-use LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult\MasteryPageDTO;
-use LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult\MasteryPagesDTO;
+use LolAPI\Service\Summoner\Ver1_4\Name\QueryResult\SummonerDTO;
 use LolAPI\Service\Exceptions\BadRequestException;
 use LolAPI\Service\Exceptions\SummonerNotFoundException;
 use LolAPI\Service\Exceptions\InternalServerException;
@@ -29,11 +27,6 @@ class Query
      */
     private $request;
 
-    /**
-     * Query
-     * @param $lolAPIHandler
-     * @param $request
-     */
     public function __construct(HandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
@@ -41,7 +34,7 @@ class Query
     }
 
     /**
-     * Returns Lol API Handler
+     * Returns LOL API Handler
      * @return HandlerInterface
      */
     private function getLolAPIHandler()
@@ -72,7 +65,7 @@ class Query
         );
 
         $serviceUrl = sprintf(
-            'https://%s.api.pvp.net/api/lol/%s/v1.4/summoner/%s/masteries',
+            'https://%s.api.pvp.net/api/lol/%s/v1.4/summoner/%s/name',
             rawurlencode($request->getRegion()->getDomain()),
             rawurlencode($request->getRegion()->getDirectory()),
             rawurlencode(implode(',', $request->getSummonerIds()))
@@ -107,32 +100,10 @@ class Query
         $jsonResponse = $response->parseJSON();
         $summonerDTOs = array();
 
-        foreach($jsonResponse as $summonerId => $arrMasteryPages) {
-            $pages = array();
-
-            foreach($arrMasteryPages['pages'] as $arrMasteryPage) {
-                $masteries = array();
-
-                if(isset($arrMasteryPage['masteries'])) { // Riot pls mark optional fields in your API documentation
-                    foreach($arrMasteryPage['masteries'] as $arrMastery) {
-                        $masteries[] = new MasteryDTO(
-                            (int) $arrMastery['id'],
-                            (int) $arrMastery['rank']
-                        );
-                    }
-
-                    $pages[] = new MasteryPageDTO(
-                        (int) $arrMasteryPage['id'],
-                        (bool) $arrMasteryPage['current'],
-                        $masteries,
-                        $arrMasteryPage['name']
-                    );
-                }
-            }
-
-            $summonerDTOs[] = new MasteryPagesDTO(
+        foreach($jsonResponse as $summonerId => $summonerName) {
+            $summonerDTOs[] = new SummonerDTO(
                 (int) $summonerId,
-                $pages
+                $summonerName
             );
         }
 

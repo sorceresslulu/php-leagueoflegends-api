@@ -6,12 +6,20 @@ $apiKey = new \LolAPI\APIKey($config['apiKey']);
 $region = \LolAPI\RegionFactory::getRegionByCode($config['region']);
 
 $apiHandler = new LolAPI\Handler\CURL\Handler();
-$request = new LolAPI\Service\Summoner\Ver1_4\Name\Request($apiKey, $region, array($config['summonerId']));
 $service = new LolAPI\Service\Summoner\Ver1_4\Name\Service($apiHandler);
-$response = $service->fetch($request);
+$request = new \LolAPI\Service\Summoner\Ver1_4\Name\Request(
+    $apiKey, $region, array($config['summonerId'])
+);
 
-foreach($response->getSummonerDTOs() as $summonerDTO) {
-    println("Summoner DTO:");
-    println("ID: ".$summonerDTO->getSummonerId(), 1);
-    println("Name: ". $summonerDTO->getSummonerName(), 1);
+$query = $service->createQuery($request);
+$queryResult = $query->execute();
+
+function processQueryResult(\LolAPI\Service\Summoner\Ver1_4\Name\QueryResult $queryResult) {
+    foreach($queryResult->getSummonerDTOs() as $summonerDTO) {
+        println("Summoner DTO:");
+        println("ID: ".$summonerDTO->getSummonerId(), 1);
+        println("Name: ". $summonerDTO->getSummonerName(), 1);
+    }
 }
+
+processQueryResult($queryResult);
