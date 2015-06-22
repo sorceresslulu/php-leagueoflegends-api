@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\Summoner\Ver1_4\ByIds\Response;
+namespace LolAPI\Service\Summoner\Ver1_4\ByIds\QueryResult;
 
 class SummonerDTO
 {

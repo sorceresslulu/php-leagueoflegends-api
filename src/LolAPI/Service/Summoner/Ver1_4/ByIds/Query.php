@@ -1,11 +1,10 @@
 <?php
-namespace LolAPI\Service\Champion\Ver1_2\ChampionList;
+namespace LolAPI\Service\Summoner\Ver1_4\ByIds;
 
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\Champion\Ver1_2\ChampionList\QueryResult\ChampionDTO;
 use LolAPI\Service\Exceptions\BadRequestException;
-use LolAPI\Service\Exceptions\ChampionNotFoundException;
+use LolAPI\Service\Exceptions\SummonerNotFoundException;
 use LolAPI\Service\Exceptions\InternalServerException;
 use LolAPI\Service\Exceptions\RateLimitExceedException;
 use LolAPI\Service\Exceptions\ServiceUnavailableException;
@@ -15,17 +14,20 @@ use LolAPI\Service\Exceptions\UnknownResponseException;
 class Query
 {
     /**
+     * LolAPI Handler
      * @var HandlerInterface
      */
     private $lolAPIHandler;
 
     /**
+     * Request
      * @var Request
      */
     private $request;
 
-    public function __construct(HandlerInterface $handler, Request $request) {
-        $this->lolAPIHandler = $handler;
+    function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    {
+        $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
     }
 
@@ -49,24 +51,15 @@ class Query
     {
         $request = $this->getRequest();
 
-        if($request->fetchNotFreeToPlayChampionsOnly()) {
-            $urlParams = array(
-                'freeToPlay' => "false"
-            );
-        }else if($request->fetchFreeToPlayChampionsOnly()) {
-            $urlParams = array(
-                'freeToPlay' => "true"
-            );
-        }else{
-            $urlParams = array();
-        }
-
-        $urlParams['api_key'] = $request->getApiKey()->toParam();
+        $urlParams = array(
+            'api_key' => $request->getApiKey()->toParam()
+        );
 
         $serviceUrl = sprintf(
-            'https://%s.api.pvp.net/api/lol/%s/v1.2/champion',
+            'https://%s.api.pvp.net/api/lol/%s/v1.4/summoner/%s',
             rawurlencode($request->getRegion()->getDomain()),
-            rawurlencode($request->getRegion()->getDirectory())
+            rawurlencode($request->getRegion()->getDirectory()),
+            rawurlencode(implode(',', $request->getSummonerIds()))
         );
 
         $response = $this->getLolAPIHandler()->exec($serviceUrl, $urlParams);
@@ -80,7 +73,7 @@ class Query
 
                 case 400: throw new BadRequestException($response->getHttpCode());
                 case 401: throw new UnauthorizedException($response->getHttpCode());
-                case 404: throw new ChampionNotFoundException($response->getHttpCode());
+                case 404: throw new SummonerNotFoundException($response->getHttpCode());
                 case 429: throw new RateLimitExceedException($response->getHttpCode());
                 case 500: throw new InternalServerException($response->getHttpCode());
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
@@ -88,21 +81,21 @@ class Query
         }
     }
 
-    private function createQueryResult(ResponseInterface $response) {
-        $jsonResponse = $response->parseJSON();
-        $champions = array();
+    private function createQueryResult(ResponseInterface $rawResponse)
+    {
+        $jsonResponse = $rawResponse->parseJSON();
+        $summonerDTOs = array();
 
-        foreach($jsonResponse['champions'] as $champion) {
-            $champions[] = new ChampionDTO(
-                (int) $champion['id'],
-                (bool) $champion['active'],
-                (bool) $champion['botEnabled'],
-                (bool) $champion['botMmEnabled'],
-                (bool) $champion['freeToPlay'],
-                (bool) $champion['rankedPlayEnabled']
+        foreach($jsonResponse as $summonerStandardizedName => $summonerDTO) {
+            $summonerDTOs[$summonerStandardizedName] = new QueryResult\SummonerDTO(
+                (int) $summonerDTO['id'],
+                $summonerDTO['name'],
+                (int) $summonerDTO['profileIconId'],
+                (int) $summonerDTO['revisionDate'],
+                (int) $summonerDTO['summonerLevel']
             );
         }
 
-        return new QueryResult($response, $champions);
+        return new QueryResult($rawResponse, $summonerDTOs);
     }
 }

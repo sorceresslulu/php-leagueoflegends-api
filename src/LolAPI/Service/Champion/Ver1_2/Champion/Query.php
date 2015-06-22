@@ -17,7 +17,7 @@ class Query
     /**
      * @var HandlerInterface
      */
-    private $handler;
+    private $lolAPIHandler;
 
     /**
      * @var Request
@@ -25,16 +25,16 @@ class Query
     private $request;
 
     public function __construct(HandlerInterface $handler, Request $request) {
-        $this->handler = $handler;
+        $this->lolAPIHandler = $handler;
         $this->request = $request;
     }
 
     /**
      * @return HandlerInterface
      */
-    private function getHandler()
+    private function getLolAPIHandler()
     {
-        return $this->handler;
+        return $this->lolAPIHandler;
     }
 
     /**
@@ -61,7 +61,7 @@ class Query
             rawurlencode($request->getChampionId())
         );
 
-        $response = $this->getHandler()->exec($serviceUrl, $urlParams);
+        $response = $this->getLolAPIHandler()->exec($serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
             return $this->createQueryResult($response);
