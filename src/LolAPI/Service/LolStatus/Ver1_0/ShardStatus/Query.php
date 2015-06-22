@@ -124,7 +124,7 @@ class Query
                     $arrUpdate['author'],
                     $arrUpdate['content'],
                     $arrUpdate['created_at'],
-                    SeverityFactory::createFromCode($arrUpdate['severity']),
+                    SeverityFactory::createFromStringCode($arrUpdate['severity']),
                     $translations,
                     $arrUpdate['updated_at']
                   );
@@ -143,7 +143,7 @@ class Query
           $services[] = new QueryResultService(
             $arrService['name'],
             $arrService['slug'],
-            StatusFactory::createFromCode($arrService['status']),
+            StatusFactory::createFromStringCode($arrService['status']),
             $incidents
           );
         }

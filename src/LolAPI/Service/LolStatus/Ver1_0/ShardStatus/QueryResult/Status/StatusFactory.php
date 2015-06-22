@@ -1,25 +1,35 @@
 <?php
 namespace LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\Status;
 
+use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\Status\Statuses\Alert;
+use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\Status\Statuses\Deploying;
+use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\Status\Statuses\Offline;
+use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\Status\Statuses\Online;
+use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\Status\Statuses\Unknown;
+
 class StatusFactory
 {
     /**
      * Create and returns status from string code
-     * @param string $code
+     * @param string $stringCode
+     * @param bool $throwExceptionsOnUnknownCode
      * @return StatusInterface
-     * @throws \Exception
      */
-    public static function createFromCode($code) {
-        $code = strtolower($code);
+    public static function createFromStringCode($stringCode, $throwExceptionsOnUnknownCode = false) {
+        $stringCode = strtolower($stringCode);
 
-        switch($code) {
+        switch($stringCode) {
             default:
-                throw new \Exception(sprintf("Unknown status `%s`", $code));
+                if($throwExceptionsOnUnknownCode) {
+                    throw new \OutOfBoundsException(sprintf("Unknown status `%s`", $stringCode));
+                }else{
+                    return new Unknown($stringCode);
+                }
 
-            case 'alert': return new AlertStatus();
-            case 'deploying': return new DeployingStatus();
-            case 'offline': return new OfflineStatus();
-            case 'online': return new OnlineStatus();
+            case StatusInterface::STATUS_ONLINE: return new Online();
+            case StatusInterface::STATUS_ALERT: return new Alert();
+            case StatusInterface::STATUS_DEPLOYING: return new Deploying();
+            case StatusInterface::STATUS_OFFLINE: return new Offline();
         }
     }
 }

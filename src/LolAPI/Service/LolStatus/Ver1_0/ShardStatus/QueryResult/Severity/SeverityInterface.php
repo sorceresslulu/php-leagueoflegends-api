@@ -3,6 +3,10 @@ namespace LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\Severity;
 
 interface SeverityInterface
 {
+    const SEVERITY_ALERT = 'alert';
+    const SEVERITY_ERROR = 'error';
+    const SEVERITY_INFO = 'info';
+
     /**
      * Returns code
      * @return string
