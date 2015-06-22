@@ -32,7 +32,7 @@ class Service extends AbstractService
         if($response->isSuccessful()) {
             return $this->createResponse(json_decode($response->getResponse(), true));
         }else{
-            throw $this->createSummonerException($response->getHttpCode());
+            throw $this->createChampionException($response->getHttpCode());
         }
     }
 

@@ -21,6 +21,7 @@ class UnknownResponseException extends LolAPIException {}
 class BadRequestException extends LolAPIException {}
 class UnauthorizedException extends LolAPIException {}
 class SummonerNotFoundException extends LolAPIException {}
+class ChampionNotFoundException extends LolAPIException {}
 class RateLimitExceedException extends LolAPIException {}
 class InternalServerException extends LolAPIException {}
 class ServiceUnavailableException extends LolAPIException {}

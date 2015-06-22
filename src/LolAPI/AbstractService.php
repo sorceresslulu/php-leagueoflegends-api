@@ -2,6 +2,7 @@
 namespace LolAPI;
 
 use LolAPI\Handler\Exceptions\BadRequestException;
+use LolAPI\Handler\Exceptions\ChampionNotFoundException;
 use LolAPI\Handler\Exceptions\InternalServerException;
 use LolAPI\Handler\Exceptions\RateLimitExceedException;
 use LolAPI\Handler\Exceptions\ServiceUnavailableException;
@@ -50,6 +51,7 @@ abstract class AbstractService
 
             case 400: return new BadRequestException;
             case 401: return new UnauthorizedException;
+            case 404: return new ChampionNotFoundException();
             case 429: return new RateLimitExceedException;
             case 500: return new InternalServerException;
             case 503: return new ServiceUnavailableException;
