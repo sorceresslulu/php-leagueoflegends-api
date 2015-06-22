@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\Summoner\Ver1_4\Masteries\Response;
+namespace LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult;
 
 class MasteryPageDTO
 {

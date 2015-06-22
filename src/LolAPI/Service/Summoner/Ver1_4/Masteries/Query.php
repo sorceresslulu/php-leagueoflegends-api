@@ -1,8 +1,12 @@
 <?php
-namespace LolAPI\Service\Summoner\Ver1_4\ByNames;
+namespace LolAPI\Service\Summoner\Ver1_4\Masteries;
 
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
+use LolAPI\Service\Exceptions\LolAPIException;
+use LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult\MasteryDTO;
+use LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult\MasteryPageDTO;
+use LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult\MasteryPagesDTO;
 use LolAPI\Service\Exceptions\BadRequestException;
 use LolAPI\Service\Exceptions\SummonerNotFoundException;
 use LolAPI\Service\Exceptions\InternalServerException;
@@ -25,13 +29,19 @@ class Query
      */
     private $request;
 
-    function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    /**
+     * Query
+     * @param $lolAPIHandler
+     * @param $request
+     */
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
     }
 
     /**
+     * Returns Lol API Handler
      * @return HandlerInterface
      */
     private function getLolAPIHandler()
@@ -40,6 +50,7 @@ class Query
     }
 
     /**
+     * Returns request
      * @return Request
      */
     private function getRequest()
@@ -47,6 +58,11 @@ class Query
         return $this->request;
     }
 
+    /**
+     * Execute query
+     * @return QueryResult
+     * @throws LolAPIException
+     */
     public function execute()
     {
         $request = $this->getRequest();
@@ -56,10 +72,10 @@ class Query
         );
 
         $serviceUrl = sprintf(
-            'https://%s.api.pvp.net/api/lol/%s/v1.4/summoner/by-name/%s',
+            'https://%s.api.pvp.net/api/lol/%s/v1.4/summoner/%s/masteries',
             rawurlencode($request->getRegion()->getDomain()),
             rawurlencode($request->getRegion()->getDirectory()),
-            rawurlencode(implode(',', $request->getSummonerNames()))
+            rawurlencode(implode(',', $request->getSummonerIds()))
         );
 
         $response = $this->getLolAPIHandler()->exec($serviceUrl, $urlParams);
@@ -81,17 +97,42 @@ class Query
         }
     }
 
-    private function createQueryResult(ResponseInterface $response) {
+    /**
+     * Create QueryResult object from Response
+     * @param ResponseInterface $response
+     * @return QueryResult
+     */
+    private function createQueryResult(ResponseInterface $response)
+    {
         $jsonResponse = $response->parseJSON();
         $summonerDTOs = array();
 
-        foreach($jsonResponse as $summonerStandardizedName => $summonerDTO) {
-            $summonerDTOs[$summonerStandardizedName] = new QueryResult\SummonerDTO(
-                (int) $summonerDTO['id'],
-                $summonerDTO['name'],
-                (int) $summonerDTO['profileIconId'],
-                (int) $summonerDTO['revisionDate'],
-                (int) $summonerDTO['summonerLevel']
+        foreach($jsonResponse as $summonerId => $arrMasteryPages) {
+            $pages = array();
+
+            foreach($arrMasteryPages['pages'] as $arrMasteryPage) {
+                $masteries = array();
+
+                if(isset($arrMasteryPage['masteries'])) { // Riot pls mark optional fields in your API documentation
+                    foreach($arrMasteryPage['masteries'] as $arrMastery) {
+                        $masteries[] = new MasteryDTO(
+                            (int) $arrMastery['id'],
+                            (int) $arrMastery['rank']
+                        );
+                    }
+
+                    $pages[] = new MasteryPageDTO(
+                        (int) $arrMasteryPage['id'],
+                        (bool) $arrMasteryPage['current'],
+                        $masteries,
+                        $arrMasteryPage['name']
+                    );
+                }
+            }
+
+            $summonerDTOs[] = new MasteryPagesDTO(
+                (int) $summonerId,
+                $pages
             );
         }
 
