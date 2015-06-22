@@ -9,8 +9,8 @@ $apiHandler = new LolAPI\Handler\CURL\Handler();
 $service = new LolAPI\Service\Champion\Ver1_2\Champion\Service($apiHandler);
 $request = new LolAPI\Service\Champion\Ver1_2\Champion\Request($apiKey, $region, 1);
 
-function processRequest(LolAPI\Service\Champion\Ver1_2\Champion\Response $response) {
-    $championDTO = $response->getChampionDTO();
+function processRequest(LolAPI\Service\Champion\Ver1_2\Champion\QueryResult $queryResult) {
+    $championDTO = $queryResult->getChampionDTO();
 
     println(sprintf("Champion #%d", $championDTO->getId()));
     println(sprintf("Active: %s", ($championDTO->isActive() ? 'true' : 'false')), 1);
@@ -20,6 +20,7 @@ function processRequest(LolAPI\Service\Champion\Ver1_2\Champion\Response $respon
     println(sprintf("RankedPlayEnabled: %s", ($championDTO->isRankedPlayEnabled() ? 'true' : 'false')), 1);
 }
 
-$response = $service->fetch($request);
+$query = $service->createQuery($request);
+$queryResult = $query->execute();
 
-processRequest($response);
+processRequest($queryResult);

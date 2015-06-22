@@ -1,60 +1,39 @@
 <?php
-namespace LolAPI;
+namespace LolAPI {
+    use LolAPI\Handler\HandlerInterface;
 
-use LolAPI\Handler\Exceptions\BadRequestException;
-use LolAPI\Handler\Exceptions\ChampionNotFoundException;
-use LolAPI\Handler\Exceptions\InternalServerException;
-use LolAPI\Handler\Exceptions\RateLimitExceedException;
-use LolAPI\Handler\Exceptions\ServiceUnavailableException;
-use LolAPI\Handler\Exceptions\SummonerNotFoundException;
-use LolAPI\Handler\Exceptions\UnauthorizedException;
-use LolAPI\Handler\Exceptions\UnknownResponseException;
-use LolAPI\Handler\HandlerInterface;
-
-abstract class AbstractService
-{
-    /**
-     * @var HandlerInterface
-     */
-    private $apiHandler;
-
-    function __construct(HandlerInterface $apiHandler)
+    abstract class AbstractService
     {
-        $this->apiHandler = $apiHandler;
+        /**
+         * @var HandlerInterface
+         */
+        private $apiHandler;
+
+        function __construct(HandlerInterface $apiHandler)
+        {
+            $this->apiHandler = $apiHandler;
+        }
+
+        protected function getAPIHandler()
+        {
+            return $this->apiHandler;
+        }
     }
+}
 
-    protected function getAPIHandler()
-    {
-        return $this->apiHandler;
-    }
-
-    protected function createSummonerException($errorCode)
-    {
-        switch($errorCode) {
-            default:
-                return new UnknownResponseException;
-
-            case 400: return new BadRequestException;
-            case 401: return new UnauthorizedException;
-            case 404: return new SummonerNotFoundException;
-            case 429: return new RateLimitExceedException;
-            case 500: return new InternalServerException;
-            case 503: return new ServiceUnavailableException;
+namespace LolAPI\Service\Exceptions {
+    class LolAPIException extends \Exception {
+        public function __construct($code) {
+            $this->code = $code;
         }
     }
 
-    protected function createChampionException($errorCode)
-    {
-        switch($errorCode) {
-            default:
-                return new UnknownResponseException;
-
-            case 400: return new BadRequestException;
-            case 401: return new UnauthorizedException;
-            case 404: return new ChampionNotFoundException();
-            case 429: return new RateLimitExceedException;
-            case 500: return new InternalServerException;
-            case 503: return new ServiceUnavailableException;
-        }
-    }
+    class UnknownResponseException extends LolAPIException {}
+    class BadRequestException extends LolAPIException {}
+    class UnauthorizedException extends LolAPIException {}
+    class SummonerNotFoundException extends LolAPIException {}
+    class ChampionNotFoundException extends LolAPIException {}
+    class RateLimitExceedException extends LolAPIException {}
+    class InternalServerException extends LolAPIException {}
+    class ServiceUnavailableException extends LolAPIException {}
 }
