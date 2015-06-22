@@ -1,6 +1,8 @@
 <?php
 namespace LolAPI\Service\Stats\Ver1_3\Summary\QueryResult;
 
+use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeInterface;
+
 class PlayerStatsSummaryDto
 {
     /**
@@ -29,11 +31,11 @@ class PlayerStatsSummaryDto
 
     /**
      * Player stats summary type.
-     * @var string
+     * @var PlayerStatSummaryTypeInterface
      */
     private $playerStatSummaryType;
 
-    function __construct($playerStatSummaryType, AggregatedStatsDto $aggregatedStats, $losses, $wins, $modifyDate)
+    function __construct(PlayerStatSummaryTypeInterface $playerStatSummaryType, AggregatedStatsDto $aggregatedStats, $losses, $wins, $modifyDate)
     {
         $this->aggregatedStats = $aggregatedStats;
         $this->losses = $losses;
@@ -90,7 +92,7 @@ class PlayerStatsSummaryDto
 
     /**
      * Returns summary type.
-     * @return string
+     * @return PlayerStatSummaryTypeInterface
      */
     public function getPlayerStatSummaryType()
     {

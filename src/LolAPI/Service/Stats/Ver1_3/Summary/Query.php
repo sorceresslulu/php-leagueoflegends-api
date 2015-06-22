@@ -1,6 +1,7 @@
 <?php
 namespace LolAPI\Service\Stats\Ver1_3\Summary;
 
+use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeFactory;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\Exceptions\BadRequestException;
@@ -116,7 +117,7 @@ class Query
 
         foreach($jsonResponse['playerStatSummaries'] as $arrPlayerStatSummaries) {
             $playerStatSummaries[] = new PlayerStatsSummaryDto(
-                $arrPlayerStatSummaries['playerStatSummaryType'],
+                PlayerStatSummaryTypeFactory::createFromStringCode($arrPlayerStatSummaries['playerStatSummaryType']),
                 new AggregatedStatsDto($arrPlayerStatSummaries['aggregatedStats']),
                 isset($arrPlayerStatSummaries['losses']) ? $arrPlayerStatSummaries['losses'] : null,
                 $arrPlayerStatSummaries['wins'],

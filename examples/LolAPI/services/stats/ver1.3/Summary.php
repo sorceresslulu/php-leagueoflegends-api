@@ -14,7 +14,8 @@ function processQueryResult(LolAPI\Service\Stats\Ver1_3\Summary\QueryResult $que
     println(sprintf("SummonerID: %s", $dto->getSummonerId()));
 
     foreach($dto->getPlayerStatSummaries() as $playerStatSummary) {
-        println(sprintf("Type: %s", $playerStatSummary->getPlayerStatSummaryType()), 1);
+        println(sprintf("Type: %s", $playerStatSummary->getPlayerStatSummaryType()->getStringCode()), 1);
+        println(sprintf("TypeDescription: %s", $playerStatSummary->getPlayerStatSummaryType()->getDescription()), 1);
 
         if($playerStatSummary->isLossesSpecified()) {
             println(sprintf("Losses: %s", $playerStatSummary->getLosses()), 1);
