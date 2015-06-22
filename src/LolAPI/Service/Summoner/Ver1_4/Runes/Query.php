@@ -27,7 +27,7 @@ class Query
     private $request;
 
     /**
-     * Runes query
+     * Summoner.Runes query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
      */

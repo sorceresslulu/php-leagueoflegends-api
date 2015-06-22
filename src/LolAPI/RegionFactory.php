@@ -8,6 +8,7 @@ use LolAPI\Region\RU;
 class RegionFactory
 {
     /**
+     * Create and returns region from code
      * @param string $code
      * @return Region
      */

@@ -18,6 +18,10 @@ class APIKey
         $this->key = $key;
     }
 
+    /**
+     * Returns API key for use as HTTP param
+     * @return string
+     */
     public function toParam()
     {
         return $this->key;

@@ -2,6 +2,7 @@
 namespace LolAPI\Service\Summoner\Ver1_4\ByIds;
 
 use LolAPI\Handler\ResponseInterface;
+use \LolAPI\Service\Summoner\Ver1_4\ByIds\QueryResult\SummonerDTO;
 
 class QueryResult
 {
@@ -12,10 +13,16 @@ class QueryResult
     private $rawResponse;
 
     /**
-     * @var \LolAPI\Service\Summoner\Ver1_4\ByIds\QueryResult\SummonerDTO[]
+     * Summoner DTOs
+     * @var SummonerDTO[]
      */
     private $summonerDTOs = array();
 
+    /**
+     * Query Result
+     * @param ResponseInterface $rawResponse
+     * @param SummonerDTO[] $summonerDTOs
+     */
     public function __construct(ResponseInterface $rawResponse, array $summonerDTOs) {
         $this->rawResponse = $rawResponse;
         $this->summonerDTOs = $summonerDTOs;
@@ -31,7 +38,8 @@ class QueryResult
     }
 
     /**
-     * @return \LolAPI\Service\Summoner\Ver1_4\ByIds\QueryResult\SummonerDTO[]
+     * Returns summoner DTOs
+     * @return SummonerDTO[]
      */
     public function getSummonerDTOs() {
         return $this->summonerDTOs;

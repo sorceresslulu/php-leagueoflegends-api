@@ -7,6 +7,7 @@ use LolAPI\Service\Champion\Ver1_2\ChampionList\QueryResult\ChampionDTO;
 use LolAPI\Service\Exceptions\BadRequestException;
 use LolAPI\Service\Exceptions\ChampionNotFoundException;
 use LolAPI\Service\Exceptions\InternalServerException;
+use LolAPI\Service\Exceptions\LolAPIException;
 use LolAPI\Service\Exceptions\RateLimitExceedException;
 use LolAPI\Service\Exceptions\ServiceUnavailableException;
 use LolAPI\Service\Exceptions\UnauthorizedException;
@@ -15,21 +16,29 @@ use LolAPI\Service\Exceptions\UnknownResponseException;
 class Query
 {
     /**
+     * Lol API Handler
      * @var HandlerInterface
      */
     private $lolAPIHandler;
 
     /**
+     * Request
      * @var Request
      */
     private $request;
 
+    /**
+     * Champion.Champions query
+     * @param HandlerInterface $handler
+     * @param Request $request
+     */
     public function __construct(HandlerInterface $handler, Request $request) {
         $this->lolAPIHandler = $handler;
         $this->request = $request;
     }
 
     /**
+     * Returns Lol API Handler
      * @return HandlerInterface
      */
     private function getLolAPIHandler()
@@ -38,6 +47,7 @@ class Query
     }
 
     /**
+     * Returns request
      * @return Request
      */
     private function getRequest()
@@ -45,6 +55,11 @@ class Query
         return $this->request;
     }
 
+    /**
+     * Execute query
+     * @return QueryResult
+     * @throws LolAPIException
+     */
     public function execute()
     {
         $request = $this->getRequest();
@@ -88,6 +103,11 @@ class Query
         }
     }
 
+    /**
+     * Builds and returns QueryResult object
+     * @param ResponseInterface $response
+     * @return QueryResult
+     */
     private function createQueryResult(ResponseInterface $response) {
         $jsonResponse = $response->parseJSON();
         $champions = array();

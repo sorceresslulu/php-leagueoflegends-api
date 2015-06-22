@@ -4,6 +4,7 @@ namespace LolAPI\Service\Summoner\Ver1_4\ByNames;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\Exceptions\BadRequestException;
+use LolAPI\Service\Exceptions\LolAPIException;
 use LolAPI\Service\Exceptions\SummonerNotFoundException;
 use LolAPI\Service\Exceptions\InternalServerException;
 use LolAPI\Service\Exceptions\RateLimitExceedException;
@@ -25,13 +26,19 @@ class Query
      */
     private $request;
 
-    function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    /**
+     * Summoner.ByNames query
+     * @param HandlerInterface $lolAPIHandler
+     * @param Request $request
+     */
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
     }
 
     /**
+     * Returns Lol API Handler
      * @return HandlerInterface
      */
     private function getLolAPIHandler()
@@ -40,6 +47,7 @@ class Query
     }
 
     /**
+     * Returns request
      * @return Request
      */
     private function getRequest()
@@ -47,6 +55,11 @@ class Query
         return $this->request;
     }
 
+    /**
+     * Execute query
+     * @return QueryResult
+     * @throws LolAPIException
+     */
     public function execute()
     {
         $request = $this->getRequest();
@@ -81,6 +94,11 @@ class Query
         }
     }
 
+    /**
+     * Builds and returns QueryResult object
+     * @param ResponseInterface $response
+     * @return QueryResult
+     */
     private function createQueryResult(ResponseInterface $response) {
         $jsonResponse = $response->parseJSON();
         $summonerDTOs = array();

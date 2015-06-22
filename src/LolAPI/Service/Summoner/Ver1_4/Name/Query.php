@@ -27,6 +27,11 @@ class Query
      */
     private $request;
 
+    /**
+     * Summoner.Name query
+     * @param HandlerInterface $lolAPIHandler
+     * @param Request $request
+     */
     public function __construct(HandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;

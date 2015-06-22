@@ -30,7 +30,7 @@ class Query
     private $request;
 
     /**
-     * Query
+     * Summoner.Masteries query
      * @param $lolAPIHandler
      * @param $request
      */
