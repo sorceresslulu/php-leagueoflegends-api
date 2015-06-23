@@ -6,6 +6,10 @@ $apiKey = new \LolAPI\APIKey($config['apiKey']);
 $regionFactory = new \LolAPI\Region\RegionFactory(new \LolAPI\Region\UnknownRegionPolicy\ThrowUnknownRegionExceptionPolicy());
 $region = $regionFactory->getRegionByStringCode($config['region']);
 
+$platformFactory = new \LolAPI\GameConstants\Platform\PlatformFactory(
+    new LolAPI\GameConstants\Platform\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+);
+
 $matchmakingQueueTypeFactory = new \LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory(
     new \LolAPI\GameConstants\MatchmakingQueueType\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
 );
@@ -25,6 +29,7 @@ $gameModeFactory = new \LolAPI\GameConstants\GameMode\GameModeFactory(
 $apiHandler = new LolAPI\Handler\CURL\Handler();
 $service = new LolAPI\Service\FeaturedGame\Ver1_0\Service(
     $apiHandler,
+    $platformFactory,
     $matchmakingQueueTypeFactory,
     $mapIdFactory,
     $gameTypeFactory,
@@ -50,7 +55,7 @@ function processQueryResult(LolAPI\Service\FeaturedGame\Ver1_0\QueryResult $quer
         println(sprintf("MapId: %s", $featuredGameInfo->getMapId()->getId()), 1);
         println(sprintf("MapId/Name: %s", $featuredGameInfo->getMapId()->getName()), 1);
         println(sprintf("MapId/Notes: %s", $featuredGameInfo->getMapId()->getNotes()), 1);
-        println(sprintf("PlatformId: %s", $featuredGameInfo->getPlatformId()), 1);
+        println(sprintf("PlatformId: %s", $featuredGameInfo->getPlatform()->getPlatformId()), 1);
         println(sprintf("ObserverKey: %s", $featuredGameInfo->getObservers()->getEncryptionKey()), 1);
 
         if($featuredGameInfo->hasBannedChampions()) {

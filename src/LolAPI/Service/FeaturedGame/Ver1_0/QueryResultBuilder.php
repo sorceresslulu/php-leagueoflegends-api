@@ -5,6 +5,7 @@ use LolAPI\GameConstants\GameMode\GameModeFactory;
 use LolAPI\GameConstants\GameType\GameTypeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
+use LolAPI\GameConstants\Platform\PlatformFactory;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\FeaturedGame\Ver1_0\QueryResult;
 use LolAPI\Service\FeaturedGame\Ver1_0\QueryResult\BannedChampion;
@@ -15,6 +16,12 @@ use LolAPI\Service\FeaturedGame\Ver1_0\QueryResult\Participant;
 
 class QueryResultBuilder
 {
+    /**
+     * PlatformFactory
+     * @var PlatformFactory
+     */
+    private $platformFactory;
+
     /**
      * MatchmakingQueueType Factory
      * @var MatchmakingQueueTypeFactory
@@ -41,17 +48,20 @@ class QueryResultBuilder
 
     /**
      * Query Result Builder
+     * @param PlatformFactory $platformFactory
      * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
      * @param MapIdFactory $mapIdFactory
      * @param GameTypeFactory $gameTypeFactory
      * @param GameModeFactory $gameModeFactory
      */
     public function __construct(
+        PlatformFactory $platformFactory,
         MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
         MapIdFactory $mapIdFactory,
         GameTypeFactory $gameTypeFactory,
         GameModeFactory $gameModeFactory
     ){
+        $this->platformFactory = $platformFactory;
         $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
         $this->mapIdFactory = $mapIdFactory;
         $this->gameTypeFactory = $gameTypeFactory;
@@ -117,7 +127,7 @@ class QueryResultBuilder
             $gameQueue,
             $jsonGame['gameStartTime'],
             $this->getMapIdFactory()->createFromIntCode((int) $jsonGame['mapId']),
-            $jsonGame['platformId'],
+            $this->getPlatformFactory()->createFromStringCode($jsonGame['platformId']),
             $bannedChampions,
             $observers,
             $participants
@@ -176,6 +186,15 @@ class QueryResultBuilder
         }
 
         return $participants;
+    }
+
+    /**
+     * Returns Platform Factory
+     * @return PlatformFactory
+     */
+    public function getPlatformFactory()
+    {
+        return $this->platformFactory;
     }
 
     /**

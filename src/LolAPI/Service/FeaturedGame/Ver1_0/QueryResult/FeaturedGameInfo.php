@@ -5,6 +5,7 @@ use LolAPI\GameConstants\GameMode\GameModeInterface;
 use LolAPI\GameConstants\GameType\GameTypeInterface;
 use LolAPI\GameConstants\MapId\MapIdInterface;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
+use LolAPI\GameConstants\Platform\PlatformInterface;
 
 class FeaturedGameInfo
 {
@@ -52,9 +53,9 @@ class FeaturedGameInfo
 
     /**
      * The ID of the platform on which the game is being played
-     * @var string
+     * @var PlatformInterface
      */
-    private $platformId;
+    private $platform;
 
     /**
      * Banned champion information
@@ -83,7 +84,7 @@ class FeaturedGameInfo
         MatchmakingQueueInterface $gameQueue,
         $gameStartTime,
         MapIdInterface $mapId,
-        $platformId,
+        PlatformInterface $platform,
         array $bannedChampions,
         Observer $observers,
         array $participants)
@@ -95,7 +96,7 @@ class FeaturedGameInfo
         $this->gameQueue = $gameQueue;
         $this->gameStartTime = $gameStartTime;
         $this->mapId = $mapId;
-        $this->platformId = $platformId;
+        $this->platform = $platform;
         $this->bannedChampions = $bannedChampions;
         $this->observers = $observers;
         $this->participants = $participants;
@@ -175,11 +176,20 @@ class FeaturedGameInfo
 
     /**
      * Returns ID of the platform on which the game is being played
+     * @return PlatformInterface
+     */
+    public function getPlatform()
+    {
+        return $this->platform;
+    }
+
+    /**
+     * Returns ID of the platform on which the game is being played
      * @return string
      */
     public function getPlatformId()
     {
-        return $this->platformId;
+        return $this->getPlatform()->getPlatformId();
     }
 
     /**

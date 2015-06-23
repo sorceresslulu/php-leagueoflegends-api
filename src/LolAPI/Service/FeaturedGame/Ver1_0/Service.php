@@ -5,6 +5,7 @@ use LolAPI\GameConstants\GameMode\GameModeFactory;
 use LolAPI\GameConstants\GameType\GameTypeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
+use LolAPI\GameConstants\Platform\PlatformFactory;
 use LolAPI\Handler\HandlerInterface;
 
 class Service
@@ -14,6 +15,12 @@ class Service
      * @var HandlerInterface
      */
     private $lolAPIHandler;
+
+    /**
+     * Platform Factory
+     * @var PlatformFactory
+     */
+    private $platformFactory;
 
     /**
      * MatchmakingQueueType Factory
@@ -42,6 +49,7 @@ class Service
     /**
      * Service
      * @param HandlerInterface $lolAPIHandler
+     * @param PlatformFactory $platformFactory
      * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
      * @param MapIdFactory $mapIdFactory
      * @param GameTypeFactory $gameTypeFactory
@@ -49,12 +57,14 @@ class Service
      */
     public function __construct(
         HandlerInterface $lolAPIHandler,
+        PlatformFactory $platformFactory,
         MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
         MapIdFactory $mapIdFactory,
         GameTypeFactory $gameTypeFactory,
         GameModeFactory $gameModeFactory
     ){
         $this->lolAPIHandler = $lolAPIHandler;
+        $this->platformFactory = $platformFactory;
         $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
         $this->mapIdFactory = $mapIdFactory;
         $this->gameTypeFactory = $gameTypeFactory;
@@ -71,6 +81,7 @@ class Service
         return new Query(
             $this->getLolAPIHandler(),
             $request,
+            $this->getPlatformFactory(),
             $this->getMatchmakingQueueTypeFactory(),
             $this->getMapIdFactory(),
             $this->getGameTypeFactory(),
@@ -85,6 +96,15 @@ class Service
     protected function getLolAPIHandler()
     {
         return $this->lolAPIHandler;
+    }
+
+    /**
+     * Returns Platform Factory
+     * @return PlatformFactory
+     */
+    public function getPlatformFactory()
+    {
+        return $this->platformFactory;
     }
 
     /**

@@ -6,6 +6,7 @@ use LolAPI\GameConstants\GameMode\GameModeFactory;
 use LolAPI\GameConstants\GameType\GameTypeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
+use LolAPI\GameConstants\Platform\PlatformFactory;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Exceptions\ForbiddenException;
 use LolAPI\Exceptions\RateLimitExceedException;
@@ -26,6 +27,12 @@ class Query
      * @var Request
      */
     private $request;
+
+    /**
+     * Platform Factory
+     * @var PlatformFactory
+     */
+    private $platformFactory;
 
     /**
      * MatchmakingQueueType Factory
@@ -55,6 +62,7 @@ class Query
      * FeaturedGames query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
+     * @param PlatformFactory $platformFactory
      * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
      * @param MapIdFactory $mapIdFactory
      * @param GameTypeFactory $gameTypeFactory
@@ -63,6 +71,7 @@ class Query
     public function __construct(
         HandlerInterface $lolAPIHandler,
         Request $request,
+        PlatformFactory $platformFactory,
         MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
         MapIdFactory $mapIdFactory,
         GameTypeFactory $gameTypeFactory,
@@ -70,6 +79,7 @@ class Query
     ){
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
+        $this->platformFactory = $platformFactory;
         $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
         $this->mapIdFactory = $mapIdFactory;
         $this->gameTypeFactory = $gameTypeFactory;
@@ -99,6 +109,7 @@ class Query
 
         if($response->isSuccessful()) {
             $queryResultBuilder = new QueryResultBuilder(
+                $this->getPlatformFactory(),
                 $this->getMatchmakingQueueTypeFactory(),
                 $this->getMapIdFactory(),
                 $this->getGameTypeFactory(),
@@ -133,6 +144,15 @@ class Query
     protected function getRequest()
     {
         return $this->request;
+    }
+
+    /**
+     * Returns Platform Factory
+     * @return PlatformFactory
+     */
+    protected function getPlatformFactory()
+    {
+        return $this->platformFactory;
     }
 
     /**
