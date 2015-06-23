@@ -3,6 +3,7 @@ namespace LolAPI\Service\FeaturedGame\Ver1_0\QueryResult;
 
 use LolAPI\GameConstants\GameMode\GameModeInterface;
 use LolAPI\GameConstants\GameType\GameTypeInterface;
+use LolAPI\GameConstants\MapId\MapIdInterface;
 use LolAPI\GameConstants\MatchmakingQueue\MatchmakingQueueInterface;
 
 class FeaturedGameInfo
@@ -45,7 +46,7 @@ class FeaturedGameInfo
 
     /**
      * The ID of the map
-     * @var int
+     * @var MapIdInterface
      */
     private $mapId;
 
@@ -74,7 +75,7 @@ class FeaturedGameInfo
      */
     private $participants;
 
-    function __construct($gameId, $gameLength, $gameMode, GameTypeInterface $gameType, MatchmakingQueueInterface $gameQueue, $gameStartTime, $mapId, $platformId, array $bannedChampions, Observer $observers, array $participants)
+    function __construct($gameId, $gameLength, $gameMode, GameTypeInterface $gameType, MatchmakingQueueInterface $gameQueue, $gameStartTime, MapIdInterface $mapId, $platformId, array $bannedChampions, Observer $observers, array $participants)
     {
         $this->gameId = $gameId;
         $this->gameLength = $gameLength;
@@ -145,7 +146,7 @@ class FeaturedGameInfo
 
     /**
      * Returns ID of the map
-     * @return int
+     * @return MapIdInterface
      */
     public function getMapId()
     {

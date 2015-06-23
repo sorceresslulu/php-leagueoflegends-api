@@ -3,6 +3,7 @@ namespace LolAPI\Service\FeaturedGame\Ver1_0;
 
 use LolAPI\GameConstants\GameMode\GameModeFactory;
 use LolAPI\GameConstants\GameType\GameTypeFactory;
+use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueue\MatchmakingQueueFactory;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\FeaturedGame\Ver1_0\QueryResult;
@@ -57,7 +58,7 @@ class QueryResultBuilder
             $gameType,
             $gameQueue,
             $jsonGame['gameStartTime'],
-            $jsonGame['mapId'],
+            MapIdFactory::createFromIntCode((int) $jsonGame['mapId']),
             $jsonGame['platformId'],
             $bannedChampions,
             $observers,

@@ -24,7 +24,9 @@ function processQueryResult(LolAPI\Service\FeaturedGame\Ver1_0\QueryResult $quer
         println(sprintf("ConfigId: %s", $featuredGameInfo->getGameQueue()->getGameQueueConfigId()), 2);
         println(sprintf("Description: %s", $featuredGameInfo->getGameQueue()->getDescription()), 2);
 
-        println(sprintf("MapId: %s", $featuredGameInfo->getMapId()), 1);
+        println(sprintf("MapId: %s", $featuredGameInfo->getMapId()->getId()), 1);
+        println(sprintf("MapId/Name: %s", $featuredGameInfo->getMapId()->getName()), 1);
+        println(sprintf("MapId/Notes: %s", $featuredGameInfo->getMapId()->getNotes()), 1);
         println(sprintf("PlatformId: %s", $featuredGameInfo->getPlatformId()), 1);
         println(sprintf("ObserverKey: %s", $featuredGameInfo->getObservers()->getEncryptionKey()), 1);
 
