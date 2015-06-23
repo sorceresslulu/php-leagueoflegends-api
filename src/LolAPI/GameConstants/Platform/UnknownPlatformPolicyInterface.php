@@ -3,7 +3,7 @@ namespace LolAPI\GameConstants\Platform;
 
 use LolAPI\GameConstants\Platform\PlatformInterface;
 
-interface UnknownDataPolicyInterface
+interface UnknownPlatformPolicyInterface
 {
     /**
      * Returns instance of "unknown" platform

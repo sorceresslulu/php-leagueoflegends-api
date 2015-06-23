@@ -1,10 +1,10 @@
 <?php
-namespace LolAPI\GameConstants\MatchmakingQueueType\UnknownDataPolicy;
+namespace LolAPI\GameConstants\MatchmakingQueueType\UnknownMQTPolicy;
 
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
-use LolAPI\GameConstants\MatchmakingQueueType\UnknownDataPolicyInterface;
+use LolAPI\GameConstants\MatchmakingQueueType\UnknownMQTPolicyInterface;
 
-class ThrowOutOfBoundsExceptionPolicy implements UnknownDataPolicyInterface
+class ThrowOutOfBoundsExceptionPolicy implements UnknownMQTPolicyInterface
 {
     /**
      * Throws OutOfBoundsException on unknown MatchmakingQueueTypes

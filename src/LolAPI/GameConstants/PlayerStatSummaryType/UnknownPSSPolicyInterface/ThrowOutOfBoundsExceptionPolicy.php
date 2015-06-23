@@ -1,10 +1,10 @@
 <?php
-namespace LolAPI\GameConstants\PlayerStatSummaryType\UnknownDataPolicy;
+namespace LolAPI\GameConstants\PlayerStatSummaryType\UnknownPSSPolicyInterface;
 
 use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeInterface;
-use LolAPI\GameConstants\PlayerStatSummaryType\UnknownDataPolicyInterface;
+use LolAPI\GameConstants\PlayerStatSummaryType\UnknownPSSPolicyInterface;
 
-class ThrowOutOfBoundsExceptionPolicy implements UnknownDataPolicyInterface
+class ThrowOutOfBoundsExceptionPolicy implements UnknownPSSPolicyInterface
 {
     /**
      * Throw OutOfBoundException on unknown PlayStatSummaryType

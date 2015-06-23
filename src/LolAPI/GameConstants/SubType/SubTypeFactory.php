@@ -28,22 +28,22 @@ class SubTypeFactory
 {
     /**
      * Policy for unknown SubTypes
-     * @var UnknownDataPolicyInterface
+     * @var UnknownSubTypePolicyInterface
      */
     private $unknownDataPolicy;
 
     /**
      * SubType Factory
-     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     * @param UnknownSubTypePolicyInterface $unknownDataPolicy
      */
-    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    public function __construct(UnknownSubTypePolicyInterface $unknownDataPolicy)
     {
         $this->unknownDataPolicy = $unknownDataPolicy;
     }
 
     /**
      * Return policy for unknown SubTypes
-     * @return UnknownDataPolicyInterface
+     * @return UnknownSubTypePolicyInterface
      */
     protected function getUnknownDataPolicy()
     {

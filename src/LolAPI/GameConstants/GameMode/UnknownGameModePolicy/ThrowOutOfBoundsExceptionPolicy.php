@@ -1,10 +1,10 @@
 <?php
-namespace LolAPI\GameConstants\GameMode\UnknownDataPolicy;
+namespace LolAPI\GameConstants\GameMode\UnknownGameModePolicy;
 
 use LolAPI\GameConstants\GameMode\GameModeInterface;
-use LolAPI\GameConstants\GameMode\UnknownDataPolicyInterface;
+use LolAPI\GameConstants\GameMode\UnknownGameModePolicyInterface;
 
-class ThrowOutOfBoundsExceptionPolicy implements UnknownDataPolicyInterface
+class ThrowOutOfBoundsExceptionPolicy implements UnknownGameModePolicyInterface
 {
     /**
      * Throws OutOfBoundsException on unknown GameMode

@@ -25,22 +25,22 @@ class PlayerStatSummaryTypeFactory
 {
     /**
      * Policy for unknown PlayerStatSummaryType
-     * @var UnknownDataPolicyInterface
+     * @var UnknownPSSPolicyInterface
      */
     private $unknownDataPolicy;
 
     /**
      * PlayerStatSummaryType Factory
-     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     * @param UnknownPSSPolicyInterface $unknownDataPolicy
      */
-    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    public function __construct(UnknownPSSPolicyInterface $unknownDataPolicy)
     {
         $this->unknownDataPolicy = $unknownDataPolicy;
     }
 
     /**
      * Returns policy for unknown PlayerStatSummaryType
-     * @return UnknownDataPolicyInterface
+     * @return UnknownPSSPolicyInterface
      */
     protected function getUnknownDataPolicy()
     {

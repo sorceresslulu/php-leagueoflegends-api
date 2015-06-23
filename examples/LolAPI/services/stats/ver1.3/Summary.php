@@ -6,7 +6,7 @@ $apiKey = new \LolAPI\APIKey($config['apiKey']);
 $regionFactory = new \LolAPI\Region\RegionFactory(new \LolAPI\Region\UnknownRegionPolicy\ThrowUnknownRegionExceptionPolicy());
 $region = $regionFactory->getRegionByStringCode($config['region']);
 $playerStatSummaryTypeFactory = new \LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeFactory(
-    new LolAPI\GameConstants\PlayerStatSummaryType\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+    new \LolAPI\GameConstants\PlayerStatSummaryType\UnknownPSSPolicyInterface\ThrowOutOfBoundsExceptionPolicy()
 );
 
 $apiHandler = new LolAPI\Handler\CURL\Handler();

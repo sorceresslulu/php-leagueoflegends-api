@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\GameConstants\MapId;
 
-interface UnknownDataPolicyInterface
+interface UnknownMapIdPolicyInterface
 {
     /**
      * Create and returns mapId for unknown constants

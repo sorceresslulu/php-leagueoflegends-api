@@ -14,22 +14,22 @@ class GameModeFactory
 {
     /**
      * Policy for unknown GameMode
-     * @var UnknownDataPolicyInterface
+     * @var UnknownGameModePolicyInterface
      */
     private $unknownDataPolicy;
 
     /**
      * GameMode Factory
-     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     * @param UnknownGameModePolicyInterface $unknownDataPolicy
      */
-    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    public function __construct(UnknownGameModePolicyInterface $unknownDataPolicy)
     {
         $this->unknownDataPolicy = $unknownDataPolicy;
     }
 
     /**
      * Returns policy for unknown GameMode
-     * @return UnknownDataPolicyInterface
+     * @return UnknownGameModePolicyInterface
      */
     protected function getUnknownDataPolicy()
     {

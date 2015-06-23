@@ -13,28 +13,28 @@ use LolAPI\GameConstants\Platform\Types\OC1;
 use LolAPI\GameConstants\Platform\Types\TR1;
 use LolAPI\GameConstants\Platform\Types\RU;
 use LolAPI\GameConstants\Platform\Types\Unknown;
-use LolAPI\GameConstants\Platform\UnknownDataPolicyInterface;
+use LolAPI\GameConstants\Platform\UnknownPlatformPolicyInterface;
 
 class PlatformFactory
 {
     /**
      * Policy for unknown platforms
-     * @var UnknownDataPolicyInterface
+     * @var UnknownPlatformPolicyInterface
      */
     private $unknownDataPolicy;
 
     /**
      * Platform factory
-     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     * @param UnknownPlatformPolicyInterface $unknownDataPolicy
      */
-    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    public function __construct(UnknownPlatformPolicyInterface $unknownDataPolicy)
     {
         $this->unknownDataPolicy = $unknownDataPolicy;
     }
 
     /**
      * Returns policy for unknown platforms
-     * @return UnknownDataPolicyInterface
+     * @return UnknownPlatformPolicyInterface
      */
     protected function getUnknownDataPolicy()
     {

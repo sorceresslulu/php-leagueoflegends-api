@@ -38,22 +38,22 @@ class MatchmakingQueueTypeFactory
 {
     /**
      * Policy for unknown MatchmakingQueueType
-     * @var UnknownDataPolicyInterface
+     * @var UnknownMQTPolicyInterface
      */
     private $unknownDataPolicy;
 
     /**
      * MatchmakingQueueType Factory
-     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     * @param UnknownMQTPolicyInterface $unknownDataPolicy
      */
-    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    public function __construct(UnknownMQTPolicyInterface $unknownDataPolicy)
     {
         $this->unknownDataPolicy = $unknownDataPolicy;
     }
 
     /**
      * Returns policy for unknown MatchmakingQueueType
-     * @return UnknownDataPolicyInterface
+     * @return UnknownMQTPolicyInterface
      */
     protected function getUnknownDataPolicy()
     {

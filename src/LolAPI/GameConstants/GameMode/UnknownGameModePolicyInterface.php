@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\GameConstants\GameMode;
 
-interface UnknownDataPolicyInterface
+interface UnknownGameModePolicyInterface
 {
     /**
      * Returns unknown GameMode

@@ -3,7 +3,7 @@ namespace LolAPI\GameConstants\MatchmakingQueueType;
 
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
 
-interface UnknownDataPolicyInterface
+interface UnknownMQTPolicyInterface
 {
     /**
      * Returns unknown MatchmakingQueueType

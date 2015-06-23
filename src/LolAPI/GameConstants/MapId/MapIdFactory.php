@@ -14,23 +14,23 @@ class MapIdFactory
 {
     /**
      * Policy for unknown MapIds
-     * @var UnknownDataPolicyInterface
+     * @var UnknownMapIdPolicyInterface
      */
     private $unknownDataPolicy;
 
 
     /**
      * MapId Factory
-     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     * @param UnknownMapIdPolicyInterface $unknownDataPolicy
      */
-    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    public function __construct(UnknownMapIdPolicyInterface $unknownDataPolicy)
     {
         $this->unknownDataPolicy = $unknownDataPolicy;
     }
 
     /**
      * Returns policy for unknown MapIds
-     * @return UnknownDataPolicyInterface
+     * @return UnknownMapIdPolicyInterface
      */
     protected function getUnknownDataPolicy()
     {

@@ -9,22 +9,22 @@ class GameTypeFactory
 {
     /**
      * Policy for unknown GameType
-     * @var UnknownDataPolicyInterface
+     * @var UnknownGameTypePolicyInterface
      */
     private $unknownDataPolicy;
 
     /**
      * GameType Factory
-     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     * @param UnknownGameTypePolicyInterface $unknownDataPolicy
      */
-    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    public function __construct(UnknownGameTypePolicyInterface $unknownDataPolicy)
     {
         $this->unknownDataPolicy = $unknownDataPolicy;
     }
 
     /**
      * Returns policy for unknown GameType
-     * @return UnknownDataPolicyInterface
+     * @return UnknownGameTypePolicyInterface
      */
     public function getUnknownDataPolicy()
     {

@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\GameConstants\SubType;
 
-interface UnknownDataPolicyInterface
+interface UnknownSubTypePolicyInterface
 {
     /**
      * Returns unknown SubType

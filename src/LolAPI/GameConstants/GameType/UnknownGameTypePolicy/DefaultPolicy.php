@@ -1,11 +1,11 @@
 <?php
-namespace LolAPI\GameConstants\GameType\UnknownDataPolicy;
+namespace LolAPI\GameConstants\GameType\UnknownGameTypePolicy;
 
 use LolAPI\GameConstants\GameType\GameTypeInterface;
 use LolAPI\GameConstants\GameType\Types\Unknown;
-use LolAPI\GameConstants\GameType\UnknownDataPolicyInterface;
+use LolAPI\GameConstants\GameType\UnknownGameTypePolicyInterface;
 
-class DefaultPolicy implements UnknownDataPolicyInterface
+class DefaultPolicy implements UnknownGameTypePolicyInterface
 {
     /**
      * Returns unknown GameType

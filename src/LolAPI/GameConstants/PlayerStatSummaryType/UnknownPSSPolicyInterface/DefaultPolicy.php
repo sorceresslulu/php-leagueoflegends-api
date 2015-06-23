@@ -1,11 +1,11 @@
 <?php
-namespace LolAPI\GameConstants\PlayerStatSummaryType\UnknownDataPolicy;
+namespace LolAPI\GameConstants\PlayerStatSummaryType\UnknownPSSPolicyInterface;
 
 use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeInterface;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\Unknown;
-use LolAPI\GameConstants\PlayerStatSummaryType\UnknownDataPolicyInterface;
+use LolAPI\GameConstants\PlayerStatSummaryType\UnknownPSSPolicyInterface;
 
-class DefaultPolicy implements UnknownDataPolicyInterface
+class DefaultPolicy implements UnknownPSSPolicyInterface
 {
     /**
      * Returns unknown PlayStatSummaryType

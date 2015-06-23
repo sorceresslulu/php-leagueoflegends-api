@@ -7,23 +7,23 @@ $regionFactory = new \LolAPI\Region\RegionFactory(new \LolAPI\Region\UnknownRegi
 $region = $regionFactory->getRegionByStringCode($config['region']);
 
 $platformFactory = new \LolAPI\GameConstants\Platform\PlatformFactory(
-    new LolAPI\GameConstants\Platform\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+    new \LolAPI\GameConstants\Platform\UnknownPlatformPolicy\ThrowOutOfBoundsExceptionPolicy()
 );
 
 $matchmakingQueueTypeFactory = new \LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory(
-    new \LolAPI\GameConstants\MatchmakingQueueType\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+    new \LolAPI\GameConstants\MatchmakingQueueType\UnknownMQTPolicy\ThrowOutOfBoundsExceptionPolicy()
 );
 
 $mapIdFactory = new \LolAPI\GameConstants\MapId\MapIdFactory(
-    new \LolAPI\GameConstants\MapId\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+    new \LolAPI\GameConstants\MapId\UnknownMapIdPolicy\ThrowOutOfBoundsExceptionPolicy()
 );
 
 $gameTypeFactory = new \LolAPI\GameConstants\GameType\GameTypeFactory(
-    new \LolAPI\GameConstants\GameType\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+    new \LolAPI\GameConstants\GameType\UnknownGameTypePolicy\ThrowOutOfBoundsExceptionPolicy()
 );
 
 $gameModeFactory = new \LolAPI\GameConstants\GameMode\GameModeFactory(
-    new \LolAPI\GameConstants\GameMode\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+    new \LolAPI\GameConstants\GameMode\UnknownGameModePolicy\ThrowOutOfBoundsExceptionPolicy()
 );
 
 $apiHandler = new LolAPI\Handler\CURL\Handler();

@@ -1,11 +1,11 @@
 <?php
-namespace LolAPI\GameConstants\SubType\UnknownDataPolicy;
+namespace LolAPI\GameConstants\SubType\UnknownSubTypePolicy;
 
 use LolAPI\GameConstants\SubType\SubTypeInterface;
 use LolAPI\GameConstants\SubType\SubTypes\Unknown;
-use LolAPI\GameConstants\SubType\UnknownDataPolicyInterface;
+use LolAPI\GameConstants\SubType\UnknownSubTypePolicyInterface;
 
-class DefaultPolicy implements UnknownDataPolicyInterface
+class DefaultPolicy implements UnknownSubTypePolicyInterface
 {
     /**
      * Returns unknown SubType

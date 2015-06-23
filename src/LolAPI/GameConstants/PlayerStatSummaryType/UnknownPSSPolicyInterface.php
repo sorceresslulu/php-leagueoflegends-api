@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\GameConstants\PlayerStatSummaryType;
 
-interface UnknownDataPolicyInterface
+interface UnknownPSSPolicyInterface
 {
     /**
      * Returns unknown PlayStatSummaryType
