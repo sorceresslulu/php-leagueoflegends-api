@@ -71,7 +71,7 @@ class Query
 
         $serviceUrl = sprintf(
             'http://status.leagueoflegends.com/shards/%s',
-            rawurlencode($request->getRegion()->getCode())
+            rawurlencode(strtolower($request->getRegion()->getCode()))
         );
 
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, array());

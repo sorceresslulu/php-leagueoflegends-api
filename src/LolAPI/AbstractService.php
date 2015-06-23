@@ -38,4 +38,5 @@ namespace LolAPI\Service\Exceptions {
     class ServiceUnavailableException extends LolAPIException {}
     class ForbiddenException extends LolAPIException {}
     class StatsDataNotFoundException extends LolAPIException {}
+    class SpectatorGameInfoNotFoundException extends LolAPIException {}
 }

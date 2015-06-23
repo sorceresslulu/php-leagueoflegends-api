@@ -11,7 +11,7 @@ class BR implements Region
      */
     public function getCode()
     {
-        return 'br';
+        return self::REGION_BR;
     }
 
     /**
@@ -20,7 +20,7 @@ class BR implements Region
      */
     public function getDomain()
     {
-        return $this->getCode();
+        return strtolower($this->getCode());
     }
 
     /**
@@ -29,6 +29,6 @@ class BR implements Region
      */
     public function getDirectory()
     {
-        return $this->getCode();
+        return strtolower($this->getCode());
     }
 }

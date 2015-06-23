@@ -11,7 +11,15 @@ class TR implements Region
      */
     public function getCode()
     {
-        return 'tr';
+        return self::REGION_TR;
+    }
+    /**
+     * {@inheritdoc}
+     * @return string
+     */
+    public function getDomain()
+    {
+        return strtolower($this->getCode());
     }
 
     /**
@@ -20,15 +28,6 @@ class TR implements Region
      */
     public function getDirectory()
     {
-        return $this->getCode();
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return string
-     */
-    public function getDomain()
-    {
-        return $this->getCode();
+        return strtolower($this->getCode());
     }
 }

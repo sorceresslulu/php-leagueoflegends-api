@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
 
 $config = getConfig();
 $apiKey = new \LolAPI\APIKey($config['apiKey']);
-$region = \LolAPI\RegionFactory::getRegionByCode($config['region']);
+$region = \LolAPI\RegionFactory::getRegionByStringCode($config['region']);
 
 $apiHandler = new LolAPI\Handler\CURL\Handler();
 $service = new LolAPI\Service\FeaturedGame\Ver1_0\Service($apiHandler);
@@ -20,9 +20,9 @@ function processQueryResult(LolAPI\Service\FeaturedGame\Ver1_0\QueryResult $quer
         println(sprintf("GameMode: %s", $featuredGameInfo->getGameMode()->getCode()), 1);
 
         println("MatchmakingQueue", 1);
-        println(sprintf("QueueType: %s", $featuredGameInfo->getGameQueue()->getQueueType()), 2);
-        println(sprintf("ConfigId: %s", $featuredGameInfo->getGameQueue()->getGameQueueConfigId()), 2);
-        println(sprintf("Description: %s", $featuredGameInfo->getGameQueue()->getDescription()), 2);
+        println(sprintf("QueueType: %s", $featuredGameInfo->getGameQueueType()->getQueueType()), 2);
+        println(sprintf("ConfigId: %s", $featuredGameInfo->getGameQueueType()->getGameQueueConfigId()), 2);
+        println(sprintf("Description: %s", $featuredGameInfo->getGameQueueType()->getDescription()), 2);
 
         println(sprintf("MapId: %s", $featuredGameInfo->getMapId()->getId()), 1);
         println(sprintf("MapId/Name: %s", $featuredGameInfo->getMapId()->getName()), 1);

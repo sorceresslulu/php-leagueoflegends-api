@@ -21,6 +21,7 @@ use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\NightmareBot5x5Rank2;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\NightmareBot5x5Rank5;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\Normal5x5Blind;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\Normal5x5Draft;
+use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\Null;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\ODIN5x5Blind;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\ODIN5x5Draft;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\OneForAll5x5;
@@ -37,13 +38,15 @@ class MatchmakingQueueFactory
 {
     /**
      * Create and returns MatchmakingQueue constant from integer code
-     * @param int $intCode
+     * @param int|null $intCode
      * @param bool $throwExceptionsOnUnknownCode
      * @return MatchmakingQueueInterface
      */
     public static function createFromIntCode($intCode, $throwExceptionsOnUnknownCode = false)
     {
-        if(!(is_int($intCode)) || $intCode < 0) throw new \InvalidArgumentException;
+        if($intCode === null) {
+            return new Null();
+        }
 
         switch($intCode) {
             default:

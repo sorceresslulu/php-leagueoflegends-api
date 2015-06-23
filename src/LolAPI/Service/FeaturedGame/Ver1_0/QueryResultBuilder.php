@@ -45,7 +45,7 @@ class QueryResultBuilder
     {
         $gameMode = GameModeFactory::createFromStringCode($jsonGame['gameMode']);
         $gameType = GameTypeFactory::createFromStringCode($jsonGame['gameType']);
-        $gameQueue = MatchmakingQueueFactory::createFromIntCode((int) $jsonGame['gameQueueConfigId']);
+        $gameQueue = MatchmakingQueueFactory::createFromIntCode(isset($jsonGame['gameQueueConfigId']) ? (int) $jsonGame['gameQueueConfigId'] : null);
 
         $bannedChampions = isset($jsonGame['bannedChampions']) ? $this->buildBannedChampions($jsonGame['bannedChampions']) : array();
         $participants = isset($jsonGame['participants']) ? $this->buildParticipants($jsonGame['participants']) : array();

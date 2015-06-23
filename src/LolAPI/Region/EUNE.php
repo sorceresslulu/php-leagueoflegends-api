@@ -11,16 +11,7 @@ class EUNE implements Region
      */
     public function getCode()
     {
-        return 'eune';
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return string
-     */
-    public function getDirectory()
-    {
-        return $this->getCode();
+        return self::REGION_EUNE;
     }
 
     /**
@@ -29,6 +20,15 @@ class EUNE implements Region
      */
     public function getDomain()
     {
-        return $this->getCode();
+        return strtolower($this->getCode());
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return string
+     */
+    public function getDirectory()
+    {
+        return strtolower($this->getCode());
     }
 }

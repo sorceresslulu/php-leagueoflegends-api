@@ -11,16 +11,7 @@ class RU implements Region
      */
     public function getCode()
     {
-        return 'ru';
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return string
-     */
-    public function getDirectory()
-    {
-        return $this->getCode();
+        return self::REGION_RU;
     }
 
     /**
@@ -29,6 +20,15 @@ class RU implements Region
      */
     public function getDomain()
     {
-        return $this->getCode();
+        return strtolower($this->getCode());
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return string
+     */
+    public function getDirectory()
+    {
+        return strtolower($this->getCode());
     }
 }

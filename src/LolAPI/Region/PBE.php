@@ -11,16 +11,7 @@ class PBE implements Region
      */
     public function getCode()
     {
-        return 'pbe';
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return string
-     */
-    public function getDirectory()
-    {
-        return $this->getCode();
+        return self::REGION_PBE;
     }
 
     /**
@@ -29,6 +20,15 @@ class PBE implements Region
      */
     public function getDomain()
     {
-        return $this->getCode();
+        return strtolower($this->getCode());
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return string
+     */
+    public function getDirectory()
+    {
+        return strtolower($this->getCode());
     }
 }

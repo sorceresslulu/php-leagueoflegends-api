@@ -11,16 +11,7 @@ class OCE implements Region
      */
     public function getCode()
     {
-        return 'oce';
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return string
-     */
-    public function getDirectory()
-    {
-        return $this->getCode();
+        return self::REGION_OCE;
     }
 
     /**
@@ -29,6 +20,15 @@ class OCE implements Region
      */
     public function getDomain()
     {
-        return $this->getCode();
+        return strtolower($this->getCode());
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return string
+     */
+    public function getDirectory()
+    {
+        return strtolower($this->getCode());
     }
 }

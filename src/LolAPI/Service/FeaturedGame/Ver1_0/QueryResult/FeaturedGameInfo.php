@@ -75,7 +75,18 @@ class FeaturedGameInfo
      */
     private $participants;
 
-    function __construct($gameId, $gameLength, $gameMode, GameTypeInterface $gameType, MatchmakingQueueInterface $gameQueue, $gameStartTime, MapIdInterface $mapId, $platformId, array $bannedChampions, Observer $observers, array $participants)
+    public function __construct(
+        $gameId,
+        $gameLength,
+        $gameMode,
+        GameTypeInterface $gameType,
+        MatchmakingQueueInterface $gameQueue,
+        $gameStartTime,
+        MapIdInterface $mapId,
+        $platformId,
+        array $bannedChampions,
+        Observer $observers,
+        array $participants)
     {
         $this->gameId = $gameId;
         $this->gameLength = $gameLength;
@@ -130,9 +141,18 @@ class FeaturedGameInfo
      * Returns queue type
      * @return MatchmakingQueueInterface
      */
-    public function getGameQueue()
+    public function getGameQueueType()
     {
         return $this->gameQueue;
+    }
+
+    /**
+     * Returns queue type (gameQueueConfigId)
+     * @return MatchmakingQueueInterface
+     */
+    public function getGameQueueConfigId()
+    {
+        return $this->getGameQueueType()->getGameQueueConfigId();
     }
 
     /**
