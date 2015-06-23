@@ -1,12 +1,36 @@
 <?php
 namespace LolAPI\Service\LolStatus\Ver1_0\Shards;
 
-use LolAPI\AbstractService;
+use LolAPI\Handler\HandlerInterface;
 
-class Service extends AbstractService
+class Service
 {
     /**
-     * Create and returns a new "status.shards" query
+     * Lol API Handler
+     * @var HandlerInterface
+     */
+    private $lolAPIHandler;
+
+    /**
+     * Service
+     * @param HandlerInterface $lolAPIHandler
+     */
+    function __construct(HandlerInterface $lolAPIHandler)
+    {
+        $this->lolAPIHandler = $lolAPIHandler;
+    }
+
+    /**
+     * Returns Lol API Handler
+     * @return HandlerInterface
+     */
+    protected function getAPIHandler()
+    {
+        return $this->lolAPIHandler;
+    }
+
+    /**
+     * Create and returns a new LolStatus.Shards query
      * @return Query
      */
     public function createQuery()

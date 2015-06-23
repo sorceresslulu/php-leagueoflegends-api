@@ -3,14 +3,14 @@ namespace LolAPI\Service\Summoner\Ver1_4\ByIds;
 
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\Exceptions\BadRequestException;
-use LolAPI\Service\Exceptions\LolAPIException;
-use LolAPI\Service\Exceptions\SummonerNotFoundException;
-use LolAPI\Service\Exceptions\InternalServerException;
-use LolAPI\Service\Exceptions\RateLimitExceedException;
-use LolAPI\Service\Exceptions\ServiceUnavailableException;
-use LolAPI\Service\Exceptions\UnauthorizedException;
-use LolAPI\Service\Exceptions\UnknownResponseException;
+use LolAPI\Exceptions\BadRequestException;
+use LolAPI\Exceptions\LolAPIException;
+use LolAPI\Exceptions\SummonerNotFoundException;
+use LolAPI\Exceptions\InternalServerException;
+use LolAPI\Exceptions\RateLimitExceedException;
+use LolAPI\Exceptions\ServiceUnavailableException;
+use LolAPI\Exceptions\UnauthorizedException;
+use LolAPI\Exceptions\UnknownResponseException;
 
 class Query
 {

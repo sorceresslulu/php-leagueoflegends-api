@@ -1,10 +1,34 @@
 <?php
 namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
-use LolAPI\AbstractService;
+use LolAPI\Handler\HandlerInterface;
 
-class Service extends AbstractService
+class Service
 {
+    /**
+     * Lol API Handler
+     * @var HandlerInterface
+     */
+    private $lolAPIHandler;
+
+    /**
+     * Service
+     * @param HandlerInterface $lolAPIHandler
+     */
+    function __construct(HandlerInterface $lolAPIHandler)
+    {
+        $this->lolAPIHandler = $lolAPIHandler;
+    }
+
+    /**
+     * Returns Lol API Handler
+     * @return HandlerInterface
+     */
+    protected function getAPIHandler()
+    {
+        return $this->lolAPIHandler;
+    }
+
     /**
      * Create and returns CurrentGame.SpectatorGameInfo query
      * @param Request $request

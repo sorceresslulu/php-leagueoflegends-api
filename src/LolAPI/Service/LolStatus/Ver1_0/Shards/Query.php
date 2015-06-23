@@ -3,10 +3,10 @@ namespace LolAPI\Service\LolStatus\Ver1_0\Shards;
 
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\Exceptions\ForbiddenException;
-use LolAPI\Service\Exceptions\LolAPIException;
-use LolAPI\Service\Exceptions\RateLimitExceedException;
-use LolAPI\Service\Exceptions\UnknownResponseException;
+use LolAPI\Exceptions\ForbiddenException;
+use LolAPI\Exceptions\LolAPIException;
+use LolAPI\Exceptions\RateLimitExceedException;
+use LolAPI\Exceptions\UnknownResponseException;
 use LolAPI\Service\LolStatus\Ver1_0\Shards\QueryResult\Shard;
 
 class Query

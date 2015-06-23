@@ -1,12 +1,36 @@
 <?php
 namespace LolAPI\Service\FeaturedGame\Ver1_0;
 
-use LolAPI\AbstractService;
+use LolAPI\Handler\HandlerInterface;
 
-class Service extends AbstractService
+class Service
 {
     /**
-     * Create and returns a new "featuredGames" query
+     * Lol API Handler
+     * @var HandlerInterface
+     */
+    private $lolAPIHandler;
+
+    /**
+     * Service
+     * @param HandlerInterface $lolAPIHandler
+     */
+    function __construct(HandlerInterface $lolAPIHandler)
+    {
+        $this->lolAPIHandler = $lolAPIHandler;
+    }
+
+    /**
+     * Returns Lol API Handler
+     * @return HandlerInterface
+     */
+    protected function getAPIHandler()
+    {
+        return $this->lolAPIHandler;
+    }
+
+    /**
+     * Create and returns a new FeaturedGames query
      * @param Request $request
      * @return Query
      */

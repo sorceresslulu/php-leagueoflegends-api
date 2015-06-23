@@ -1,12 +1,37 @@
 <?php
 namespace LolAPI\Service\Summoner\Ver1_4\ByIds;
 
-use LolAPI\AbstractService;
+use LolAPI\Handler\HandlerInterface;
 
-class Service extends AbstractService
+class Service
 {
     /**
-     * Create and returns a new "summoner.byIds" query
+     * Lol API Handler
+     * @var HandlerInterface
+     */
+    private $lolAPIHandler;
+
+    /**
+     * Service
+     * @param HandlerInterface $lolAPIHandler
+     */
+    function __construct(HandlerInterface $lolAPIHandler)
+    {
+        $this->lolAPIHandler = $lolAPIHandler;
+    }
+
+    /**
+     * Returns Lol API Handler
+     * @return HandlerInterface
+     */
+    protected function getAPIHandler()
+    {
+        return $this->lolAPIHandler;
+    }
+
+
+    /**
+     * Create and returns a new Summoner.ByIds query
      * @param Request $request
      * @return Query
      */

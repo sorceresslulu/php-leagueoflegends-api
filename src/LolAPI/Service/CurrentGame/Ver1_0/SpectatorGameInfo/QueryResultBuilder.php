@@ -16,11 +16,21 @@ use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\QueryResult\Rune;
 
 class QueryResultBuilder
 {
+    /**
+     * Query Result Builder
+     * @param ResponseInterface $response
+     * @return QueryResult
+     */
     public function build(ResponseInterface $response)
     {
         return new QueryResult($response, $this->buildCurrentGameInfo($response->parseJSON()));
     }
 
+    /**
+     * Build CurrentGameInfo
+     * @param array $jsonResponse
+     * @return CurrentGameInfo
+     */
     private function buildCurrentGameInfo(array $jsonResponse)
     {
         $participants = array();
@@ -49,6 +59,11 @@ class QueryResultBuilder
         );
     }
 
+    /**
+     * Build list of participants
+     * @param array $jsonParticipants
+     * @return array
+     */
     private function buildParticipants(array $jsonParticipants)
     {
         $participants = array();
@@ -60,7 +75,12 @@ class QueryResultBuilder
         return $participants;
     }
 
-    private function buildParticipant($jsonParticipant)
+    /**
+     * Build participant
+     * @param array $jsonParticipant
+     * @return CurrentGameParticipant
+     */
+    private function buildParticipant(array $jsonParticipant)
     {
         $masteries = array();
         $runes = array();
@@ -91,6 +111,11 @@ class QueryResultBuilder
         );
     }
 
+    /**
+     * Build list of banned champions
+     * @param array $jsonBannedChampions
+     * @return array]
+     */
     private function buildBannedChampions(array $jsonBannedChampions)
     {
         $bannedChampions = array();

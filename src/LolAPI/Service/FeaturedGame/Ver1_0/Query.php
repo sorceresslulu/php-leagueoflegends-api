@@ -2,9 +2,9 @@
 namespace LolAPI\Service\FeaturedGame\Ver1_0;
 
 use LolAPI\Handler\HandlerInterface;
-use LolAPI\Service\Exceptions\ForbiddenException;
-use LolAPI\Service\Exceptions\RateLimitExceedException;
-use LolAPI\Service\Exceptions\UnknownResponseException;
+use LolAPI\Exceptions\ForbiddenException;
+use LolAPI\Exceptions\RateLimitExceedException;
+use LolAPI\Exceptions\UnknownResponseException;
 
 class Query
 {

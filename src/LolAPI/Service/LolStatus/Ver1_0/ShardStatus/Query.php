@@ -10,10 +10,10 @@ use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\Severity\SeverityFac
 use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\ShardStatus;
 use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\Status\StatusFactory;
 use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult\Translation;
-use LolAPI\Service\Exceptions\LolAPIException;
-use LolAPI\Service\Exceptions\RateLimitExceedException;
-use LolAPI\Service\Exceptions\UnknownResponseException;
-use LolAPI\Service\Exceptions\ForbiddenException;
+use LolAPI\Exceptions\LolAPIException;
+use LolAPI\Exceptions\RateLimitExceedException;
+use LolAPI\Exceptions\UnknownResponseException;
+use LolAPI\Exceptions\ForbiddenException;
 
 class Query
 {
