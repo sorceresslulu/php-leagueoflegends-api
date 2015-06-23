@@ -6,7 +6,7 @@ use LolAPI\GameConstants\GameType\GameTypeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueue\MatchmakingQueueFactory;
 use LolAPI\Handler\ResponseInterface;
-use LolAPI\PlatformFactory;
+use LolAPI\Platform\PlatformFactory;
 use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\QueryResult\BannedChampion;
 use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\QueryResult\CurrentGameInfo;
 use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\QueryResult\CurrentGameParticipant;
@@ -19,11 +19,12 @@ class QueryResultBuilder
     /**
      * Query Result Builder
      * @param ResponseInterface $response
+     * @param PlatformFactory $platformFactory
      * @return QueryResult
      */
-    public function build(ResponseInterface $response)
+    public function build(ResponseInterface $response, PlatformFactory $platformFactory)
     {
-        return new QueryResult($response, $this->buildCurrentGameInfo($response->parseJSON()));
+        return new QueryResult($response, $this->buildCurrentGameInfo($response->parseJSON(), $platformFactory));
     }
 
     /**
@@ -31,7 +32,7 @@ class QueryResultBuilder
      * @param array $jsonResponse
      * @return CurrentGameInfo
      */
-    private function buildCurrentGameInfo(array $jsonResponse)
+    private function buildCurrentGameInfo(array $jsonResponse, PlatformFactory $platformFactory)
     {
         $participants = array();
         $bannedChampions = array();
@@ -46,7 +47,7 @@ class QueryResultBuilder
 
         return new CurrentGameInfo(
             (int) $jsonResponse['gameId'],
-            PlatformFactory::createFromStringCode($jsonResponse['platformId']),
+            $platformFactory->createFromStringCode($jsonResponse['platformId']),
             (int) $jsonResponse['gameStartTime'],
             (int) $jsonResponse['gameLength'],
             GameTypeFactory::createFromStringCode($jsonResponse['gameType']),

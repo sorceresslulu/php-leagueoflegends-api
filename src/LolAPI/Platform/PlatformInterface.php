@@ -1,7 +1,7 @@
 <?php
-namespace LolAPI;
+namespace LolAPI\Platform;
 
-interface Platform
+interface PlatformInterface
 {
     const PLATFORM_BR1 = 'BR1';
     const PLATFORM_EUN1 = 'EUN1';

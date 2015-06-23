@@ -4,9 +4,10 @@ require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
 $config = getConfig();
 $apiKey = new \LolAPI\APIKey($config['apiKey']);
 $region = \LolAPI\RegionFactory::getRegionByStringCode($config['region']);
+$platformFactory = new \LolAPI\Platform\PlatformFactory(new LolAPI\Platform\UnknownDataPolicy\DefaultPolicy());
 
 $apiHandler = new LolAPI\Handler\CURL\Handler();
-$service = new LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\Service($apiHandler);
+$service = new LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\Service($apiHandler, $platformFactory);
 
 function processQueryResult(LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\QueryResult $queryResult)
 {
@@ -59,7 +60,7 @@ $request = new LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\Request(
     $apiKey,
     $region,
     $config['summonerId'],
-    \LolAPI\PlatformFactory::createFromStringCode($config['platformId'])
+    $platformFactory->createFromStringCode($config['platformId'])
 );
 
 $query = $service->createQuery($request);

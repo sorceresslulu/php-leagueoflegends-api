@@ -9,6 +9,7 @@ use LolAPI\Exceptions\RateLimitExceedException;
 use LolAPI\Exceptions\SpectatorGameInfoNotFoundException;
 use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
+use LolAPI\Platform\PlatformFactory;
 
 class Query
 {
@@ -25,14 +26,22 @@ class Query
     private $request;
 
     /**
+     * Platform Factory
+     * @var PlatformFactory
+     */
+    private $platformFactory;
+
+    /**
      * CurrentGame.SpectatorGameInfo query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
+     * @param PlatformFactory $platformFactory
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request, PlatformFactory $platformFactory)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
+        $this->platformFactory = $platformFactory;
     }
 
     /**
@@ -51,6 +60,14 @@ class Query
     private function getRequest()
     {
         return $this->request;
+    }
+
+    /**
+     * @return PlatformFactory
+     */
+    private function getPlatformFactory()
+    {
+        return $this->platformFactory;
     }
 
     /**
@@ -99,6 +116,6 @@ class Query
     {
         $queryResultBuilder = new QueryResultBuilder();
 
-        return $queryResultBuilder->build($response);
+        return $queryResultBuilder->build($response, $this->getPlatformFactory());
     }
 }

@@ -2,7 +2,7 @@
 namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
 use LolAPI\APIKey;
-use LolAPI\Platform;
+use LolAPI\Platform\PlatformInterface;
 use LolAPI\Region;
 
 class Request
@@ -27,11 +27,11 @@ class Request
 
     /**
      * Platform ID
-     * @var Platform
+     * @var PlatformInterface
      */
     private $platformId;
 
-    public function __construct(APIKey $apiKey, Region $region, $summonerId, Platform $platformId)
+    public function __construct(APIKey $apiKey, Region $region, $summonerId, PlatformInterface $platformId)
     {
         $this->apiKey = $apiKey;
         $this->region = $region;
@@ -68,7 +68,7 @@ class Request
 
     /**
      * Returns platform ID
-     * @return Platform
+     * @return PlatformInterface
      */
     public function getPlatformId()
     {

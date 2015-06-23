@@ -1,9 +1,9 @@
 <?php
-namespace LolAPI\Platform;
+namespace LolAPI\Platform\Types;
 
-use LolAPI\Platform;
+use LolAPI\Platform\PlatformInterface;
 
-class RU implements Platform
+class KR implements PlatformInterface
 {
     /**
      * Returns platform ID
@@ -11,7 +11,7 @@ class RU implements Platform
      */
     public function getPlatformId()
     {
-        return self::PLATFORM_RU;
+        return self::PLATFORM_KR;
     }
 
     /**

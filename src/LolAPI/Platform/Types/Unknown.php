@@ -1,9 +1,9 @@
 <?php
-namespace LolAPI\Platform;
+namespace LolAPI\Platform\Types;
 
-use LolAPI\Platform;
+use LolAPI\Platform\PlatformInterface;
 
-class Unknown implements Platform
+class Unknown implements PlatformInterface
 {
     /**
      * Platform Id
