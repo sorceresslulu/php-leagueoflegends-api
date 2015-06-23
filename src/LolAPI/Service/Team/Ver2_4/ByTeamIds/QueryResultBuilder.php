@@ -1,12 +1,10 @@
 <?php
-namespace LolAPI\Service\Team\Ver2_4\BySummonerIds;
+namespace LolAPI\Service\Team\Ver2_4\ByTeamIds;
 
 use LolAPI\GameConstants\GameMode\GameModeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult\SummonerDTO;
 use LolAPI\Service\Team\Ver2_4\TeamDTOBuilder;
-
 
 class QueryResultBuilder
 {
@@ -42,19 +40,13 @@ class QueryResultBuilder
     {
         $jsonResponse = $response->parseJSON();
         $teamDTOBuilder = new TeamDTOBuilder($this->getGameModeFactory(), $this->getMapIdFactory());
-        $summonerDTOs = array();
+        $teamDTOs = array();
 
-        foreach($jsonResponse as $summonerId => $arrTeams) {
-            $teams = array();
-
-            foreach($arrTeams as $arrTeam) {
-                $teams[] = $teamDTOBuilder->buildTeamDTO($arrTeam);
-            }
-
-            $summonerDTOs[] = new SummonerDTO((int) $summonerId, $teams);
+        foreach($jsonResponse as $arrTeam) {
+            $teamDTOs[] = $teamDTOBuilder->buildTeamDTO($arrTeam);
         }
 
-        return new QueryResult($response, $summonerDTOs);
+        return new QueryResult($response, $teamDTOs);
     }
 
     /**

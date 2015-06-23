@@ -92,7 +92,7 @@ function processQueryResult(LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult
     }
 }
 
-$request = new LolAPI\Service\Team\Ver2_4\BySummonerIds\Request($apiKey, $region, array(1685959));
+$request = new LolAPI\Service\Team\Ver2_4\BySummonerIds\Request($apiKey, $region, array($config['summonerIdWithTeam']));
 $query = $service->createQuery($request);
 $queryResult = $query->execute();
 

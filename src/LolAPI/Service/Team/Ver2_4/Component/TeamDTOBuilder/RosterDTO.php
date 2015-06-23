@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult;
+namespace LolAPI\Service\Team\Ver2_4\Component\TeamDTOBuilder;
 
 class RosterDTO
 {

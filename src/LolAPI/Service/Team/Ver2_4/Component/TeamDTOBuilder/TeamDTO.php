@@ -1,5 +1,9 @@
 <?php
-namespace LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult;
+namespace LolAPI\Service\Team\Ver2_4\Component\TeamDTOBuilder;
+
+use LolAPI\Service\Team\Ver2_4\Component\TeamDTOBuilder\MatchHistorySummaryDTO;
+use LolAPI\Service\Team\Ver2_4\Component\TeamDTOBuilder\RosterDTO;
+use LolAPI\Service\Team\Ver2_4\Component\TeamDTOBuilder\TeamStatDetailDTO;
 
 class TeamDTO
 {
@@ -221,7 +225,7 @@ class TeamDTO
 
     /**
      * Returns match history
-     * @return MatchHistorySummaryDTO[]
+     * @return \LolAPI\Service\Team\Ver2_4\Component\TeamDTOBuilder\MatchHistorySummaryDTO[]
      */
     public function getMatchHistory()
     {
@@ -239,7 +243,7 @@ class TeamDTO
 
     /**
      * Returns roster
-     * @return RosterDTO
+     * @return \LolAPI\Service\Team\Ver2_4\Component\TeamDTOBuilder\RosterDTO
      */
     public function getRoster()
     {

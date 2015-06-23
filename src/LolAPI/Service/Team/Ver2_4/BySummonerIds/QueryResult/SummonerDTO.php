@@ -1,6 +1,8 @@
 <?php
 namespace LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult;
 
+use LolAPI\Service\Team\Ver2_4\Component\TeamDTOBuilder\TeamDTO;
+
 class SummonerDTO
 {
     /**
