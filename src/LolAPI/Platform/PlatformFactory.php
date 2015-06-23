@@ -35,7 +35,7 @@ class PlatformFactory
      * Returns policy for unknown platforms
      * @return UnknownDataPolicyInterface
      */
-    private function getUnknownDataPolicy()
+    protected function getUnknownDataPolicy()
     {
         return $this->unknownDataPolicy;
     }

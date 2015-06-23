@@ -21,27 +21,45 @@ use LolAPI\GameConstants\SubType\SubTypes\RankedSolo5x5;
 use LolAPI\GameConstants\SubType\SubTypes\RankedTeam3x3;
 use LolAPI\GameConstants\SubType\SubTypes\RankedTeam5x5;
 use LolAPI\GameConstants\SubType\SubTypes\SR6x6;
-use LolAPI\GameConstants\SubType\SubTypes\Unknown;
 use LolAPI\GameConstants\SubType\SubTypes\URF;
 use LolAPI\GameConstants\SubType\SubTypes\URFBot;
 
 class SubTypeFactory
 {
     /**
+     * Policy for unknown SubTypes
+     * @var UnknownDataPolicyInterface
+     */
+    private $unknownDataPolicy;
+
+    /**
+     * SubType Factory
+     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     */
+    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    {
+        $this->unknownDataPolicy = $unknownDataPolicy;
+    }
+
+    /**
+     * Return policy for unknown SubTypes
+     * @return UnknownDataPolicyInterface
+     */
+    protected function getUnknownDataPolicy()
+    {
+        return $this->unknownDataPolicy;
+    }
+
+    /**
      * Create and returns subType from string code
      * @param string $stringCode
-     * @param bool $throwExceptionsOnUnknownCode
      * @return SubTypeInterface;
      */
-    public function createFromStringCode($stringCode, $throwExceptionsOnUnknownCode = false)
+    public function createFromStringCode($stringCode)
     {
         switch($stringCode) {
             default:
-                if($throwExceptionsOnUnknownCode) {
-                    throw new \OutOfBoundsException(sprintf("Unknown subType with code `%s`", $stringCode));
-                }else{
-                    return new Unknown($stringCode);
-                }
+                return $this->getUnknownDataPolicy()->getUnknownSubType($stringCode);
 
             case SubTypeInterface::SUB_TYPE_NONE:
                 return new None();
