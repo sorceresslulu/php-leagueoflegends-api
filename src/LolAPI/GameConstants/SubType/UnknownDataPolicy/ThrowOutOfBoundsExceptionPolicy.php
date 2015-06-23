@@ -4,7 +4,7 @@ namespace LolAPI\GameConstants\SubType\UnknownDataPolicy;
 use LolAPI\Platform\PlatformInterface;
 use LolAPI\Platform\UnknownDataPolicyInterface;
 
-class ThrowOutOfBoundExceptionPolicy implements UnknownDataPolicyInterface
+class ThrowOutOfBoundsExceptionPolicy implements UnknownDataPolicyInterface
 {
     /**
      * Throw OutOfBoundExceptions instead of returning "unknown" platform
@@ -13,6 +13,6 @@ class ThrowOutOfBoundExceptionPolicy implements UnknownDataPolicyInterface
      */
     public function getUnknownPlatform($platformStringCode)
     {
-        throw new \OutOfBoundsException(sprintf("Unknown subType with code `%s`", $stringCode));
+        throw new \OutOfBoundsException(sprintf("Unknown subType with code `%s`", $platformStringCode));
     }
 }

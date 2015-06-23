@@ -4,7 +4,7 @@ namespace LolAPI\GameConstants\MapId\UnknownDataPolicy;
 use LolAPI\GameConstants\MapId\MapIdInterface;
 use LolAPI\GameConstants\MapId\UnknownDataPolicyInterface;
 
-class ThrowOutOfBoundException implements UnknownDataPolicyInterface
+class ThrowOutOfBoundsExceptionPolicy implements UnknownDataPolicyInterface
 {
     /**
      * Throws OutOfBoundsException on unknown mapIds

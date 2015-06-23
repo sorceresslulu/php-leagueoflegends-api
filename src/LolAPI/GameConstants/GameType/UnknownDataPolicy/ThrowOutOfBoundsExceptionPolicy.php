@@ -4,7 +4,7 @@ namespace LolAPI\GameConstants\GameType\UnknownDataPolicy;
 use LolAPI\GameConstants\GameType\GameTypeInterface;
 use LolAPI\GameConstants\GameType\UnknownDataPolicyInterface;
 
-class ThrowOutOfBoundExceptionPolicy implements UnknownDataPolicyInterface
+class ThrowOutOfBoundsExceptionPolicy implements UnknownDataPolicyInterface
 {
     /**
      * Throws OutOfBoundsException on unknown GameType

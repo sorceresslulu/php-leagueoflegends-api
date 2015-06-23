@@ -4,7 +4,7 @@ namespace LolAPI\GameConstants\MatchmakingQueue\UnknownDataPolicy;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
 use LolAPI\GameConstants\MatchmakingQueueType\UnknownDataPolicyInterface;
 
-class ThrowOutOfBoundExceptionPolicy implements UnknownDataPolicyInterface
+class ThrowOutOfBoundsExceptionPolicy implements UnknownDataPolicyInterface
 {
     /**
      * Throws OutOfBoundsException on unknown MatchmakingQueueTypes

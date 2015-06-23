@@ -4,7 +4,7 @@ namespace LolAPI\GameConstants\PlayerStatSummaryType\UnknownDataPolicy;
 use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeInterface;
 use LolAPI\GameConstants\PlayerStatSummaryType\UnknownDataPolicyInterface;
 
-class ThrowOutOfBoundExceptionPolicy implements UnknownDataPolicyInterface
+class ThrowOutOfBoundsExceptionPolicy implements UnknownDataPolicyInterface
 {
     /**
      * Throw OutOfBoundException on unknown PlayStatSummaryType

@@ -4,7 +4,7 @@ namespace LolAPI\Platform\UnknownDataPolicy;
 use LolAPI\Platform\PlatformInterface;
 use LolAPI\Platform\UnknownDataPolicyInterface;
 
-class ThrowOutOfBoundExceptionPolicy implements UnknownDataPolicyInterface
+class ThrowOutOfBoundsExceptionPolicy implements UnknownDataPolicyInterface
 {
     /**
      * Throw an OutOfBound exception on unknown platforms
