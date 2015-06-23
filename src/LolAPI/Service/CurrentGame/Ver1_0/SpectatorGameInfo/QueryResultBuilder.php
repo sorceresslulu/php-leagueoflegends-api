@@ -4,7 +4,7 @@ namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 use LolAPI\GameConstants\GameMode\GameModeFactory;
 use LolAPI\GameConstants\GameType\GameTypeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
-use LolAPI\GameConstants\MatchmakingQueue\MatchmakingQueueFactory;
+use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Platform\PlatformFactory;
 use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\QueryResult\BannedChampion;
@@ -17,14 +17,54 @@ use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\QueryResult\Rune;
 class QueryResultBuilder
 {
     /**
+     * Platform factory
+     * @var PlatformFactory
+     */
+    private $platformFactory;
+
+    /**
+     * MatchmakingQueueType Factory
+     * @var MatchmakingQueueTypeFactory
+     */
+    private $matchmakingQueueTypeFactory;
+
+    /**
+     * Query Result Builder
+     * @param PlatformFactory $platformFactory
+     * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
+     */
+    public function __construct(PlatformFactory $platformFactory, MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory)
+    {
+        $this->platformFactory = $platformFactory;
+        $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
+    }
+
+    /**
+     * Returns platform factory
+     * @return PlatformFactory
+     */
+    protected function getPlatformFactory()
+    {
+        return $this->platformFactory;
+    }
+
+    /**
+     * Return MatchmakingQueueType Factory
+     * @return MatchmakingQueueTypeFactory
+     */
+    protected function getMatchmakingQueueTypeFactory()
+    {
+        return $this->matchmakingQueueTypeFactory;
+    }
+
+    /**
      * Query Result Builder
      * @param ResponseInterface $response
-     * @param PlatformFactory $platformFactory
      * @return QueryResult
      */
-    public function build(ResponseInterface $response, PlatformFactory $platformFactory)
+    public function build(ResponseInterface $response)
     {
-        return new QueryResult($response, $this->buildCurrentGameInfo($response->parseJSON(), $platformFactory));
+        return new QueryResult($response, $this->buildCurrentGameInfo($response->parseJSON()));
     }
 
     /**
@@ -32,7 +72,7 @@ class QueryResultBuilder
      * @param array $jsonResponse
      * @return CurrentGameInfo
      */
-    private function buildCurrentGameInfo(array $jsonResponse, PlatformFactory $platformFactory)
+    private function buildCurrentGameInfo(array $jsonResponse)
     {
         $participants = array();
         $bannedChampions = array();
@@ -47,13 +87,13 @@ class QueryResultBuilder
 
         return new CurrentGameInfo(
             (int) $jsonResponse['gameId'],
-            $platformFactory->createFromStringCode($jsonResponse['platformId']),
+            $this->getPlatformFactory()->createFromStringCode($jsonResponse['platformId']),
             (int) $jsonResponse['gameStartTime'],
             (int) $jsonResponse['gameLength'],
             GameTypeFactory::createFromStringCode($jsonResponse['gameType']),
             GameModeFactory::createFromStringCode($jsonResponse['gameMode']),
             MapIdFactory::createFromIntCode((int) $jsonResponse['mapId']),
-            MatchmakingQueueFactory::createFromIntCode(isset($jsonResponse['gameQueueConfigId']) ? (int) $jsonResponse['gameQueueConfigId'] : null),
+            $this->getMatchmakingQueueTypeFactory()->createFromIntCode(isset($jsonResponse['gameQueueConfigId']) ? (int) $jsonResponse['gameQueueConfigId'] : null),
             $participants,
             $bannedChampions,
             new Observer($jsonResponse['observers']['encryptionKey'])

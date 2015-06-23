@@ -4,7 +4,7 @@ namespace LolAPI\Service\FeaturedGame\Ver1_0\QueryResult;
 use LolAPI\GameConstants\GameMode\GameModeInterface;
 use LolAPI\GameConstants\GameType\GameTypeInterface;
 use LolAPI\GameConstants\MapId\MapIdInterface;
-use LolAPI\GameConstants\MatchmakingQueue\MatchmakingQueueInterface;
+use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
 
 class FeaturedGameInfo
 {

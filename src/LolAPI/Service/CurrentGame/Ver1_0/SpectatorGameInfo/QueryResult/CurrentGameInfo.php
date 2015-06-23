@@ -4,7 +4,7 @@ namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\QueryResult;
 use LolAPI\GameConstants\GameMode\GameModeInterface;
 use LolAPI\GameConstants\GameType\GameTypeInterface;
 use LolAPI\GameConstants\MapId\MapIdInterface;
-use LolAPI\GameConstants\MatchmakingQueue\MatchmakingQueueInterface;
+use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
 use LolAPI\Platform\PlatformInterface;
 
 class CurrentGameInfo

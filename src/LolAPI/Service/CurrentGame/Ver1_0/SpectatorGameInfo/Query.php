@@ -1,6 +1,7 @@
 <?php
 namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
+use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Exceptions\ForbiddenException;
@@ -32,23 +33,35 @@ class Query
     private $platformFactory;
 
     /**
+     * MatchmakingQueueType Factory
+     * @var MatchmakingQueueTypeFactory
+     */
+    private $matchmakingQueueTypeFactory;
+
+    /**
      * CurrentGame.SpectatorGameInfo query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
      * @param PlatformFactory $platformFactory
+     * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request, PlatformFactory $platformFactory)
+    public function __construct(
+        HandlerInterface $lolAPIHandler,
+        Request $request,
+        PlatformFactory $platformFactory,
+        MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
         $this->platformFactory = $platformFactory;
+        $this->matchmakingQueueTypeFactory =$matchmakingQueueTypeFactory;
     }
 
     /**
      * Returns Lol API Handler
      * @return HandlerInterface
      */
-    private function getLolAPIHandler()
+    protected function getLolAPIHandler()
     {
         return $this->lolAPIHandler;
     }
@@ -57,17 +70,27 @@ class Query
      * Returns request
      * @return Request
      */
-    private function getRequest()
+    protected function getRequest()
     {
         return $this->request;
     }
 
     /**
+     * Returns platform factory
      * @return PlatformFactory
      */
-    private function getPlatformFactory()
+    protected function getPlatformFactory()
     {
         return $this->platformFactory;
+    }
+
+    /**
+     * Returns MatchmakingQueueType Factory
+     * @return MatchmakingQueueTypeFactory
+     */
+    protected function getMatchmakingQueueTypeFactory()
+    {
+        return $this->matchmakingQueueTypeFactory;
     }
 
     /**
@@ -112,10 +135,13 @@ class Query
      * @param ResponseInterface $response
      * @return QueryResult
      */
-    private function createQueryResult(ResponseInterface $response)
+    protected function createQueryResult(ResponseInterface $response)
     {
-        $queryResultBuilder = new QueryResultBuilder();
+        $queryResultBuilder = new QueryResultBuilder(
+            $this->getPlatformFactory(),
+            $this->getMatchmakingQueueTypeFactory()
+        );
 
-        return $queryResultBuilder->build($response, $this->getPlatformFactory());
+        return $queryResultBuilder->build($response);
     }
 }
