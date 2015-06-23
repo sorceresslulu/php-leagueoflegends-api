@@ -3,7 +3,7 @@ namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
 use LolAPI\APIKey;
 use LolAPI\GameConstants\Platform\PlatformInterface;
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
 class Request
 {
@@ -15,7 +15,7 @@ class Request
 
     /**
      * Region
-     * @var Region
+     * @var RegionInterface
      */
     private $region;
 
@@ -31,7 +31,7 @@ class Request
      */
     private $platformId;
 
-    public function __construct(APIKey $apiKey, Region $region, $summonerId, PlatformInterface $platformId)
+    public function __construct(APIKey $apiKey, RegionInterface $region, $summonerId, PlatformInterface $platformId)
     {
         $this->apiKey = $apiKey;
         $this->region = $region;
@@ -50,7 +50,7 @@ class Request
 
     /**
      * Returns region
-     * @return Region
+     * @return RegionInterface
      */
     public function getRegion()
     {

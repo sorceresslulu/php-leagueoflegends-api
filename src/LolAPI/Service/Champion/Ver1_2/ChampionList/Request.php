@@ -2,7 +2,7 @@
 namespace LolAPI\Service\Champion\Ver1_2\ChampionList;
 
 use LolAPI\APIKey;
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
 class Request
 {
@@ -14,7 +14,7 @@ class Request
 
     /**
      * Region
-     * @var Region
+     * @var \LolAPI\Region\RegionInterface
      */
     private $region;
 
@@ -24,7 +24,7 @@ class Request
      */
     private $freeToPlay = null;
 
-    function __construct(APIKey $APIKey, Region $region, $freeToPlay = null)
+    function __construct(APIKey $APIKey, RegionInterface $region, $freeToPlay = null)
     {
         $this->apiKey = $APIKey;
         $this->freeToPlay = $freeToPlay;
@@ -52,7 +52,7 @@ class Request
 
     /**
      * Returns region
-     * @return Region
+     * @return RegionInterface
      */
     public function getRegion()
     {

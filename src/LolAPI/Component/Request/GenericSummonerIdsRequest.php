@@ -2,7 +2,7 @@
 namespace LolAPI\Component\Request;
 
 use LolAPI\APIKey;
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
 class GenericSummonerIdsRequest
 {
@@ -16,7 +16,7 @@ class GenericSummonerIdsRequest
 
     /**
      * Region where to retrieve the data.
-     * @var Region
+     * @var \LolAPI\Region\RegionInterface
      */
     private $region;
 
@@ -30,10 +30,10 @@ class GenericSummonerIdsRequest
     /**
      * Request
      * @param APIKey $apiKey
-     * @param Region $region
+     * @param \LolAPI\Region\RegionInterface $region
      * @param array $summonerIds
      */
-    function __construct(APIKey $apiKey, Region $region, array $summonerIds)
+    function __construct(APIKey $apiKey, RegionInterface $region, array $summonerIds)
     {
         if(count($summonerIds) == 0 || count($summonerIds) >= self::MAX_SUMMONER_IDS_ALLOWED) {
             throw new \InvalidArgumentException(sprintf("Only 1..%d Id's allowed", self::MAX_SUMMONER_IDS_ALLOWED));
@@ -62,7 +62,7 @@ class GenericSummonerIdsRequest
 
     /**
      * Returns region where to retrieve the data.
-     * @return Region
+     * @return \LolAPI\Region\RegionInterface
      */
     public function getRegion()
     {

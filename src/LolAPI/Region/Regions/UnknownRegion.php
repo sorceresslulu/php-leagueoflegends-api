@@ -1,9 +1,9 @@
 <?php
-namespace LolAPI\Region;
+namespace LolAPI\Region\Regions;
 
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
-class Unknown implements Region
+class UnknownRegion implements RegionInterface
 {
     /**
      * Region code

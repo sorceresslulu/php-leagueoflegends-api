@@ -1,9 +1,9 @@
 <?php
-namespace LolAPI\Region;
+namespace LolAPI\Region\Regions;
 
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
-class KR implements Region
+class TR implements RegionInterface
 {
     /**
      * {@inheritdoc}
@@ -11,9 +11,8 @@ class KR implements Region
      */
     public function getCode()
     {
-        return self::REGION_KR;
+        return self::REGION_TR;
     }
-
     /**
      * {@inheritdoc}
      * @return string

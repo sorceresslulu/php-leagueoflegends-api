@@ -2,7 +2,7 @@
 namespace LolAPI\Service\Stats\Ver1_3\BySummoner;
 
 use LolAPI\APIKey;
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
 class Request
 {
@@ -14,7 +14,7 @@ class Request
 
     /**
      * Region
-     * @var Region
+     * @var RegionInterface
      */
     private $region;
 
@@ -33,10 +33,10 @@ class Request
     /**
      * Request
      * @param APIKey $apiKey
-     * @param Region $region
+     * @param RegionInterface $region
      * @param $summonerId
      */
-    public function __construct(APIKey $apiKey, Region $region, $summonerId)
+    public function __construct(APIKey $apiKey, RegionInterface $region, $summonerId)
     {
         $this->apiKey = $apiKey;
         $this->region = $region;
@@ -72,7 +72,7 @@ class Request
 
     /**
      * Returns region
-     * @return Region
+     * @return RegionInterface
      */
     public function getRegion()
     {

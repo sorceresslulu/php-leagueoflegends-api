@@ -2,7 +2,7 @@
 namespace LolAPI\Service\Champion\Ver1_2\Champion;
 
 use LolAPI\APIKey;
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
 class Request
 {
@@ -14,7 +14,7 @@ class Request
 
     /**
      * Region
-     * @var Region
+     * @var RegionInterface
      */
     private $region;
 
@@ -24,7 +24,7 @@ class Request
      */
     private $championId;
 
-    public function __construct(APIKey $apiKey, Region $region, $championId)
+    public function __construct(APIKey $apiKey, RegionInterface $region, $championId)
     {
         if(!(is_int($championId)) || $championId < 0) {
             throw new \InvalidArgumentException;
@@ -46,7 +46,7 @@ class Request
 
     /**
      * Returns region
-     * @return Region
+     * @return \LolAPI\Region\RegionInterface
      */
     public function getRegion()
     {

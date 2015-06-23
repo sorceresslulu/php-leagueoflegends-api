@@ -1,9 +1,9 @@
 <?php
-namespace LolAPI\Region;
+namespace LolAPI\Region\Regions;
 
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
-class RU implements Region
+class RU implements RegionInterface
 {
     /**
      * {@inheritdoc}

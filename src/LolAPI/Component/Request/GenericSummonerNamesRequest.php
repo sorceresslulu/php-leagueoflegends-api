@@ -2,7 +2,7 @@
 namespace LolAPI\Component\Request;
 
 use LolAPI\APIKey;
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
 class GenericSummonerNamesRequest
 {
@@ -16,7 +16,7 @@ class GenericSummonerNamesRequest
 
     /**
      * Region
-     * @var Region
+     * @var RegionInterface
      */
     private $region;
 
@@ -30,10 +30,10 @@ class GenericSummonerNamesRequest
     /**
      * Request
      * @param APIKey $apiKey
-     * @param Region $region
+     * @param \LolAPI\Region\RegionInterface $region
      * @param string[] $summonerNames
      */
-    public function __construct(APIKey $apiKey, Region $region, array $summonerNames)
+    public function __construct(APIKey $apiKey, RegionInterface $region, array $summonerNames)
     {
         if(count($summonerNames) == 0 || count($summonerNames) >= self::MAX_SUMMONER_NAMES_ALLOWED) {
             throw new \InvalidArgumentException(sprintf("Only 1..%d names allowed", self::MAX_SUMMONER_NAMES_ALLOWED));
@@ -61,7 +61,7 @@ class GenericSummonerNamesRequest
 
     /**
      * Returns region
-     * @return Region
+     * @return \LolAPI\Region\RegionInterface
      */
     public function getRegion()
     {

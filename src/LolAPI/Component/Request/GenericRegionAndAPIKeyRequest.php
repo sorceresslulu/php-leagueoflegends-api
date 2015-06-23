@@ -2,7 +2,7 @@
 namespace LolAPI\Component\Request;
 
 use LolAPI\APIKey;
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
 class GenericRegionAndAPIKeyRequest
 {
@@ -14,11 +14,11 @@ class GenericRegionAndAPIKeyRequest
 
     /**
      * Region
-     * @var Region
+     * @var \LolAPI\Region\RegionInterface
      */
     private $region;
 
-    public function __construct(APIKey $apiKey, Region $region)
+    public function __construct(APIKey $apiKey, RegionInterface $region)
     {
         $this->apiKey = $apiKey;
         $this->region = $region;
@@ -35,7 +35,7 @@ class GenericRegionAndAPIKeyRequest
 
     /**
      * Returns region
-     * @return Region
+     * @return \LolAPI\Region\RegionInterface
      */
     public function getRegion()
     {

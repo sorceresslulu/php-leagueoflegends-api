@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
 
 $config = getConfig();
 $apiKey = new \LolAPI\APIKey($config['apiKey']);
-$region = \LolAPI\RegionFactory::getRegionByStringCode($config['region']);
+$region = \LolAPI\Region\RegionFactory::getRegionByStringCode($config['region']);
 
 $apiHandler = new LolAPI\Handler\CURL\Handler();
 $service = new LolAPI\Service\Stats\Ver1_3\Summary\Service($apiHandler);

@@ -1,7 +1,7 @@
 <?php
-namespace LolAPI;
+namespace LolAPI\Region;
 
-interface Region
+interface RegionInterface
 {
     const REGION_BR = 'BR';
     const REGION_EUNE = 'EUNE';

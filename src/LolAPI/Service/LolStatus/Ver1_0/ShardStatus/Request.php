@@ -1,13 +1,13 @@
 <?php
 namespace LolAPI\Service\LolStatus\Ver1_0\ShardStatus;
 
-use LolAPI\Region;
+use LolAPI\Region\RegionInterface;
 
 class Request
 {
     /**
      * Region
-     * @var Region
+     * @var \LolAPI\Region\RegionInterface
      */
     private $region;
 
@@ -18,7 +18,7 @@ class Request
 
     /**
      * Returns region
-     * @return Region
+     * @return \LolAPI\Region\RegionInterface
      */
     public function getRegion()
     {
