@@ -1,7 +1,7 @@
 <?php
-namespace LolAPI\Platform\Types;
+namespace LolAPI\GameConstants\Platform\Types;
 
-use LolAPI\Platform\PlatformInterface;
+use LolAPI\GameConstants\Platform\PlatformInterface;
 
 class RU implements PlatformInterface
 {

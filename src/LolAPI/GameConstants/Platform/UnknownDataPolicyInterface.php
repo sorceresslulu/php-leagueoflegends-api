@@ -1,5 +1,7 @@
 <?php
-namespace LolAPI\Platform;
+namespace LolAPI\GameConstants\Platform;
+
+use LolAPI\GameConstants\Platform\PlatformInterface;
 
 interface UnknownDataPolicyInterface
 {

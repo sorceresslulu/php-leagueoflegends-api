@@ -1,18 +1,19 @@
 <?php
-namespace LolAPI\Platform;
+namespace LolAPI\GameConstants\Platform;
 
-use LolAPI\Platform\PlatformInterface;
-use LolAPI\Platform\Types\BR1;
-use LolAPI\Platform\Types\EUN1;
-use LolAPI\Platform\Types\EUW1;
-use LolAPI\Platform\Types\KR;
-use LolAPI\Platform\Types\LA1;
-use LolAPI\Platform\Types\LA2;
-use LolAPI\Platform\Types\NA1;
-use LolAPI\Platform\Types\OC1;
-use LolAPI\Platform\Types\TR1;
-use LolAPI\Platform\Types\RU;
-use LolAPI\Platform\Types\Unknown;
+use LolAPI\GameConstants\Platform\PlatformInterface;
+use LolAPI\GameConstants\Platform\Types\BR1;
+use LolAPI\GameConstants\Platform\Types\EUN1;
+use LolAPI\GameConstants\Platform\Types\EUW1;
+use LolAPI\GameConstants\Platform\Types\KR;
+use LolAPI\GameConstants\Platform\Types\LA1;
+use LolAPI\GameConstants\Platform\Types\LA2;
+use LolAPI\GameConstants\Platform\Types\NA1;
+use LolAPI\GameConstants\Platform\Types\OC1;
+use LolAPI\GameConstants\Platform\Types\TR1;
+use LolAPI\GameConstants\Platform\Types\RU;
+use LolAPI\GameConstants\Platform\Types\Unknown;
+use LolAPI\GameConstants\Platform\UnknownDataPolicyInterface;
 
 class PlatformFactory
 {
@@ -64,22 +65,22 @@ class PlatformFactory
             case PlatformInterface::PLATFORM_KR:
                 return new KR();
 
-            case PlatformInterface::PLATFORM_LA1:
+            case \LolAPI\GameConstants\Platform\PlatformInterface::PLATFORM_LA1:
                 return new LA1();
 
-            case PlatformInterface::PLATFORM_LA2:
+            case \LolAPI\GameConstants\Platform\PlatformInterface::PLATFORM_LA2:
                 return new LA2();
 
             case PlatformInterface::PLATFORM_NA1:
                 return new NA1();
 
-            case PlatformInterface::PLATFORM_OC1:
+            case \LolAPI\GameConstants\Platform\PlatformInterface::PLATFORM_OC1:
                 return new OC1();
 
-            case PlatformInterface::PLATFORM_RU:
+            case \LolAPI\GameConstants\Platform\PlatformInterface::PLATFORM_RU:
                 return new RU();
 
-            case PlatformInterface::PLATFORM_TR1:
+            case \LolAPI\GameConstants\Platform\PlatformInterface::PLATFORM_TR1:
                 return new TR1();
         }
     }

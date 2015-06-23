@@ -1,15 +1,15 @@
 <?php
-namespace LolAPI\Platform\UnknownDataPolicy;
+namespace LolAPI\GameConstants\Platform\UnknownDataPolicy;
 
-use LolAPI\Platform\PlatformInterface;
-use LolAPI\Platform\UnknownDataPolicyInterface;
+use LolAPI\GameConstants\Platform\PlatformInterface;
+use LolAPI\GameConstants\Platform\UnknownDataPolicyInterface;
 
 class ThrowOutOfBoundsExceptionPolicy implements UnknownDataPolicyInterface
 {
     /**
      * Throw an OutOfBound exception on unknown platforms
      * @param string $platformStringCode
-     * @return PlatformInterface
+     * @return \LolAPI\GameConstants\Platform\PlatformInterface
      */
     public function getUnknownPlatform($platformStringCode)
     {

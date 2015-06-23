@@ -1,9 +1,9 @@
 <?php
-namespace LolAPI\Platform\UnknownDataPolicy;
+namespace LolAPI\GameConstants\Platform\UnknownDataPolicy;
 
-use LolAPI\Platform\PlatformInterface;
-use LolAPI\Platform\Types\Unknown;
-use LolAPI\Platform\UnknownDataPolicyInterface;
+use LolAPI\GameConstants\Platform\PlatformInterface;
+use LolAPI\GameConstants\Platform\Types\Unknown;
+use LolAPI\GameConstants\Platform\UnknownDataPolicyInterface;
 
 class DefaultPolicy implements UnknownDataPolicyInterface
 {

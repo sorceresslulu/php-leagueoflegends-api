@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Platform;
+namespace LolAPI\GameConstants\Platform;
 
 interface PlatformInterface
 {

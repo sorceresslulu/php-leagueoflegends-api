@@ -13,7 +13,7 @@ use LolAPI\Exceptions\RateLimitExceedException;
 use LolAPI\Exceptions\SpectatorGameInfoNotFoundException;
 use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
-use LolAPI\Platform\PlatformFactory;
+use LolAPI\GameConstants\Platform\PlatformFactory;
 
 class Query
 {
@@ -31,7 +31,7 @@ class Query
 
     /**
      * Platform Factory
-     * @var PlatformFactory
+     * @var \LolAPI\GameConstants\Platform\PlatformFactory
      */
     private $platformFactory;
 

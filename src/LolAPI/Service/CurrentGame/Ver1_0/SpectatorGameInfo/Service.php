@@ -6,7 +6,7 @@ use LolAPI\GameConstants\GameType\GameTypeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
 use LolAPI\Handler\HandlerInterface;
-use LolAPI\Platform\PlatformFactory;
+use LolAPI\GameConstants\Platform\PlatformFactory;
 
 class Service
 {
@@ -18,7 +18,7 @@ class Service
 
     /**
      * Platform Factory
-     * @var PlatformFactory
+     * @var \LolAPI\GameConstants\Platform\PlatformFactory
      */
     private $platformFactory;
 

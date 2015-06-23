@@ -5,7 +5,7 @@ use LolAPI\GameConstants\GameMode\GameModeInterface;
 use LolAPI\GameConstants\GameType\GameTypeInterface;
 use LolAPI\GameConstants\MapId\MapIdInterface;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
-use LolAPI\Platform\PlatformInterface;
+use LolAPI\GameConstants\Platform\PlatformInterface;
 
 class CurrentGameInfo
 {
@@ -17,7 +17,7 @@ class CurrentGameInfo
 
     /**
      * The platform on which the game is being played
-     * @var PlatformInterface
+     * @var \LolAPI\GameConstants\Platform\PlatformInterface
      */
     private $platform;
 
@@ -113,7 +113,7 @@ class CurrentGameInfo
 
     /**
      * Returns platform on which the game is being played
-     * @return PlatformInterface
+     * @return \LolAPI\GameConstants\Platform\PlatformInterface
      */
     public function getPlatform()
     {

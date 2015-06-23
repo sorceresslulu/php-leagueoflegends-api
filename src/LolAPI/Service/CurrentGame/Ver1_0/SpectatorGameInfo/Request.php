@@ -2,7 +2,7 @@
 namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
 use LolAPI\APIKey;
-use LolAPI\Platform\PlatformInterface;
+use LolAPI\GameConstants\Platform\PlatformInterface;
 use LolAPI\Region;
 
 class Request
@@ -27,7 +27,7 @@ class Request
 
     /**
      * Platform ID
-     * @var PlatformInterface
+     * @var \LolAPI\GameConstants\Platform\PlatformInterface
      */
     private $platformId;
 
@@ -68,7 +68,7 @@ class Request
 
     /**
      * Returns platform ID
-     * @return PlatformInterface
+     * @return \LolAPI\GameConstants\Platform\PlatformInterface
      */
     public function getPlatformId()
     {
