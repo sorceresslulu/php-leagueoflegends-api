@@ -1,6 +1,7 @@
 <?php
 namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
+use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
@@ -39,22 +40,31 @@ class Query
     private $matchmakingQueueTypeFactory;
 
     /**
+     * MapId Factory
+     * @var MapIdFactory
+     */
+    private $mapIdFactory;
+
+    /**
      * CurrentGame.SpectatorGameInfo query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
      * @param PlatformFactory $platformFactory
      * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
+     * @param MapIdFactory $mapIdFactory
      */
     public function __construct(
         HandlerInterface $lolAPIHandler,
         Request $request,
         PlatformFactory $platformFactory,
-        MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory)
-    {
+        MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
+        MapIdFactory $mapIdFactory
+    ){
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
         $this->platformFactory = $platformFactory;
         $this->matchmakingQueueTypeFactory =$matchmakingQueueTypeFactory;
+        $this->mapIdFactory = $mapIdFactory;
     }
 
     /**
@@ -91,6 +101,15 @@ class Query
     protected function getMatchmakingQueueTypeFactory()
     {
         return $this->matchmakingQueueTypeFactory;
+    }
+
+    /**
+     * Returns MapId Factory
+     * @return MapIdFactory
+     */
+    protected function getMapIdFactory()
+    {
+        return $this->mapIdFactory;
     }
 
     /**
@@ -139,7 +158,8 @@ class Query
     {
         $queryResultBuilder = new QueryResultBuilder(
             $this->getPlatformFactory(),
-            $this->getMatchmakingQueueTypeFactory()
+            $this->getMatchmakingQueueTypeFactory(),
+            $this->getMapIdFactory()
         );
 
         return $queryResultBuilder->build($response);

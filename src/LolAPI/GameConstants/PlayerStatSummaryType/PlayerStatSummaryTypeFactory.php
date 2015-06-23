@@ -21,7 +21,7 @@ use LolAPI\GameConstants\PlayerStatSummaryType\Types\RankedTeam3x3;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\URF;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\URFBots;
 
-class Factory
+class PlayerStatSummaryTypeFactory
 {
     /**
      * Policy for unknown PlayerStatSummaryType

@@ -29,14 +29,25 @@ class QueryResultBuilder
     private $matchmakingQueueTypeFactory;
 
     /**
+     * MapId Factory
+     * @var MapIdFactory
+     */
+    private $mapIdFactory;
+
+    /**
      * Query Result Builder
      * @param PlatformFactory $platformFactory
      * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
+     * @param MapIdFactory $mapIdFactory
      */
-    public function __construct(PlatformFactory $platformFactory, MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory)
-    {
+    public function __construct(
+        PlatformFactory $platformFactory,
+        MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
+        MapIdFactory $mapIdFactory
+    ){
         $this->platformFactory = $platformFactory;
         $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
+        $this->mapIdFactory = $mapIdFactory;
     }
 
     /**
@@ -55,6 +66,15 @@ class QueryResultBuilder
     protected function getMatchmakingQueueTypeFactory()
     {
         return $this->matchmakingQueueTypeFactory;
+    }
+
+    /**
+     * Returns MapId Factory
+     * @return MapIdFactory
+     */
+    protected function getMapIdFactory()
+    {
+        return $this->mapIdFactory;
     }
 
     /**
@@ -92,7 +112,7 @@ class QueryResultBuilder
             (int) $jsonResponse['gameLength'],
             GameTypeFactory::createFromStringCode($jsonResponse['gameType']),
             GameModeFactory::createFromStringCode($jsonResponse['gameMode']),
-            MapIdFactory::createFromIntCode((int) $jsonResponse['mapId']),
+            $this->getMapIdFactory()->createFromIntCode((int) $jsonResponse['mapId']),
             $this->getMatchmakingQueueTypeFactory()->createFromIntCode(isset($jsonResponse['gameQueueConfigId']) ? (int) $jsonResponse['gameQueueConfigId'] : null),
             $participants,
             $bannedChampions,

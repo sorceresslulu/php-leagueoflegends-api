@@ -22,12 +22,22 @@ class QueryResultBuilder
     private $matchmakingQueueTypeFactory;
 
     /**
+     * MapId Factory
+     * @var MapIdFactory
+     */
+    private $mapIdFactory;
+
+    /**
      * Query Result Builder
      * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
+     * @param MapIdFactory $mapIdFactory
      */
-    public function __construct(MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory)
-    {
+    public function __construct(
+        MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
+        MapIdFactory $mapIdFactory
+    ){
         $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
+        $this->mapIdFactory = $mapIdFactory;
     }
 
     /**
@@ -39,6 +49,20 @@ class QueryResultBuilder
         return $this->matchmakingQueueTypeFactory;
     }
 
+    /**
+     * Returns MapId Factory
+     * @return MapIdFactory
+     */
+    protected function getMapIdFactory()
+    {
+        return $this->mapIdFactory;
+    }
+
+    /**
+     * Build QueryResult
+     * @param ResponseInterface $response
+     * @return QueryResult
+     */
     public function build(ResponseInterface $response)
     {
         $jsonResponse = $response->parseJSON();
@@ -54,6 +78,11 @@ class QueryResultBuilder
         return new QueryResult($response, $featuredGames);
     }
 
+    /**
+     * Build GameList
+     * @param array $jsonGameList
+     * @return array
+     */
     private function buildGameList(array $jsonGameList)
     {
         $games = array();
@@ -65,6 +94,11 @@ class QueryResultBuilder
         return $games;
     }
 
+    /**
+     * Build FeaturedGameInfo
+     * @param array $jsonGame
+     * @return FeaturedGameInfo
+     */
     private function buildFeaturedGameInfo(array $jsonGame)
     {
         $gameMode = GameModeFactory::createFromStringCode($jsonGame['gameMode']);
@@ -82,7 +116,7 @@ class QueryResultBuilder
             $gameType,
             $gameQueue,
             $jsonGame['gameStartTime'],
-            MapIdFactory::createFromIntCode((int) $jsonGame['mapId']),
+            $this->getMapIdFactory()->createFromIntCode((int) $jsonGame['mapId']),
             $jsonGame['platformId'],
             $bannedChampions,
             $observers,
@@ -90,6 +124,11 @@ class QueryResultBuilder
         );
     }
 
+    /**
+     * Build list of banned champions
+     * @param array $jsonBannedChampions
+     * @return array
+     */
     private function buildBannedChampions(array $jsonBannedChampions)
     {
         $bannedChampions = array();
@@ -105,11 +144,21 @@ class QueryResultBuilder
         return $bannedChampions;
     }
 
+    /**
+     * Build Observer
+     * @param array $observers
+     * @return Observer
+     */
     private function buildObservers(array $observers)
     {
         return new Observer($observers['encryptionKey']);
     }
 
+    /**
+     * Build list of participants
+     * @param array $jsonParticipants
+     * @return array
+     */
     private function buildParticipants(array $jsonParticipants)
     {
         $participants = array();

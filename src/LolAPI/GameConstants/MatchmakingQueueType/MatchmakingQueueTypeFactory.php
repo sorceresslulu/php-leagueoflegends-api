@@ -3,7 +3,6 @@ namespace LolAPI\GameConstants\MatchmakingQueueType;
 
 use LolAPI\GameConstants\GameMode\Modes\ARAM;
 use LolAPI\GameConstants\GameMode\Modes\Ascension;
-use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
 use LolAPI\GameConstants\MatchmakingQueue\Normal3x3;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\Bot5x5;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\Bot5x5Beginner;
@@ -33,7 +32,6 @@ use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\RankedSolo5x5;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\RankedTeam3x3;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\RankedTeam5x5;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\SR6x6;
-use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\Unknown;
 use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\URF5x5;
 
 class MatchmakingQueueTypeFactory
@@ -46,9 +44,9 @@ class MatchmakingQueueTypeFactory
 
     /**
      * MatchmakingQueueType Factory
-     * @param $unknownDataPolicy
+     * @param UnknownDataPolicyInterface $unknownDataPolicy
      */
-    public function __construct($unknownDataPolicy)
+    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
     {
         $this->unknownDataPolicy = $unknownDataPolicy;
     }

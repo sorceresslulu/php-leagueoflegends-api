@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\Service\Stats\Ver1_3\Summary;
 
-use LolAPI\GameConstants\PlayerStatSummaryType\Factory;
+use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeFactory;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Exceptions\BadRequestException;
@@ -34,7 +34,7 @@ class Query
 
     /**
      * PlayerStatSummaryType Factory
-     * @var Factory
+     * @var PlayerStatSummaryTypeFactory
      */
     private $playerStatSummaryTypeFactory;
 
@@ -42,9 +42,9 @@ class Query
      * Stats.Summary Query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
-     * @param Factory $playerStatSummaryTypeFactory
+     * @param PlayerStatSummaryTypeFactory $playerStatSummaryTypeFactory
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request, Factory $playerStatSummaryTypeFactory)
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request, PlayerStatSummaryTypeFactory $playerStatSummaryTypeFactory)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
@@ -71,7 +71,7 @@ class Query
 
     /**
      * Returns PlayerStatSummaryType factory
-     * @return Factory
+     * @return PlayerStatSummaryTypeFactory
      */
     protected function getPlayerStatSummaryTypeFactory()
     {
@@ -127,7 +127,7 @@ class Query
      * @param ResponseInterface $response
      * @return QueryResult
      */
-    private function createQueryResult(ResponseInterface $response, Factory $playerStatSummaryTypeFactory)
+    private function createQueryResult(ResponseInterface $response, PlayerStatSummaryTypeFactory $playerStatSummaryTypeFactory)
     {
         $jsonResponse = $response->parseJSON();
         $playerStatSummaries = array();

@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\Service\Stats\Ver1_3\Summary;
 
-use LolAPI\GameConstants\PlayerStatSummaryType\Factory;
+use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeFactory;
 use LolAPI\Handler\HandlerInterface;
 
 class Service
@@ -14,7 +14,7 @@ class Service
 
     /**
      * PlayerStatSummaryType Factory
-     * @var Factory
+     * @var PlayerStatSummaryTypeFactory
      */
     private $playerStatSummaryTypeFactory;
 
@@ -22,7 +22,7 @@ class Service
      * Service
      * @param HandlerInterface $lolAPIHandler
      */
-    function __construct(HandlerInterface $lolAPIHandler, Factory $playerStatSummaryTypeFactory)
+    function __construct(HandlerInterface $lolAPIHandler, PlayerStatSummaryTypeFactory $playerStatSummaryTypeFactory)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->playerStatSummaryTypeFactory = $playerStatSummaryTypeFactory;
@@ -39,7 +39,7 @@ class Service
 
     /**
      * Returns PlayerStatSummaryType Factory
-     * @return Factory
+     * @return PlayerStatSummaryTypeFactory
      */
     protected function getPlayerStatSummaryTypeFactory()
     {

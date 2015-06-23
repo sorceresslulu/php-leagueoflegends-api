@@ -13,20 +13,40 @@ use LolAPI\GameConstants\MapId\Maps\TutorialMap;
 class MapIdFactory
 {
     /**
+     * Policy for unknown MapIds
+     * @var UnknownDataPolicyInterface
+     */
+    private $unknownDataPolicy;
+
+
+    /**
+     * MapId Factory
+     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     */
+    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    {
+        $this->unknownDataPolicy = $unknownDataPolicy;
+    }
+
+    /**
+     * Returns policy for unknown MapIds
+     * @return UnknownDataPolicyInterface
+     */
+    protected function getUnknownDataPolicy()
+    {
+        return $this->unknownDataPolicy;
+    }
+
+    /**
      * Create and returns MapId from integer code
      * @param int $intCode
-     * @param bool $throwExceptionsOnUnknownCode
      * @return MapIdInterface
      */
-    public static function createFromIntCode($intCode, $throwExceptionsOnUnknownCode = false)
+    public function createFromIntCode($intCode)
     {
         switch($intCode) {
             default:
-                if($throwExceptionsOnUnknownCode) {
-                    throw new \OutOfBoundsException(sprintf("Unknown map with ID `%d`", $intCode));
-                }else{
-                    return new Maps\Unknown($intCode);
-                }
+                return $this->getUnknownDataPolicy()->getUnknownMapId($intCode);
 
             case MapIdInterface::MAP_ID_1:
                 return new OriginalSummerSR();
