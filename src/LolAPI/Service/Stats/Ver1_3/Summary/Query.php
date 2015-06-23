@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\Service\Stats\Ver1_3\Summary;
 
-use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeFactory;
+use LolAPI\GameConstants\PlayerStatSummaryType\Factory;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Exceptions\BadRequestException;
@@ -33,21 +33,29 @@ class Query
     private $request;
 
     /**
+     * PlayerStatSummaryType Factory
+     * @var Factory
+     */
+    private $playerStatSummaryTypeFactory;
+
+    /**
      * Stats.Summary Query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
+     * @param Factory $playerStatSummaryTypeFactory
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request, Factory $playerStatSummaryTypeFactory)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
+        $this->playerStatSummaryTypeFactory = $playerStatSummaryTypeFactory;
     }
 
     /**
      * Returns Lol API Handler
      * @return HandlerInterface
      */
-    private function getLolAPIHandler()
+    protected function getLolAPIHandler()
     {
         return $this->lolAPIHandler;
     }
@@ -56,9 +64,18 @@ class Query
      * Returns request
      * @return Request
      */
-    private function getRequest()
+    protected function getRequest()
     {
         return $this->request;
+    }
+
+    /**
+     * Returns PlayerStatSummaryType factory
+     * @return Factory
+     */
+    protected function getPlayerStatSummaryTypeFactory()
+    {
+        return $this->playerStatSummaryTypeFactory;
     }
 
     /**
@@ -88,7 +105,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $this->createQueryResult($response, $this->getPlayerStatSummaryTypeFactory());
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -110,14 +127,14 @@ class Query
      * @param ResponseInterface $response
      * @return QueryResult
      */
-    private function createQueryResult(ResponseInterface $response)
+    private function createQueryResult(ResponseInterface $response, Factory $playerStatSummaryTypeFactory)
     {
         $jsonResponse = $response->parseJSON();
         $playerStatSummaries = array();
 
         foreach($jsonResponse['playerStatSummaries'] as $arrPlayerStatSummaries) {
             $playerStatSummaries[] = new PlayerStatsSummaryDto(
-                PlayerStatSummaryTypeFactory::createFromStringCode($arrPlayerStatSummaries['playerStatSummaryType']),
+                $playerStatSummaryTypeFactory->createFromStringCode($arrPlayerStatSummaries['playerStatSummaryType']),
                 new AggregatedStatsDto($arrPlayerStatSummaries['aggregatedStats']),
                 isset($arrPlayerStatSummaries['losses']) ? $arrPlayerStatSummaries['losses'] : null,
                 $arrPlayerStatSummaries['wins'],

@@ -14,7 +14,6 @@ use LolAPI\GameConstants\PlayerStatSummaryType\Types\ODINUnranked;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\OneForAll5x5;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\RankedTeam5x5;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\SummonerRift6x6;
-use LolAPI\GameConstants\PlayerStatSummaryType\Types\Unknown;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\Unranked;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\Unranked3x3;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\RankedSolo5x5;
@@ -22,17 +21,42 @@ use LolAPI\GameConstants\PlayerStatSummaryType\Types\RankedTeam3x3;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\URF;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\URFBots;
 
-class PlayerStatSummaryTypeFactory
+class Factory
 {
-    public static function createFromStringCode($stringCode, $throwExceptionsOnUnknownCode = false)
+    /**
+     * Policy for unknown PlayerStatSummaryType
+     * @var UnknownDataPolicyInterface
+     */
+    private $unknownDataPolicy;
+
+    /**
+     * PlayerStatSummaryType Factory
+     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     */
+    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    {
+        $this->unknownDataPolicy = $unknownDataPolicy;
+    }
+
+    /**
+     * Returns policy for unknown PlayerStatSummaryType
+     * @return UnknownDataPolicyInterface
+     */
+    protected function getUnknownDataPolicy()
+    {
+        return $this->unknownDataPolicy;
+    }
+
+    /**
+     * Create and returns PlayerStatSummaryType from string code
+     * @param $stringCode
+     * @return PlayerStatSummaryTypeInterface
+     */
+    public function createFromStringCode($stringCode)
     {
         switch($stringCode) {
             default:
-                if($throwExceptionsOnUnknownCode) {
-                    throw new \OutOfBoundsException(sprintf("Unknown PlayerStatSummaryType with code `%s`", $stringCode));
-                }else{
-                    return new Unknown($stringCode);
-                }
+                return $this->getUnknownDataPolicy()->getUnknownPlayStatSummaryType($stringCode);
 
             case PlayerStatSummaryTypeInterface::TYPE_UNRANKED:
                 return new Unranked();

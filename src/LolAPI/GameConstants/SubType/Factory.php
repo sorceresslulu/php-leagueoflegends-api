@@ -24,7 +24,7 @@ use LolAPI\GameConstants\SubType\SubTypes\SR6x6;
 use LolAPI\GameConstants\SubType\SubTypes\URF;
 use LolAPI\GameConstants\SubType\SubTypes\URFBot;
 
-class SubTypeFactory
+class Factory
 {
     /**
      * Policy for unknown SubTypes
