@@ -9,24 +9,42 @@ use LolAPI\GameConstants\GameMode\Modes\KingPoro;
 use LolAPI\GameConstants\GameMode\Modes\ODIN;
 use LolAPI\GameConstants\GameMode\Modes\OneForAll;
 use LolAPI\GameConstants\GameMode\Modes\Tutorial;
-use LolAPI\GameConstants\GameMode\Modes\Unknown;
 
 class GameModeFactory
 {
     /**
+     * Policy for unknown GameMode
+     * @var UnknownDataPolicyInterface
+     */
+    private $unknownDataPolicy;
+
+    /**
+     * GameMode Factory
+     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     */
+    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    {
+        $this->unknownDataPolicy = $unknownDataPolicy;
+    }
+
+    /**
+     * Returns policy for unknown GameMode
+     * @return UnknownDataPolicyInterface
+     */
+    protected function getUnknownDataPolicy()
+    {
+        return $this->unknownDataPolicy;
+    }
+
+    /**
      * Create and returns game mode from string code
      * @param $stringCode
-     * @param bool $throwExceptionsOnUnknownCode
      * @return GameModeInterface
      */
-    public static function createFromStringCode($stringCode, $throwExceptionsOnUnknownCode = false) {
+    public function createFromStringCode($stringCode) {
         switch($stringCode) {
             default:
-                if($throwExceptionsOnUnknownCode) {
-                    throw new \OutOfBoundsException(sprintf("Unknown game mode `%s`", $stringCode));
-                }else{
-                    return new Unknown($stringCode);
-                }
+                return $this->getUnknownDataPolicy()->getUnknownGameMode($stringCode);
 
             case GameModeInterface::GAME_MODE_CLASSIC: return new Classic();
             case GameModeInterface::GAME_MODE_ARAM: return new ARAM();

@@ -35,46 +35,37 @@ class QueryResultBuilder
     private $mapIdFactory;
 
     /**
+     * GameType Factory
+     * @var GameTypeFactory
+     */
+    private $gameTypeFactory;
+
+    /**
+     * GameMode Factory
+     * @var GameModeFactory
+     */
+    private $gameModeFactory;
+
+    /**
      * Query Result Builder
      * @param PlatformFactory $platformFactory
      * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
      * @param MapIdFactory $mapIdFactory
+     * @param GameTypeFactory $gameTypeFactory
+     * @param GameModeFactory $gameModeFactory
      */
     public function __construct(
         PlatformFactory $platformFactory,
         MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
-        MapIdFactory $mapIdFactory
+        MapIdFactory $mapIdFactory,
+        GameTypeFactory $gameTypeFactory,
+        GameModeFactory $gameModeFactory
     ){
         $this->platformFactory = $platformFactory;
         $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
         $this->mapIdFactory = $mapIdFactory;
-    }
-
-    /**
-     * Returns platform factory
-     * @return PlatformFactory
-     */
-    protected function getPlatformFactory()
-    {
-        return $this->platformFactory;
-    }
-
-    /**
-     * Return MatchmakingQueueType Factory
-     * @return MatchmakingQueueTypeFactory
-     */
-    protected function getMatchmakingQueueTypeFactory()
-    {
-        return $this->matchmakingQueueTypeFactory;
-    }
-
-    /**
-     * Returns MapId Factory
-     * @return MapIdFactory
-     */
-    protected function getMapIdFactory()
-    {
-        return $this->mapIdFactory;
+        $this->gameTypeFactory = $gameTypeFactory;
+        $this->gameModeFactory = $gameModeFactory;
     }
 
     /**
@@ -110,8 +101,8 @@ class QueryResultBuilder
             $this->getPlatformFactory()->createFromStringCode($jsonResponse['platformId']),
             (int) $jsonResponse['gameStartTime'],
             (int) $jsonResponse['gameLength'],
-            GameTypeFactory::createFromStringCode($jsonResponse['gameType']),
-            GameModeFactory::createFromStringCode($jsonResponse['gameMode']),
+            $this->getGameTypeFactory()->createFromStringCode($jsonResponse['gameType']),
+            $this->getGameModeFactory()->createFromStringCode($jsonResponse['gameMode']),
             $this->getMapIdFactory()->createFromIntCode((int) $jsonResponse['mapId']),
             $this->getMatchmakingQueueTypeFactory()->createFromIntCode(isset($jsonResponse['gameQueueConfigId']) ? (int) $jsonResponse['gameQueueConfigId'] : null),
             $participants,
@@ -190,5 +181,50 @@ class QueryResultBuilder
         }
 
         return $bannedChampions;
+    }
+
+    /**
+     * Returns platform factory
+     * @return PlatformFactory
+     */
+    protected function getPlatformFactory()
+    {
+        return $this->platformFactory;
+    }
+
+    /**
+     * Return MatchmakingQueueType Factory
+     * @return MatchmakingQueueTypeFactory
+     */
+    protected function getMatchmakingQueueTypeFactory()
+    {
+        return $this->matchmakingQueueTypeFactory;
+    }
+
+    /**
+     * Returns MapId Factory
+     * @return MapIdFactory
+     */
+    protected function getMapIdFactory()
+    {
+        return $this->mapIdFactory;
+    }
+
+    /**
+     * Returns GameType Factory
+     * @return GameTypeFactory
+     */
+    protected function getGameTypeFactory()
+    {
+        return $this->gameTypeFactory;
+    }
+
+    /**
+     * Returns GameMode Factory
+     * @return GameModeFactory
+     */
+    protected function getGameModeFactory()
+    {
+        return $this->gameModeFactory;
     }
 }

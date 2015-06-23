@@ -8,22 +8,42 @@ use LolAPI\GameConstants\GameType\Types\Tutorial;
 class GameTypeFactory
 {
     /**
+     * Policy for unknown GameType
+     * @var UnknownDataPolicyInterface
+     */
+    private $unknownDataPolicy;
+
+    /**
+     * GameType Factory
+     * @param UnknownDataPolicyInterface $unknownDataPolicy
+     */
+    public function __construct(UnknownDataPolicyInterface $unknownDataPolicy)
+    {
+        $this->unknownDataPolicy = $unknownDataPolicy;
+    }
+
+    /**
+     * Returns policy for unknown GameType
+     * @return UnknownDataPolicyInterface
+     */
+    public function getUnknownDataPolicy()
+    {
+        return $this->unknownDataPolicy;
+    }
+
+
+    /**
      * Create and returns GameType from string code
      * @param $stringCode
-     * @param bool $throwExceptionsOnUnknownCode
      * @return GameTypeInterface
      */
-    public static function createFromStringCode($stringCode, $throwExceptionsOnUnknownCode = false)
+    public function createFromStringCode($stringCode)
     {
         $stringCode = strtoupper($stringCode);
 
         switch($stringCode) {
             default:
-                if($throwExceptionsOnUnknownCode) {
-                    throw new \OutOfBoundsException(sprintf("Unknown game type `%s`", $stringCode));
-                }else{
-                    return new Types\Unknown($stringCode);
-                }
+                return $this->getUnknownDataPolicy()->getUnknownGameType($stringCode);
 
             case GameTypeInterface::CUSTOM_GAME: return new Custom();
             case GameTypeInterface::MATCHED_GAME: return new Matched();

@@ -1,6 +1,8 @@
 <?php
 namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
+use LolAPI\GameConstants\GameMode\GameModeFactory;
+use LolAPI\GameConstants\GameType\GameTypeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
 use LolAPI\Handler\HandlerInterface;
@@ -33,6 +35,18 @@ class Service
     private $mapIdFactory;
 
     /**
+     * GameType Factory
+     * @var GameTypeFactory
+     */
+    private $gameTypeFactory;
+
+    /**
+     * GameMode Factory
+     * @var GameModeFactory
+     */
+    private $gameModeFactory;
+
+    /**
      * Service
      * @param HandlerInterface $lolAPIHandler
      * @param PlatformFactory $platformFactory
@@ -43,12 +57,34 @@ class Service
         HandlerInterface $lolAPIHandler,
         PlatformFactory $platformFactory,
         MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
-        MapIdFactory $mapIdFactory
+        MapIdFactory $mapIdFactory,
+        GameTypeFactory $gameTypeFactory,
+        GameModeFactory $gameModeFactory
     ){
         $this->lolAPIHandler = $lolAPIHandler;
         $this->platformFactory = $platformFactory;
         $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
         $this->mapIdFactory = $mapIdFactory;
+        $this->gameTypeFactory = $gameTypeFactory;
+        $this->gameModeFactory = $gameModeFactory;
+    }
+
+    /**
+     * Create and returns CurrentGame.SpectatorGameInfo query
+     * @param Request $request
+     * @return Query
+     */
+    public function createQuery(Request $request)
+    {
+        return new Query(
+            $this->getLolAPIHandler(),
+            $request,
+            $this->getPlatformFactory(),
+            $this->getMatchmakingQueueTypeFactory(),
+            $this->getMapIdFactory(),
+            $this->getGameTypeFactory(),
+            $this->getGameModeFactory()
+        );
     }
 
     /**
@@ -88,18 +124,20 @@ class Service
     }
 
     /**
-     * Create and returns CurrentGame.SpectatorGameInfo query
-     * @param Request $request
-     * @return Query
+     * Returns GameType Factory
+     * @return GameTypeFactory
      */
-    public function createQuery(Request $request)
+    protected function getGameTypeFactory()
     {
-        return new Query(
-            $this->getLolAPIHandler(),
-            $request,
-            $this->getPlatformFactory(),
-            $this->getMatchmakingQueueTypeFactory(),
-            $this->getMapIdFactory()
-        );
+        return $this->gameTypeFactory;
+    }
+
+    /**
+     * Returns GameMode Factory
+     * @return GameModeFactory
+     */
+    protected function getGameModeFactory()
+    {
+        return $this->gameModeFactory;
     }
 }

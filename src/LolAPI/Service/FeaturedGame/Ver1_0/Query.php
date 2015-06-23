@@ -2,6 +2,8 @@
 namespace LolAPI\Service\FeaturedGame\Ver1_0;
 
 use LolAPI\Exceptions\LolAPIException;
+use LolAPI\GameConstants\GameMode\GameModeFactory;
+use LolAPI\GameConstants\GameType\GameTypeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
 use LolAPI\Handler\HandlerInterface;
@@ -38,22 +40,81 @@ class Query
     private $mapIdFactory;
 
     /**
+     * GameType Factory
+     * @var GameTypeFactory
+     */
+    private $gameTypeFactory;
+
+    /**
+     * GameMode Factory
+     * @var GameModeFactory
+     */
+    private $gameModeFactory;
+
+    /**
      * FeaturedGames query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
      * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
      * @param MapIdFactory $mapIdFactory
+     * @param GameTypeFactory $gameTypeFactory
+     * @param GameModeFactory $gameModeFactory
      */
     public function __construct(
         HandlerInterface $lolAPIHandler,
         Request $request,
         MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
-        MapIdFactory $mapIdFactory
+        MapIdFactory $mapIdFactory,
+        GameTypeFactory $gameTypeFactory,
+        GameModeFactory $gameModeFactory
     ){
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
         $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
         $this->mapIdFactory = $mapIdFactory;
+        $this->gameTypeFactory = $gameTypeFactory;
+        $this->gameModeFactory = $gameModeFactory;
+    }
+
+    /**
+     * Execute Query
+     * @return QueryResult
+     * @throws LolAPIException
+     */
+    public function execute()
+    {
+        $request = $this->getRequest();
+
+        $urlParams = array(
+            'api_key' => $request->getApiKey()->toParam()
+        );
+
+        $serviceUrl = sprintf(
+            'https://%s.api.pvp.net/observer-mode/rest/featured',
+            rawurlencode($request->getRegion()->getDomain()),
+            rawurlencode($request->getRegion()->getDirectory())
+        );
+
+        $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
+
+        if($response->isSuccessful()) {
+            $queryResultBuilder = new QueryResultBuilder(
+                $this->getMatchmakingQueueTypeFactory(),
+                $this->getMapIdFactory(),
+                $this->getGameTypeFactory(),
+                $this->getGameModeFactory()
+            );
+
+            return $queryResultBuilder->build($response);
+        }else{
+            switch($response->getHttpCode()) {
+                default:
+                    throw new UnknownResponseException($response->getHttpCode());
+
+                case 403: throw new ForbiddenException($response->getHttpCode());
+                case 429: throw new RateLimitExceedException($response->getHttpCode());
+            }
+        }
     }
 
     /**
@@ -93,41 +154,18 @@ class Query
     }
 
     /**
-     * Execute Query
-     * @return QueryResult
-     * @throws LolAPIException
+     * @return GameTypeFactory
      */
-    public function execute()
+    protected function getGameTypeFactory()
     {
-        $request = $this->getRequest();
+        return $this->gameTypeFactory;
+    }
 
-        $urlParams = array(
-            'api_key' => $request->getApiKey()->toParam()
-        );
-
-        $serviceUrl = sprintf(
-            'https://%s.api.pvp.net/observer-mode/rest/featured',
-            rawurlencode($request->getRegion()->getDomain()),
-            rawurlencode($request->getRegion()->getDirectory())
-        );
-
-        $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
-
-        if($response->isSuccessful()) {
-            $queryResultBuilder = new QueryResultBuilder(
-                $this->getMatchmakingQueueTypeFactory(),
-                $this->getMapIdFactory()
-            );
-
-            return $queryResultBuilder->build($response);
-        }else{
-            switch($response->getHttpCode()) {
-                default:
-                    throw new UnknownResponseException($response->getHttpCode());
-
-                case 403: throw new ForbiddenException($response->getHttpCode());
-                case 429: throw new RateLimitExceedException($response->getHttpCode());
-            }
-        }
+    /**
+     * @return GameModeFactory
+     */
+    protected function getGameModeFactory()
+    {
+        return $this->gameModeFactory;
     }
 }

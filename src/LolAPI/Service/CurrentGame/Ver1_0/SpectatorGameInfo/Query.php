@@ -1,6 +1,8 @@
 <?php
 namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
+use LolAPI\GameConstants\GameMode\GameModeFactory;
+use LolAPI\GameConstants\GameType\GameTypeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
 use LolAPI\Handler\HandlerInterface;
@@ -46,6 +48,18 @@ class Query
     private $mapIdFactory;
 
     /**
+     * GameType Factory
+     * @var GameTypeFactory
+     */
+    private $gameTypeFactory;
+
+    /**
+     * GameMode Factory
+     * @var GameModeFactory
+     */
+    private $gameModeFactory;
+
+    /**
      * CurrentGame.SpectatorGameInfo query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
@@ -58,58 +72,17 @@ class Query
         Request $request,
         PlatformFactory $platformFactory,
         MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
-        MapIdFactory $mapIdFactory
+        MapIdFactory $mapIdFactory,
+        GameTypeFactory $gameTypeFactory,
+        GameModeFactory $gameModeFactory
     ){
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
         $this->platformFactory = $platformFactory;
         $this->matchmakingQueueTypeFactory =$matchmakingQueueTypeFactory;
         $this->mapIdFactory = $mapIdFactory;
-    }
-
-    /**
-     * Returns Lol API Handler
-     * @return HandlerInterface
-     */
-    protected function getLolAPIHandler()
-    {
-        return $this->lolAPIHandler;
-    }
-
-    /**
-     * Returns request
-     * @return Request
-     */
-    protected function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * Returns platform factory
-     * @return PlatformFactory
-     */
-    protected function getPlatformFactory()
-    {
-        return $this->platformFactory;
-    }
-
-    /**
-     * Returns MatchmakingQueueType Factory
-     * @return MatchmakingQueueTypeFactory
-     */
-    protected function getMatchmakingQueueTypeFactory()
-    {
-        return $this->matchmakingQueueTypeFactory;
-    }
-
-    /**
-     * Returns MapId Factory
-     * @return MapIdFactory
-     */
-    protected function getMapIdFactory()
-    {
-        return $this->mapIdFactory;
+        $this->gameTypeFactory = $gameTypeFactory;
+        $this->gameModeFactory = $gameModeFactory;
     }
 
     /**
@@ -159,9 +132,74 @@ class Query
         $queryResultBuilder = new QueryResultBuilder(
             $this->getPlatformFactory(),
             $this->getMatchmakingQueueTypeFactory(),
-            $this->getMapIdFactory()
+            $this->getMapIdFactory(),
+            $this->getGameTypeFactory(),
+            $this->getGameModeFactory()
         );
 
         return $queryResultBuilder->build($response);
+    }
+
+    /**
+     * Returns Lol API Handler
+     * @return HandlerInterface
+     */
+    protected function getLolAPIHandler()
+    {
+        return $this->lolAPIHandler;
+    }
+
+    /**
+     * Returns request
+     * @return Request
+     */
+    protected function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * Returns platform factory
+     * @return PlatformFactory
+     */
+    protected function getPlatformFactory()
+    {
+        return $this->platformFactory;
+    }
+
+    /**
+     * Returns MatchmakingQueueType Factory
+     * @return MatchmakingQueueTypeFactory
+     */
+    protected function getMatchmakingQueueTypeFactory()
+    {
+        return $this->matchmakingQueueTypeFactory;
+    }
+
+    /**
+     * Returns MapId Factory
+     * @return MapIdFactory
+     */
+    protected function getMapIdFactory()
+    {
+        return $this->mapIdFactory;
+    }
+
+    /**
+     * Returns GameType Factory
+     * @return GameTypeFactory
+     */
+    protected function getGameTypeFactory()
+    {
+        return $this->gameTypeFactory;
+    }
+
+    /**
+     * Returns GameMode Factory
+     * @return GameModeFactory
+     */
+    protected function getGameModeFactory()
+    {
+        return $this->gameModeFactory;
     }
 }
