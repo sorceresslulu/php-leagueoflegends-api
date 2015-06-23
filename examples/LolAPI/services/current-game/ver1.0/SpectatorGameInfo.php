@@ -3,11 +3,35 @@ require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
 
 $config = getConfig();
 $apiKey = new \LolAPI\APIKey($config['apiKey']);
-$region = \LolAPI\Region\RegionFactory::getRegionByStringCode($config['region']);
+$regionFactory = new \LolAPI\Region\RegionFactory(new \LolAPI\Region\UnknownRegionPolicy\ThrowUnknownRegionExceptionPolicy());
+$region = $regionFactory->getRegionByStringCode($config['region']);
 $platformFactory = new \LolAPI\GameConstants\Platform\PlatformFactory(new \LolAPI\GameConstants\Platform\UnknownDataPolicy\DefaultPolicy());
 
+$matchmakingQueueTypeFactory = new \LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory(
+    new \LolAPI\GameConstants\MatchmakingQueueType\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+);
+
+$mapIdFactory = new \LolAPI\GameConstants\MapId\MapIdFactory(
+    new \LolAPI\GameConstants\MapId\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+);
+
+$gameTypeFactory = new \LolAPI\GameConstants\GameType\GameTypeFactory(
+    new \LolAPI\GameConstants\GameType\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+);
+
+$gameModeFactory = new \LolAPI\GameConstants\GameMode\GameModeFactory(
+    new \LolAPI\GameConstants\GameMode\UnknownDataPolicy\ThrowOutOfBoundsExceptionPolicy()
+);
+
 $apiHandler = new LolAPI\Handler\CURL\Handler();
-$service = new LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\Service($apiHandler, $platformFactory);
+$service = new LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\Service(
+    $apiHandler,
+    $platformFactory,
+    $matchmakingQueueTypeFactory,
+    $mapIdFactory,
+    $gameTypeFactory,
+    $gameModeFactory
+);
 
 function processQueryResult(LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\QueryResult $queryResult)
 {

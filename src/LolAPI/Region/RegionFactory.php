@@ -51,7 +51,7 @@ class RegionFactory
             throw new \InvalidArgumentException;
         }
 
-        switch(strtolower($regionStringCode)) {
+        switch(strtoupper($regionStringCode)) {
             default:
                 return $this->getUnknownRegionPolicy()->getUnknownRegion($regionStringCode);
 

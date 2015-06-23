@@ -1,7 +1,7 @@
 <?php
-namespace LolAPI\GameConstants\MatchmakingQueue\QueueTypes;
+namespace LolAPI\GameConstants\MatchmakingQueueType\QueueTypes;
 
-use LolAPI\GameConstants\MatchmakingQueue\MatchmakingQueueInterface;
+use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
 
 class RankedPremade3x3 implements MatchmakingQueueInterface
 {

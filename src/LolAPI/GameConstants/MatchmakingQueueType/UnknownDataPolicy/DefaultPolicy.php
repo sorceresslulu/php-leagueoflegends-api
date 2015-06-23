@@ -1,8 +1,8 @@
 <?php
-namespace LolAPI\GameConstants\MatchmakingQueue\UnknownDataPolicy;
+namespace LolAPI\GameConstants\MatchmakingQueueType\UnknownDataPolicy;
 
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
-use LolAPI\GameConstants\MatchmakingQueue\QueueTypes\Unknown;
+use LolAPI\GameConstants\MatchmakingQueueType\QueueTypes\Unknown;
 use LolAPI\GameConstants\MatchmakingQueueType\UnknownDataPolicyInterface;
 
 class DefaultPolicy implements UnknownDataPolicyInterface

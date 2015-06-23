@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\GameConstants\MatchmakingQueue\QueueTypes;
+namespace LolAPI\GameConstants\MatchmakingQueueType\QueueTypes;
 
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
 

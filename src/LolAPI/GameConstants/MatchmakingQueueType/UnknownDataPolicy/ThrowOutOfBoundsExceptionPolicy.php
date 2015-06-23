@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\GameConstants\MatchmakingQueue\UnknownDataPolicy;
+namespace LolAPI\GameConstants\MatchmakingQueueType\UnknownDataPolicy;
 
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueInterface;
 use LolAPI\GameConstants\MatchmakingQueueType\UnknownDataPolicyInterface;
