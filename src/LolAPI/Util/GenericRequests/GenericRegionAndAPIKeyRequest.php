@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Component\Request;
+namespace LolAPI\Util\GenericRequests;
 
 use LolAPI\APIKey;
 use LolAPI\Region\RegionInterface;
