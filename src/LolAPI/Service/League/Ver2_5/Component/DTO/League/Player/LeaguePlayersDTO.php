@@ -7,7 +7,7 @@ class LeaguePlayersDTO extends AbstractLeagueDTO
 {
     /**
      * Returns entries
-     * @return LeaguePlayerEntryDTO
+     * @return LeaguePlayerEntryDTO[]
      */
     public function getEntries()
     {

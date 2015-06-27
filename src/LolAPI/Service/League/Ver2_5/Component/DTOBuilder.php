@@ -54,34 +54,53 @@ class DTOBuilder
     }
 
     /**
+     * Builds and returns LeagueDTO
+     * @param array $jsonLeagueDTO
+     * @return LeaguePlayersDTO|LeagueTeamsDTO
+     * @throws \Exception
+     */
+    public function buildLeagueDTO(array $jsonLeagueDTO)
+    {
+        $leagueQueueType = $this->getLeagueQueueTypeFactory()->createLQTypeByStringCode($jsonLeagueDTO['queue']);
+
+        if($leagueQueueType->forSolo()) {
+            return $this->buildLeaguePlayerDTO($jsonLeagueDTO);
+        }else if($leagueQueueType->forTeam()) {
+            return $this->buildLeagueTeamDTO($jsonLeagueDTO);
+        }else{
+            throw new \Exception(sprintf("No idea how to build DTO for league queue type `%s`", $leagueQueueType->getCode()));
+        }
+    }
+
+    /**
      * Builds and returns LeagueDTO (Team requests)
-     * @param array $jsonResponse
+     * @param array $jsonLeagueDTO
      * @return LeagueTeamsDTO
      */
-    public function buildLeagueTeamDTO(array $jsonResponse)
+    private function buildLeagueTeamDTO(array $jsonLeagueDTO)
     {
         return new LeagueTeamsDTO(
-            $jsonResponse['name'],
-            isset($jsonResponse['participantId']) ? $jsonResponse['participantId'] : null,
-            $this->getLeagueQueueTypeFactory()->createLQTypeByStringCode($jsonResponse['queue']),
-            $this->getLeagueTierFactory()->createLeagueTierByStringCode($jsonResponse['tier']),
-            $this->buildTeamEntries(isset($jsonResponse['entries']) ? $jsonResponse['entries'] : array())
+            $jsonLeagueDTO['name'],
+            isset($jsonLeagueDTO['participantId']) ? $jsonLeagueDTO['participantId'] : null,
+            $this->getLeagueQueueTypeFactory()->createLQTypeByStringCode($jsonLeagueDTO['queue']),
+            $this->getLeagueTierFactory()->createLeagueTierByStringCode($jsonLeagueDTO['tier']),
+            $this->buildTeamEntries(isset($jsonLeagueDTO['entries']) ? $jsonLeagueDTO['entries'] : array())
         );
     }
 
     /**
      * Builds and returns LeagueDTO (player requests)
-     * @param array $jsonResponse
+     * @param array $jsonLeagueDTO
      * @return LeaguePlayersDTO
      */
-    public function buildLeaguePlayerDTO(array $jsonResponse)
+    private function buildLeaguePlayerDTO(array $jsonLeagueDTO)
     {
         return new LeaguePlayersDTO(
-            $jsonResponse['name'],
-            isset($jsonResponse['participantId']) ? $jsonResponse['participantId'] : null,
-            $this->getLeagueQueueTypeFactory()->createLQTypeByStringCode($jsonResponse['queue']),
-            $this->getLeagueTierFactory()->createLeagueTierByStringCode($jsonResponse['tier']),
-            $this->buildPlayerEntries(isset($jsonResponse['entries']) ? $jsonResponse['entries'] : array())
+            $jsonLeagueDTO['name'],
+            isset($jsonLeagueDTO['participantId']) ? $jsonLeagueDTO['participantId'] : null,
+            $this->getLeagueQueueTypeFactory()->createLQTypeByStringCode($jsonLeagueDTO['queue']),
+            $this->getLeagueTierFactory()->createLeagueTierByStringCode($jsonLeagueDTO['tier']),
+            $this->buildPlayerEntries(isset($jsonLeagueDTO['entries']) ? $jsonLeagueDTO['entries'] : array())
         );
     }
 
@@ -95,7 +114,7 @@ class DTOBuilder
         $entries = array();
 
         foreach($jsonEntries as $jsonEntry) {
-            $jsonEntry[] = new LeagueTeamEntryDTO(
+            $entries[] = new LeagueTeamEntryDTO(
                 $jsonEntry['division'],
                 (bool) $jsonEntry['isFreshBlood'],
                 (bool) $jsonEntry['isHotStreak'],
@@ -131,7 +150,7 @@ class DTOBuilder
         $entries = array();
 
         foreach($jsonEntries as $jsonEntry) {
-            $jsonEntry[] = new LeaguePlayerEntryDTO(
+            $entries[] = new LeaguePlayerEntryDTO(
                 $jsonEntry['division'],
                 (bool) $jsonEntry['isFreshBlood'],
                 (bool) $jsonEntry['isHotStreak'],

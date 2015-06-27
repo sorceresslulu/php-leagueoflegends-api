@@ -28,4 +28,22 @@ class UnknownLQType implements LeagueQueueTypeInterface
     {
         return $this->leagueQueueTypeCode;
     }
+
+    /**
+     * Returns true if this league queue type for team queue
+     * @return bool
+     */
+    public function forTeam()
+    {
+        return true;
+    }
+
+    /**
+     * Returns true if this league queue type for solo queue
+     * @return bool
+     */
+    public function forSolo()
+    {
+        return false;
+    }
 }

@@ -49,7 +49,7 @@ abstract class AbstractLeagueDTO
      * @param LeagueTierInterface $tier
      * @param array $entries
      */
-    public function __construct($name, $participantId, LeagueQueueTypeInterface $queue, LeagueTierInterface $tier, $entries)
+    public function __construct($name, $participantId, LeagueQueueTypeInterface $queue, LeagueTierInterface $tier, array $entries)
     {
         $this->name = $name;
         $this->participantId = $participantId;
@@ -101,4 +101,13 @@ abstract class AbstractLeagueDTO
     }
 
     abstract public function getEntries();
+
+    /**
+     * Returns true if league has entries
+     * @return bool
+     */
+    public function hasEntries()
+    {
+        return count($this->entries) > 0;
+    }
 }

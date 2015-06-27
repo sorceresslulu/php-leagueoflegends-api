@@ -12,4 +12,16 @@ interface LeagueQueueTypeInterface
      * @return string
      */
     public function getCode();
+
+    /**
+     * Returns true if this league queue type for team queue
+     * @return bool
+     */
+    public function forTeam();
+
+    /**
+     * Returns true if this league queue type for solo queue
+     * @return bool
+     */
+    public function forSolo();
 }
