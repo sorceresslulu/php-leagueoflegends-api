@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
-require_once __DIR__ . '/lib.php';
+require_once __DIR__ . '/_lib.php';
 
 $config = getConfig();
 $apiKey = new \LolAPI\APIKey($config['apiKey']);
