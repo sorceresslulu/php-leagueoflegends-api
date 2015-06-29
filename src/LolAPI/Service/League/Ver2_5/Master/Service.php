@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\League\Ver2_5\BySummonerIds;
+namespace LolAPI\Service\League\Ver2_5\Master;
 
 use LolAPI\GameConstants\LeagueQueueType\LeagueQueueTypeFactory;
 use LolAPI\GameConstants\LeagueTier\LeagueTierFactory;
@@ -27,7 +27,7 @@ class Service
     private $leagueTierFactory;
 
     /**
-     * League.BySummonerIds service
+     * League.Master service
      * @param HandlerInterface $lolAPIHandler
      * @param LeagueQueueTypeFactory $leagueQueueTypeFactory
      * @param LeagueTierFactory $leagueTierFactory
@@ -43,7 +43,7 @@ class Service
     }
 
     /**
-     * Crewate and returns new League.BySummonerIds query
+     * Crewate and returns new League.Master query
      * @param Request $request
      * @return Query
      */
@@ -85,6 +85,4 @@ class Service
     {
         return $this->leagueTierFactory;
     }
-
-
 }
