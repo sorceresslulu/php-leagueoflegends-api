@@ -4,7 +4,7 @@ namespace LolAPI\Util\GenericRequests;
 use LolAPI\APIKey;
 use LolAPI\Region\RegionInterface;
 
-class GenericTeamsIdsRequest
+class GenericTeamIdsRequest
 {
     /**
      * API Keys

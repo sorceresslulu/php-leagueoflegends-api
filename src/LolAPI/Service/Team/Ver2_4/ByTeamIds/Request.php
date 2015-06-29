@@ -1,8 +1,8 @@
 <?php
 namespace LolAPI\Service\Team\Ver2_4\ByTeamIds;
 
-use LolAPI\Util\GenericRequests\GenericTeamsIdsRequest;
+use LolAPI\Util\GenericRequests\GenericTeamIdsRequest;
 
-class Request extends GenericTeamsIdsRequest
+class Request extends GenericTeamIdsRequest
 {
 }
