@@ -103,7 +103,7 @@ class Query
      */
     private function createQueryResult(ResponseInterface $response)
     {
-        $jsonResponse = $response->parseJSON();
+        $jsonResponse = $response->parse();
         $runePagesDTOs = array();
 
         foreach($jsonResponse as $summonerId => $arrRunePages) {

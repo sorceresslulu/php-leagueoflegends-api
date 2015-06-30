@@ -97,7 +97,7 @@ class Query
      */
     public function createQueryResult(ResponseInterface $response)
     {
-        $jsonResponse = $response->parseJSON();
+        $jsonResponse = $response->parse();
         $services = array();
 
         foreach($jsonResponse['services'] as $arrService) {

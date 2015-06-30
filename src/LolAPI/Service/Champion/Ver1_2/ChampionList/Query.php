@@ -111,7 +111,7 @@ class Query
      * @return QueryResult
      */
     private function createQueryResult(ResponseInterface $response) {
-        $jsonResponse = $response->parseJSON();
+        $jsonResponse = $response->parse();
         $champions = array();
 
         foreach($jsonResponse['champions'] as $champion) {

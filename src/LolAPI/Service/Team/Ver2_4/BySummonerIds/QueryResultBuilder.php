@@ -40,7 +40,7 @@ class QueryResultBuilder
      */
     public function build(ResponseInterface $response)
     {
-        $jsonResponse = $response->parseJSON();
+        $jsonResponse = $response->parse();
         $teamDTOBuilder = new TeamDTOBuilder($this->getGameModeFactory(), $this->getMapIdFactory());
         $summonerDTOs = array();
 

@@ -103,7 +103,7 @@ class Query
      * @return QueryResult
      */
     private function createQueryResult(ResponseInterface $response) {
-        $jsonResponse = $response->parseJSON();
+        $jsonResponse = $response->parse();
 
         return new QueryResult($response, new ChampionDTO(
             (int) $jsonResponse['id'],

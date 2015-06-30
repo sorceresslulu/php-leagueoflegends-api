@@ -96,7 +96,7 @@ class Query
      */
     protected function createQueryResult(ResponseInterface $response)
     {
-        $jsonResponse = $response->parseJSON();
+        $jsonResponse = $response->parse();
         $teamDTOs = array();
 
         foreach($jsonResponse as $teamId => $jsonLeagues) {

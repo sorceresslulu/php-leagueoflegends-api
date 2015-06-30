@@ -75,7 +75,7 @@ class QueryResultBuilder
      */
     public function build(ResponseInterface $response)
     {
-        return new QueryResult($response, $this->buildCurrentGameInfo($response->parseJSON()));
+        return new QueryResult($response, $this->buildCurrentGameInfo($response->parse()));
     }
 
     /**

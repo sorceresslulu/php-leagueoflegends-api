@@ -129,7 +129,7 @@ class Query
      */
     private function createQueryResult(ResponseInterface $response, PlayerStatSummaryTypeFactory $playerStatSummaryTypeFactory)
     {
-        $jsonResponse = $response->parseJSON();
+        $jsonResponse = $response->parse();
         $playerStatSummaries = array();
 
         foreach($jsonResponse['playerStatSummaries'] as $arrPlayerStatSummaries) {

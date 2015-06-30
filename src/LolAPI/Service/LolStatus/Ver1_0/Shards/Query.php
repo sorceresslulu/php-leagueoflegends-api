@@ -65,7 +65,7 @@ class Query
      */
     private function createQueryResult(ResponseInterface $response)
     {
-        $jsonResponse = $response->parseJSON();
+        $jsonResponse = $response->parse();
         $shards = array();
 
         foreach($jsonResponse as $arrShard) {

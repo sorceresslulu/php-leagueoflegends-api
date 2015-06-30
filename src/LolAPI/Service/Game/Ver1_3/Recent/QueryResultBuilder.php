@@ -6,7 +6,6 @@ use LolAPI\GameConstants\GameType\GameTypeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\SubType\SubTypeFactory;
 use LolAPI\GameConstants\TeamSide\TeamSideFactory;
-use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\Game\Ver1_3\Recent\QueryResult\GameDTO;
 use LolAPI\Service\Game\Ver1_3\Recent\QueryResult\PlayerDTO;
@@ -61,7 +60,7 @@ class QueryResultBuilder
 
     public function build(ResponseInterface $response)
     {
-        $jsonResponse = $response->parseJSON();
+        $jsonResponse = $response->parse();
         $games = array();
 
         foreach($jsonResponse['games'] as $jsonGame) {

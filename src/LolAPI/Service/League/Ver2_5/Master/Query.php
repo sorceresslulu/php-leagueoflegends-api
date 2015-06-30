@@ -96,7 +96,7 @@ class Query
      */
     protected function  createQueryResult(ResponseInterface $response)
     {
-        $leagueDTO = $this->getDTOBuilder()->buildLeagueDTO($response->parseJSON());
+        $leagueDTO = $this->getDTOBuilder()->buildLeagueDTO($response->parse());
 
         return new QueryResult($response, $leagueDTO->getQueue(), $leagueDTO);
     }

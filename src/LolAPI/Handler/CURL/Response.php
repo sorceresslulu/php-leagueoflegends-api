@@ -22,7 +22,7 @@ class Response implements ResponseInterface
      * @param $httpCode
      * @param $response
      */
-    function __construct($httpCode, $response)
+    public function __construct($httpCode, $response)
     {
         $this->httpCode = $httpCode;
         $this->response = $response;
@@ -47,11 +47,11 @@ class Response implements ResponseInterface
     }
 
     /**
-     * Returns JSON
+     * Returns response as array
      * @return array
      * @throws \Exception
      */
-    public function parseJSON()
+    public function parse()
     {
         $result = json_decode($this->getResponse(), true);
 

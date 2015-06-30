@@ -75,7 +75,7 @@ class QueryResultBuilder
      */
     public function build(ResponseInterface $response)
     {
-        $jsonResponse = $response->parseJSON();
+        $jsonResponse = $response->parse();
 
         if(isset($jsonResponse['gameList'])) {
             $gameList = $this->buildGameList($jsonResponse['gameList']);
