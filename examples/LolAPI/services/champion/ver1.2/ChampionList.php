@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\Champion\Ver1_2\ChampionList\DTOBuilder;
+
 $testFunc = function() {
     $config = getConfig();
     $apiKey = new \LolAPI\APIKey($config['apiKey']);
@@ -9,8 +11,14 @@ $testFunc = function() {
     $service = new LolAPI\Service\Champion\Ver1_2\ChampionList\Service($apiHandler);
     $request = new LolAPI\Service\Champion\Ver1_2\ChampionList\Request($apiKey, $regionEndpoint, true);
 
-    $processRequest = function(LolAPI\Service\Champion\Ver1_2\ChampionList\QueryResult $response) {
-        foreach($response->getChampionDTOs() as $championDTO) {
+    $query = $service->createQuery($request);
+    $response = $query->execute();
+
+    $dtoBuilder = new DTOBuilder();
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processRequest = function(\LolAPI\Service\Champion\Ver1_2\ChampionList\DTO\ChampionListDTO $championDTOs) {
+        foreach($championDTOs->getChampionDTOs() as $championDTO) {
             println(sprintf("Champion #%d", $championDTO->getId()));
             println(sprintf("Active: %s", ($championDTO->isActive() ? 'true' : 'false')), 1);
             println(sprintf("BotEnabled: %s", ($championDTO->isBotEnabled() ? 'true' : 'false')), 1);
@@ -20,10 +28,7 @@ $testFunc = function() {
         }
     };
 
-    $query = $service->createQuery($request);
-    $queryResult = $query->execute();
-
-    $processRequest($queryResult);
+    $processRequest($dto);
 };
 
 if (!count(debug_backtrace())) {

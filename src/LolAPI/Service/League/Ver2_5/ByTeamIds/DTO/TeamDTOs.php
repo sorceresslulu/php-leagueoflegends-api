@@ -1,17 +1,17 @@
 <?php
-namespace LolAPI\Service\League\Ver2_5\ByTeamIds;
+namespace LolAPI\Service\League\Ver2_5\ByTeamIds\DTO;
 
 class TeamDTOs
 {
     /**
      * Team DTOs
-     * @var array
+     * @var TeamDTO[]
      */
     private $teamDTOs = array();
 
     /**
      * Team DTOs
-     * @param array $teamDTOs
+     * @param TeamDTO[] $teamDTOs
      */
     public function __construct(array $teamDTOs)
     {
@@ -20,7 +20,7 @@ class TeamDTOs
 
     /**
      * Returns team DTOs
-     * @return array
+     * @return TeamDTO[]
      */
     public function getTeamDTOs()
     {

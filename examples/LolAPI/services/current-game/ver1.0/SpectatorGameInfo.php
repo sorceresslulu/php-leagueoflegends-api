@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -24,19 +26,10 @@ $testFunc = function()
     );
 
     $apiHandler = new LolAPI\Handler\CURL\Handler();
-    $service = new LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\Service(
-        $apiHandler,
-        $platformFactory,
-        $matchmakingQueueTypeFactory,
-        $mapIdFactory,
-        $gameTypeFactory,
-        $gameModeFactory
-    );
+    $service = new LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\Service($apiHandler);
 
-    $processQueryResult = function(LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\QueryResult $queryResult)
+    $processQueryResult = function(LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\DTO\CurrentGameInfoDTO $currentGameInfo)
     {
-        $currentGameInfo = $queryResult->getCurrentGameInfo();
-
         println(sprintf("GameId: %s", $currentGameInfo->getGameId()), 1);
         println(sprintf("GameStartTime: %s", $currentGameInfo->getGameStartTime()), 1);
         println(sprintf("GameLength: %s", $currentGameInfo->getGameLength()), 1);
@@ -80,19 +73,21 @@ $testFunc = function()
         }
     };
 
-    $request = new LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\Request(
-        $apiKey,
-        $regionEndpoint,
-        $config['summonerId'],
-        $platformFactory->createFromStringCode($config['platformId'])
-    );
-
-    $query = $service->createQuery($request);
-
     try {
-        $queryResult = $query->execute();
+        $request = new LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\Request(
+            $apiKey,
+            $regionEndpoint,
+            $config['summonerId'],
+            $platformFactory->createFromStringCode($config['platformId'])
+        );
 
-        $processQueryResult($queryResult);
+        $query = $service->createQuery($request);
+        $response = $query->execute();
+
+        $dtoBuilder = new DTOBuilder($platformFactory, $matchmakingQueueTypeFactory, $mapIdFactory, $gameTypeFactory, $gameModeFactory);
+        $dto = $dtoBuilder->buildDTO($response);
+
+        $processQueryResult($dto);
     }catch(\LolAPI\Exceptions\SpectatorGameInfoNotFoundException $e) {
         echo "no current game available!";
     }

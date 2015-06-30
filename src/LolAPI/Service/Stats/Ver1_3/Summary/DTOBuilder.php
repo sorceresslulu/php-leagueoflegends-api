@@ -16,6 +16,16 @@ class DTOBuilder
     private $playerStatSummaryTypeFactory;
 
     /**
+     * Stats.Summary DTO builder
+     * @param $playerStatSummaryTypeFactory
+     */
+    public function __construct($playerStatSummaryTypeFactory)
+    {
+        $this->playerStatSummaryTypeFactory = $playerStatSummaryTypeFactory;
+    }
+
+
+    /**
      * Builds and returns Stats.Summary DTO
      * @param ResponseInterface $response
      * @return PlayerStatsSummaryListDto

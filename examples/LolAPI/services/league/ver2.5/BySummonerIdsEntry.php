@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\League\Ver2_5\BySummonerIdsEntry\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -15,21 +17,24 @@ $testFunc = function()
     );
 
     $apiHandler = new LolAPI\Handler\CURL\Handler();
-    $service = new LolAPI\Service\League\Ver2_5\BySummonerIdsEntry\Service(
-        $apiHandler,
-        $leagueQueueTypeFactory,
-        $leagueTierFactory
-    );
+    $service = new LolAPI\Service\League\Ver2_5\BySummonerIdsEntry\Service($apiHandler);
 
     $request = new LolAPI\Service\League\Ver2_5\BySummonerIdsEntry\Request(
         $apiKey, $regionEndpoint, array($config['summonerId'], $config['summonerIdWithTeam'])
     );
     $query = $service->createQuery($request);
-    $queryResult = $query->execute();
+    $response = $query->execute();
 
-    $processQueryResult = function(LolAPI\Service\League\Ver2_5\BySummonerIdsEntry\QueryResult $queryResult)
+    $dtoBuilder = new DTOBuilder(new \LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder(
+        $leagueQueueTypeFactory,
+        $leagueTierFactory
+    ));
+
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(LolAPI\Service\League\Ver2_5\BySummonerIdsEntry\DTO\SummonerDTOs $dto)
     {
-        foreach ($queryResult->getSummonerDTOs() as $summonerDTO) {
+        foreach ($dto->getSummonerDTOs() as $summonerDTO) {
             println(sprintf("Summoner DTO (%d)", $summonerDTO->getSummonerId()));
 
             foreach ($summonerDTO->getLeaguePlayerDTOs() as $leagueDTO) {
@@ -42,7 +47,7 @@ $testFunc = function()
         }
     };
 
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

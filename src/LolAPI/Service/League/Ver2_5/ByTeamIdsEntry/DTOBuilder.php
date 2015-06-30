@@ -3,6 +3,7 @@ namespace LolAPI\Service\League\Ver2_5\ByTeamIdsEntry;
 
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\League\Ver2_5\ByTeamIdsEntry\DTO\TeamDTO;
+use LolAPI\Service\League\Ver2_5\ByTeamIdsEntry\DTO\TeamDTOs;
 use LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder;
 
 class DTOBuilder
@@ -28,7 +29,7 @@ class DTOBuilder
      * @return TeamDTOs
      * @throws \Exception
      */
-    public function builderDTO(ResponseInterface $response)
+    public function buildDTO(ResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $teamDTOs = array();

@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\Stats\Ver1_3\BySummoner\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -9,12 +11,19 @@ $testFunc = function()
     $apiHandler = new LolAPI\Handler\CURL\Handler();
     $service = new LolAPI\Service\Stats\Ver1_3\BySummoner\Service($apiHandler);
 
-    $processQueryResult = function(LolAPI\Service\Stats\Ver1_3\BySummoner\QueryResult $queryResult)
-    {
-        println(sprintf("SummonerID: %d", $queryResult->getRankedStatsDTO()->getSummonerId()));
-        println(sprintf("ModifyDate: %d", $queryResult->getRankedStatsDTO()->getModifyDate()));
+    $request = new LolAPI\Service\Stats\Ver1_3\BySummoner\Request($apiKey, $regionEndpoint, $config['summonerId']);
+    $query = $service->createQuery($request);
+    $response = $query->execute();
 
-        foreach ($queryResult->getRankedStatsDTO()->getChampions() as $champion) {
+    $dtoBuilder = new DTOBuilder();
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\RankedStatsDto $dto)
+    {
+        println(sprintf("SummonerID: %d", $dto->getSummonerId()));
+        println(sprintf("ModifyDate: %d", $dto->getModifyDate()));
+
+        foreach ($dto->getChampions() as $champion) {
             println(sprintf("ChampionId: %s", $champion->getChampionId()), 1);
             println("Stats", 1);
 
@@ -26,11 +35,7 @@ $testFunc = function()
         }
     };
 
-    $request = new LolAPI\Service\Stats\Ver1_3\BySummoner\Request($apiKey, $regionEndpoint, $config['summonerId']);
-    $query = $service->createQuery($request);
-    $queryResult = $query->execute();
-
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\Summoner\Ver1_4\ByIds\DTO;
+namespace LolAPI\Service\Summoner\Ver1_4\ByNames\DTO;
 
 class ByNamesDTO
 {

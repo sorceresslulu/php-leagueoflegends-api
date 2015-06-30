@@ -27,11 +27,11 @@ class DTOBuilder
      * @param ResponseInterface $response
      * @return MasterDTO
      */
-    public function builderDTO(ResponseInterface $response)
+    public function buildDTO(ResponseInterface $response)
     {
         $leagueDTO = $this->getLeagueDTOBuilder()->buildLeagueDTO($response->parse());
 
-        return new MasterDTO($response, $leagueDTO->getQueue(), $leagueDTO);
+        return new MasterDTO($leagueDTO->getQueue(), $leagueDTO);
     }
 
     /**

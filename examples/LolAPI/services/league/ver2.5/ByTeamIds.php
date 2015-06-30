@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\League\Ver2_5\ByTeamIds\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -15,21 +17,23 @@ $testFunc = function()
     );
 
     $apiHandler = new LolAPI\Handler\CURL\Handler();
-    $service = new LolAPI\Service\League\Ver2_5\ByTeamIds\Service(
-        $apiHandler,
-        $leagueQueueTypeFactory,
-        $leagueTierFactory
-    );
-
+    $service = new LolAPI\Service\League\Ver2_5\ByTeamIds\Service($apiHandler);
     $request = new LolAPI\Service\League\Ver2_5\ByTeamIds\Request(
         $apiKey, $regionEndpoint, array($config['teamId'])
     );
     $query = $service->createQuery($request);
-    $queryResult = $query->execute();
+    $response = $query->execute();
 
-    $processQueryResult = function(LolAPI\Service\League\Ver2_5\ByTeamIds\QueryResult $queryResult)
+    $dtoBuilder = new DTOBuilder(new \LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder(
+        $leagueQueueTypeFactory,
+        $leagueTierFactory
+    ));
+
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(LolAPI\Service\League\Ver2_5\ByTeamIds\DTO\TeamDTOs $dto)
     {
-        foreach ($queryResult->getTeamDTOs() as $teamDTO) {
+        foreach ($dto->getTeamDTOs() as $teamDTO) {
             println(sprintf("Team DTO (%s)", $teamDTO->getTeamId()));
 
             foreach ($teamDTO->getLeagueTeamDTOs() as $leagueDTO) {
@@ -38,7 +42,7 @@ $testFunc = function()
         }
     };
 
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

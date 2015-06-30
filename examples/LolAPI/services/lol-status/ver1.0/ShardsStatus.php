@@ -1,12 +1,20 @@
 <?php
+use LolAPI\Service\LolStatus\Ver1_0\Shards\DTOBuilder;
+
 $testFunc = function()
 {
     $apiHandler = new LolAPI\Handler\CURL\Handler();
     $service = new LolAPI\Service\LolStatus\Ver1_0\Shards\Service($apiHandler);
 
-    $processQueryResult = function(LolAPI\Service\LolStatus\Ver1_0\Shards\QueryResult $queryResult)
+    $query = $service->createQuery();
+    $response = $query->execute();
+
+    $dtoBuilder = new DTOBuilder();
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(LolAPI\Service\LolStatus\Ver1_0\Shards\DTO\ShardsDTO $dto)
     {
-        foreach ($queryResult->getShards() as $shard) {
+        foreach ($dto->getShardDTOs() as $shard) {
             println("Shard:");
             println(sprintf("Name: %s", $shard->getName()), 1);
             println(sprintf("Hostname: %s", $shard->getHostname()), 1);
@@ -16,10 +24,7 @@ $testFunc = function()
         }
     };
 
-    $query = $service->createQuery();
-    $queryResult = $query->execute();
-
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

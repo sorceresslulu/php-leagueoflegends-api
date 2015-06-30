@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\Team\Ver2_4\ByTeamIds\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -16,15 +18,18 @@ $testFunc = function()
 
     $apiHandler = new LolAPI\Handler\CURL\Handler();
 
-    $service = new LolAPI\Service\Team\Ver2_4\ByTeamIds\Service(
-        $apiHandler,
-        $gameModeFactory,
-        $mapIdFactory
-    );
+    $service = new LolAPI\Service\Team\Ver2_4\ByTeamIds\Service($apiHandler);
 
-    $processQueryResult = function(LolAPI\Service\Team\Ver2_4\ByTeamIds\QueryResult $queryResult)
+    $request = new LolAPI\Service\Team\Ver2_4\ByTeamIds\Request($apiKey, $regionEndpoint, array($config['teamId']));
+    $query = $service->createQuery($request);
+    $response = $query->execute();
+
+    $dtoBuilder = new DTOBuilder($gameModeFactory, $mapIdFactory);
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(LolAPI\Service\Team\Ver2_4\ByTeamIds\DTO\ByTeamIdsDTO $dto)
     {
-        foreach ($queryResult->getTeamDTOs() as $teamDTO) {
+        foreach ($dto->getTeamDTOs() as $teamDTO) {
             println(sprintf("FullId: %s", $teamDTO->getFullId()), 1);
             println(sprintf("Name: %s", $teamDTO->getName()), 1);
             println(sprintf("Status: %s", $teamDTO->getStatus()), 1);
@@ -87,11 +92,7 @@ $testFunc = function()
         }
     };
 
-    $request = new LolAPI\Service\Team\Ver2_4\ByTeamIds\Request($apiKey, $regionEndpoint, array($config['teamId']));
-    $query = $service->createQuery($request);
-    $queryResult = $query->execute();
-
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

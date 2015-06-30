@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\Team\Ver2_4\BySummonerIds\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -16,15 +18,18 @@ $testFunc = function()
 
     $apiHandler = new LolAPI\Handler\CURL\Handler();
 
-    $service = new LolAPI\Service\Team\Ver2_4\BySummonerIds\Service(
-        $apiHandler,
-        $gameModeFactory,
-        $mapIdFactory
-    );
+    $service = new LolAPI\Service\Team\Ver2_4\BySummonerIds\Service($apiHandler);
 
-    $processQueryResult = function(LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult $queryResult)
+    $request = new LolAPI\Service\Team\Ver2_4\BySummonerIds\Request($apiKey, $regionEndpoint, array($config['summonerIdWithTeam']));
+    $query = $service->createQuery($request);
+    $response = $query->execute();
+
+    $dtoBuilder = new DTOBuilder($gameModeFactory, $mapIdFactory);
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(LolAPI\Service\Team\Ver2_4\BySummonerIds\DTO\BySummonerIdsDTO $dto)
     {
-        foreach ($queryResult->getSummonerDTOs() as $summonerDTO) {
+        foreach ($dto->getSummonerDTOs() as $summonerDTO) {
             println(sprintf("Summoner DTO (%d)", $summonerDTO->getSummonerId()));
             println("Teams");
 
@@ -92,11 +97,7 @@ $testFunc = function()
         }
     };
 
-    $request = new LolAPI\Service\Team\Ver2_4\BySummonerIds\Request($apiKey, $regionEndpoint, array($config['summonerIdWithTeam']));
-    $query = $service->createQuery($request);
-    $queryResult = $query->execute();
-
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

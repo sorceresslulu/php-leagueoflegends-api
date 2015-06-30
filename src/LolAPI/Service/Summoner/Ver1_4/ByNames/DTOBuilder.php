@@ -2,14 +2,14 @@
 namespace LolAPI\Service\Summoner\Ver1_4\ByNames;
 
 use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\Summoner\Ver1_4\ByIds\DTO\ByNamesDTO;
+use LolAPI\Service\Summoner\Ver1_4\ByNames\DTO\ByNamesDTO;
 
 class DTOBuilder
 {
     /**
      * Builds and returns Summoner.ByIds DTO
      * @param ResponseInterface $response
-     * @return ByNamesDTO
+     * @return \LolAPI\Service\Summoner\Ver1_4\ByNames\DTO\ByNamesDTO
      */
     public function buildDTO(ResponseInterface $response)
     {

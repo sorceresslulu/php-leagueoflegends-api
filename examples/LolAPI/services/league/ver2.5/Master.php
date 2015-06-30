@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\League\Ver2_5\Master\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -14,12 +16,12 @@ $testFunc = function()
         new LolAPI\GameConstants\LeagueTier\UnknownTierPolicy\ThrowsOutOfBoundsExceptionPolicy()
     );
 
-    $processQueryResult = function(LolAPI\Service\League\Ver2_5\Master\QueryResult $queryResult)
+    $processQueryResult = function(LolAPI\Service\League\Ver2_5\Master\DTO\MasterDTO $dto)
     {
-        if ($queryResult->getLeagueQueueType()->forSolo()) {
-            printLeaguePlayerDTO($queryResult->getMasterLeaguePlayersDTO());
+        if ($dto->getLeagueQueueType()->forSolo()) {
+            printLeaguePlayerDTO($dto->getMasterLeaguePlayersDTO());
         } else {
-            printLeagueTeamDTO($queryResult->getMasterLeagueTeamsDTO());
+            printLeagueTeamDTO($dto->getMasterLeagueTeamsDTO());
         }
     };
 
@@ -37,9 +39,16 @@ $testFunc = function()
     );
 
     $query = $service->createQuery($request);
-    $queryResult = $query->execute();
+    $response = $query->execute();
 
-    $processQueryResult($queryResult);
+    $dtoBuilder = new DTOBuilder(new \LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder(
+        $leagueQueueTypeFactory,
+        $leagueTierFactory
+    ));
+
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult($dto);
 
 
     $request = new LolAPI\Service\League\Ver2_5\Master\Request(
@@ -49,9 +58,11 @@ $testFunc = function()
     );
 
     $query = $service->createQuery($request);
-    $queryResult = $query->execute();
+    $response = $query->execute();
 
-    $processQueryResult($queryResult);
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

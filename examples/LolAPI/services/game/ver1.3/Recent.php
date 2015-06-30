@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\Game\Ver1_3\Recent\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -28,10 +30,23 @@ $testFunc = function()
 
     $apiHandler = new LolAPI\Handler\CURL\Handler();
 
-    $processQueryResult = function(LolAPI\Service\Game\Ver1_3\Recent\QueryResult $queryResult)
-    {
-        $dto = $queryResult->getRecentGamesDTO();
+    $service = new LolAPI\Service\Game\Ver1_3\Recent\Service($apiHandler);
+    $request = new LolAPI\Service\Game\Ver1_3\Recent\Request($apiKey, $regionEndpoint, $config['summonerId']);
+    $query = $service->createQuery($request);
+    $response = $query->execute();
 
+    $dtoBuilder = new DTOBuilder(
+        $teamSideFactory,
+        $gameTypeFactory,
+        $gameModeFactory,
+        $subTypesFactory,
+        $mapIdFactory
+    );
+
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(LolAPI\Service\Game\Ver1_3\Recent\DTO\RecentGamesDTO $dto)
+    {
         println(sprintf("Recent games for summoner (%d)", $dto->getSummonerId()));
 
         foreach ($dto->getGames() as $gameDTO) {
@@ -67,19 +82,8 @@ $testFunc = function()
         }
     };
 
-    $service = new LolAPI\Service\Game\Ver1_3\Recent\Service(
-        $apiHandler,
-        $teamSideFactory,
-        $gameTypeFactory,
-        $gameModeFactory,
-        $subTypesFactory,
-        $mapIdFactory
-    );
-    $request = new LolAPI\Service\Game\Ver1_3\Recent\Request($apiKey, $regionEndpoint, $config['summonerId']);
-    $query = $service->createQuery($request);
-    $queryResult = $query->execute();
 
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

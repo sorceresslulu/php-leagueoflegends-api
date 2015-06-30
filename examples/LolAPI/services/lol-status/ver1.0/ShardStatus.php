@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -8,9 +10,14 @@ $testFunc = function()
     $apiHandler = new LolAPI\Handler\CURL\Handler();
     $service = new LolAPI\Service\LolStatus\Ver1_0\ShardStatus\Service($apiHandler);
 
-    $processQueryResult = function(\LolAPI\Service\LolStatus\Ver1_0\ShardStatus\QueryResult $queryResult) {
-        $shardStatus = $queryResult->getShardStatus();
+    $request = new LolAPI\Service\LolStatus\Ver1_0\ShardStatus\Request($regionEndpoint);
+    $query = $service->createQuery($request);
+    $response = $query->execute();
 
+    $dtoBuilder = new DTOBuilder();
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(\LolAPI\Service\LolStatus\Ver1_0\ShardStatus\DTO\ShardStatus $shardStatus) {
         println("Shard status");
         println(sprintf("Name: %s", $shardStatus->getName()), 1);
         println(sprintf("Hostname: %s", $shardStatus->getHostname()), 1);
@@ -61,11 +68,7 @@ $testFunc = function()
         }
     };
 
-    $request = new LolAPI\Service\LolStatus\Ver1_0\ShardStatus\Request($regionEndpoint);
-    $query = $service->createQuery($request);
-    $queryResult = $query->execute();
-
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

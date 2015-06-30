@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\Summoner\Ver1_4\Runes\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -13,11 +15,14 @@ $testFunc = function()
     );
 
     $query = $service->createQuery($request);
-    $queryResult = $query->execute();
+    $response = $query->execute();
 
-    $processQueryResult = function(\LolAPI\Service\Summoner\Ver1_4\Runes\QueryResult $queryResult)
+    $dtoBuilder = new DTOBuilder();
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(\LolAPI\Service\Summoner\Ver1_4\Runes\DTO\RunesDTO $dto)
     {
-        foreach ($queryResult->getRunePagesDTOs() as $runePagesDTO) {
+        foreach ($dto->getRunePagesDTOs() as $runePagesDTO) {
             println(sprintf("Summoner (%d)", $runePagesDTO->getSummonerId()));
 
             foreach ($runePagesDTO->getPages() as $page) {
@@ -36,7 +41,7 @@ $testFunc = function()
         }
     };
 
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\Summoner\Ver1_4\Name\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -13,18 +15,21 @@ $testFunc = function()
     );
 
     $query = $service->createQuery($request);
-    $queryResult = $query->execute();
+    $response = $query->execute();
 
-    $processQueryResult = function(\LolAPI\Service\Summoner\Ver1_4\Name\QueryResult $queryResult)
+    $dtoBuilder = new DTOBuilder();
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(\LolAPI\Service\Summoner\Ver1_4\Name\DTO\NameDTO $dto)
     {
-        foreach ($queryResult->getSummonerDTOs() as $summonerDTO) {
+        foreach ($dto->getSummonerDTOs() as $summonerDTO) {
             println("Summoner DTO:");
             println("ID: " . $summonerDTO->getSummonerId(), 1);
             println("Name: " . $summonerDTO->getSummonerName(), 1);
         }
     };
 
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

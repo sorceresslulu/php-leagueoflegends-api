@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\League\Ver2_5\Challenger\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -24,11 +26,7 @@ $testFunc = function()
     };
 
     $apiHandler = new LolAPI\Handler\CURL\Handler();
-    $service = new LolAPI\Service\League\Ver2_5\Challenger\Service(
-        $apiHandler,
-        $leagueQueueTypeFactory,
-        $leagueTierFactory
-    );
+    $service = new LolAPI\Service\League\Ver2_5\Challenger\Service($apiHandler);
 
     $request = new LolAPI\Service\League\Ver2_5\Challenger\Request(
         $apiKey,
@@ -37,10 +35,16 @@ $testFunc = function()
     );
 
     $query = $service->createQuery($request);
-    $queryResult = $query->execute();
+    $response = $query->execute();
 
-    $processQueryResult($queryResult);
+    $dtoBuilder = new DTOBuilder(new \LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder(
+        $leagueQueueTypeFactory,
+        $leagueTierFactory
+    ));
 
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult($dto);
 
     $request = new LolAPI\Service\League\Ver2_5\Challenger\Request(
         $apiKey,
@@ -49,9 +53,16 @@ $testFunc = function()
     );
 
     $query = $service->createQuery($request);
-    $queryResult = $query->execute();
+    $response = $query->execute();
 
-    $processQueryResult($queryResult);
+    $dtoBuilder = new DTOBuilder(new \LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder(
+        $leagueQueueTypeFactory,
+        $leagueTierFactory
+    ));
+
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\Summoner\Ver1_4\Masteries\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -15,11 +17,14 @@ $testFunc = function()
     );
 
     $query = $service->createQuery($request);
-    $queryResult = $query->execute();
+    $response = $query->execute();
 
-    $processQueryResult = function(\LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult $queryResult)
+    $dtoBuilder = new DTOBuilder();
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(\LolAPI\Service\Summoner\Ver1_4\Masteries\DTO\MasteriesDTO $dto)
     {
-        foreach ($queryResult->getMasteryPagesDTOs() as $masteryPages) {
+        foreach ($dto->getMasteryPagesDTOs() as $masteryPages) {
             println(sprintf("Mastery for summoner: %s", $masteryPages->getSummonerId()));
 
             foreach ($masteryPages->getPages() as $masteryPage) {
@@ -38,7 +43,7 @@ $testFunc = function()
         }
     };
 
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

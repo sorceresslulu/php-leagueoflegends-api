@@ -1,4 +1,6 @@
 <?php
+use LolAPI\Service\Stats\Ver1_3\Summary\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -12,11 +14,18 @@ $testFunc = function()
     );
 
     $apiHandler = new LolAPI\Handler\CURL\Handler();
-    $service = new LolAPI\Service\Stats\Ver1_3\Summary\Service($apiHandler, $playerStatSummaryTypeFactory);
+    $service = new LolAPI\Service\Stats\Ver1_3\Summary\Service($apiHandler);
 
-    $processQueryResult = function(LolAPI\Service\Stats\Ver1_3\Summary\QueryResult $queryResult)
+
+    $request = new LolAPI\Service\Stats\Ver1_3\Summary\Request($apiKey, $regionEndpoint, $config['summonerId']);
+    $query = $service->createQuery($request);
+    $response = $query->execute();
+
+    $dtoBuilder = new DTOBuilder($playerStatSummaryTypeFactory);
+    $dto = $dtoBuilder->buildDTO($response);
+
+    $processQueryResult = function(LolAPI\Service\Stats\Ver1_3\Summary\DTO\PlayerStatsSummaryListDto $dto)
     {
-        $dto = $queryResult->getPlayerStatsSummaryListDto();
         println(sprintf("SummonerID: %s", $dto->getSummonerId()));
 
         foreach ($dto->getPlayerStatSummaries() as $playerStatSummary) {
@@ -39,11 +48,7 @@ $testFunc = function()
         }
     };
 
-    $request = new LolAPI\Service\Stats\Ver1_3\Summary\Request($apiKey, $regionEndpoint, $config['summonerId']);
-    $query = $service->createQuery($request);
-    $queryResult = $query->execute();
-
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {

@@ -1,5 +1,7 @@
 <?php
 
+use LolAPI\Service\FeaturedGame\Ver1_0\DTOBuilder;
+
 $testFunc = function()
 {
     $config = getConfig();
@@ -28,8 +30,13 @@ $testFunc = function()
     );
 
     $apiHandler = new LolAPI\Handler\CURL\Handler();
-    $service = new LolAPI\Service\FeaturedGame\Ver1_0\Service(
-        $apiHandler,
+    $service = new LolAPI\Service\FeaturedGame\Ver1_0\Service($apiHandler);
+
+    $request = new LolAPI\Service\FeaturedGame\Ver1_0\Request($apiKey, $regionEndpoint);
+    $query = $service->createQuery($request);
+    $response = $query->execute();
+
+    $dtoBuilder = new DTOBuilder(
         $platformFactory,
         $matchmakingQueueTypeFactory,
         $mapIdFactory,
@@ -37,10 +44,10 @@ $testFunc = function()
         $gameModeFactory
     );
 
-    $processQueryResult = function(LolAPI\Service\FeaturedGame\Ver1_0\QueryResult $queryResult)
-    {
-        $featuredGames = $queryResult->getFeaturedGames();
+    $dto = $dtoBuilder->buildDTO($response);
 
+    $processQueryResult = function(LolAPI\Service\FeaturedGame\Ver1_0\DTO\FeaturedGames $featuredGames)
+    {
         println(sprintf("ClientRefreshInterval: %d", $featuredGames->getClientRefreshInterval()));
 
         foreach ($featuredGames->getGameList() as $featuredGameInfo) {
@@ -90,11 +97,7 @@ $testFunc = function()
         }
     };
 
-    $request = new LolAPI\Service\FeaturedGame\Ver1_0\Request($apiKey, $regionEndpoint);
-    $query = $service->createQuery($request);
-    $queryResult = $query->execute();
-
-    $processQueryResult($queryResult);
+    $processQueryResult($dto);
 };
 
 if (!count(debug_backtrace())) {
