@@ -1,31 +1,41 @@
 <?php
-require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
+$testFunc = function()
+{
+    $config = getConfig();
+    $apiKey = new \LolAPI\APIKey($config['apiKey']);
+    $regionEndpointsFactory = new \LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointFactory();
+    $regionEndpoint = $regionEndpointsFactory->createFromPlatformId($config['platformId']);
 
-$config = getConfig();
-$apiKey = new \LolAPI\APIKey($config['apiKey']);
-$regionFactory = new \LolAPI\Region\RegionFactory(new \LolAPI\Region\UnknownRegionPolicy\ThrowUnknownRegionExceptionPolicy());
-$region = $regionFactory->getRegionByStringCode($config['region']);
+    $apiHandler = new LolAPI\Handler\CURL\Handler();
+    $service = new LolAPI\Service\Summoner\Ver1_4\ByNames\Service($apiHandler);
+    $request = new \LolAPI\Service\Summoner\Ver1_4\ByNames\Request(
+        $apiKey,
+        $regionEndpoint,
+        array($config['summonerName'])
+    );
 
-$apiHandler = new LolAPI\Handler\CURL\Handler();
-$service = new LolAPI\Service\Summoner\Ver1_4\ByNames\Service($apiHandler);
-$request = new \LolAPI\Service\Summoner\Ver1_4\ByNames\Request(
-    $apiKey,
-    $region,
-    array($config['summonerName'])
-);
+    $query = $service->createQuery($request);
+    $queryResult = $query->execute();
 
-$query = $service->createQuery($request);
-$queryResult = $query->execute();
+    $processQueryResult = function(\LolAPI\Service\Summoner\Ver1_4\ByNames\QueryResult $queryResult)
+    {
+        foreach ($queryResult->getSummonerDTOs() as $summonerDTO) {
+            println("Summoner DTO");
+            println(sprintf("ID: %d", $summonerDTO->getId()), 1);
+            println(sprintf("Name: %s", $summonerDTO->getName()), 1);
+            println(sprintf("ProfileIconId: %d", $summonerDTO->getProfileIconId()), 1);
+            println(sprintf("RevisionDate: %d", $summonerDTO->getRevisionDate()), 1);
+            println(sprintf("SummonerLevel: %d", $summonerDTO->getSummonerLevel()), 1);
+        }
+    };
 
-function processQueryResult(\LolAPI\Service\Summoner\Ver1_4\ByNames\QueryResult $queryResult) {
-    foreach($queryResult->getSummonerDTOs() as $summonerDTO) {
-        println("Summoner DTO");
-        println(sprintf("ID: %d", $summonerDTO->getId()), 1);
-        println(sprintf("Name: %s", $summonerDTO->getName()), 1);
-        println(sprintf("ProfileIconId: %d", $summonerDTO->getProfileIconId()), 1);
-        println(sprintf("RevisionDate: %d", $summonerDTO->getRevisionDate()), 1);
-        println(sprintf("SummonerLevel: %d", $summonerDTO->getSummonerLevel()), 1);
-    }
+    $processQueryResult($queryResult);
+};
+
+if (!count(debug_backtrace())) {
+    require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
+
+    $testFunc();
+}else{
+    return $testFunc;
 }
-
-processQueryResult($queryResult);

@@ -1,34 +1,30 @@
 <?php
-require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
-
-$config = getConfig();
-$apiKey = new \LolAPI\APIKey($config['apiKey']);
-$regionFactory = new \LolAPI\Region\RegionFactory(new \LolAPI\Region\UnknownRegionPolicy\ThrowUnknownRegionExceptionPolicy());
-$region = $regionFactory->getRegionByStringCode($config['region']);
-
-$mapIdFactory = new \LolAPI\GameConstants\MapId\MapIdFactory(
-    new \LolAPI\GameConstants\MapId\UnknownMapIdPolicy\ThrowOutOfBoundsExceptionPolicy()
-);
-
-$gameModeFactory = new \LolAPI\GameConstants\GameMode\GameModeFactory(
-    new \LolAPI\GameConstants\GameMode\UnknownGameModePolicy\ThrowOutOfBoundsExceptionPolicy()
-);
-
-$apiHandler = new LolAPI\Handler\CURL\Handler();
-
-$service = new LolAPI\Service\Team\Ver2_4\BySummonerIds\Service(
-    $apiHandler,
-    $gameModeFactory,
-    $mapIdFactory
-);
-
-function processQueryResult(LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult $queryResult)
+$testFunc = function()
 {
-    foreach($queryResult->getSummonerDTOs() as $summonerDTO) {
-        println(sprintf("Summoner DTO (%d)", $summonerDTO->getSummonerId()));
-        println("Teams");
+    $config = getConfig();
+    $apiKey = new \LolAPI\APIKey($config['apiKey']);
+    $regionEndpointsFactory = new \LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointFactory();
+    $regionEndpoint = $regionEndpointsFactory->createFromPlatformId($config['platformId']);
 
-        foreach($summonerDTO->getTeams() as $teamDTO) {
+    $mapIdFactory = new \LolAPI\GameConstants\MapId\MapIdFactory(
+        new \LolAPI\GameConstants\MapId\UnknownMapIdPolicy\ThrowOutOfBoundsExceptionPolicy()
+    );
+
+    $gameModeFactory = new \LolAPI\GameConstants\GameMode\GameModeFactory(
+        new \LolAPI\GameConstants\GameMode\UnknownGameModePolicy\ThrowOutOfBoundsExceptionPolicy()
+    );
+
+    $apiHandler = new LolAPI\Handler\CURL\Handler();
+
+    $service = new LolAPI\Service\Team\Ver2_4\ByTeamIds\Service(
+        $apiHandler,
+        $gameModeFactory,
+        $mapIdFactory
+    );
+
+    $processQueryResult = function(LolAPI\Service\Team\Ver2_4\ByTeamIds\QueryResult $queryResult)
+    {
+        foreach ($queryResult->getTeamDTOs() as $teamDTO) {
             println(sprintf("FullId: %s", $teamDTO->getFullId()), 1);
             println(sprintf("Name: %s", $teamDTO->getName()), 1);
             println(sprintf("Status: %s", $teamDTO->getStatus()), 1);
@@ -41,10 +37,10 @@ function processQueryResult(LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult
             println(sprintf("ThirdLastJoinDate: %s", $teamDTO->getThirdLastJoinDate()), 1);
             println(sprintf("LastJoinedRankedTeamQueueDate: %s", $teamDTO->getLastJoinedRankedTeamQueueDate()), 1);
 
-            if($teamDTO->hasMatchHistory()) {
+            if ($teamDTO->hasMatchHistory()) {
                 println("Match history", 1);
 
-                foreach($teamDTO->getMatchHistory() as $match) {
+                foreach ($teamDTO->getMatchHistory() as $match) {
                     println(sprintf("GameId: %s", $match->getGameId()), 2);
                     println(sprintf("Date: %s", $match->getDate()), 2);
                     println(sprintf("GameMode/Code: %s", $match->getGameMode()->getCode()), 2);
@@ -61,10 +57,10 @@ function processQueryResult(LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult
                 }
             }
 
-            if($teamDTO->hasTeamStatsDetails()) {
+            if ($teamDTO->hasTeamStatsDetails()) {
                 println("Stats", 1);
 
-                foreach($teamDTO->getTeamStatDetails() as $statDetails) {
+                foreach ($teamDTO->getTeamStatDetails() as $statDetails) {
                     println(sprintf("Type: %s", $statDetails->getTeamStatType()), 2);
                     println(sprintf("AverageGamesPlayed: %s", $statDetails->getAverageGamesPlayed()), 2);
                     println(sprintf("Wins: %s", $statDetails->getWins()), 2);
@@ -76,10 +72,10 @@ function processQueryResult(LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult
             println("Roster", 1);
             println(sprintf("OwnerId: %s", $teamDTO->getRoster()->getOwnerId()), 2);
 
-            if($teamDTO->getRoster()->hasMembers()) {
+            if ($teamDTO->getRoster()->hasMembers()) {
                 println("Members", 1);
 
-                foreach($teamDTO->getRoster()->getMemberList() as $member) {
+                foreach ($teamDTO->getRoster()->getMemberList() as $member) {
                     println(sprintf("PlayerId: %s", $member->getPlayerId()), 2);
                     println(sprintf("Status: %s", $member->getStatus()), 2);
                     println(sprintf("InviteDate: %s", $member->getInviteDate()), 2);
@@ -89,11 +85,19 @@ function processQueryResult(LolAPI\Service\Team\Ver2_4\BySummonerIds\QueryResult
             }
 
         }
-    }
+    };
+
+    $request = new LolAPI\Service\Team\Ver2_4\ByTeamIds\Request($apiKey, $regionEndpoint, array($config['teamId']));
+    $query = $service->createQuery($request);
+    $queryResult = $query->execute();
+
+    $processQueryResult($queryResult);
+};
+
+if (!count(debug_backtrace())) {
+    require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
+
+    $testFunc();
+}else{
+    return $testFunc;
 }
-
-$request = new LolAPI\Service\Team\Ver2_4\BySummonerIds\Request($apiKey, $region, array($config['summonerIdWithTeam']));
-$query = $service->createQuery($request);
-$queryResult = $query->execute();
-
-processQueryResult($queryResult);

@@ -1,27 +1,31 @@
 <?php
 namespace LolAPI\Service\LolStatus\Ver1_0\ShardStatus;
 
-use LolAPI\Region\RegionInterface;
+use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
 
 class Request
 {
     /**
-     * Region
-     * @var \LolAPI\Region\RegionInterface
+     * Regional endpoint
+     * @var RegionalEndpointInterface
      */
-    private $region;
+    private $regionalEndpoint;
 
-    public function __construct($region)
+    /**
+     * LolStatus.ShardStatus request
+     * @param RegionalEndpointInterface $regionalEndpoint
+     */
+    public function __construct(RegionalEndpointInterface $regionalEndpoint)
     {
-        $this->region = $region;
+        $this->regionalEndpoint = $regionalEndpoint;
     }
 
     /**
-     * Returns region
-     * @return \LolAPI\Region\RegionInterface
+     * Returns regional endpoint
+     * @return RegionalEndpointInterface
      */
-    public function getRegion()
+    public function getRegionalEndpoint()
     {
-        return $this->region;
+        return $this->regionalEndpoint;
     }
 }

@@ -2,7 +2,8 @@
 namespace LolAPI\Service\Stats\Ver1_3\Summary;
 
 use LolAPI\APIKey;
-use LolAPI\Region\RegionInterface;
+use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
+use LolAPI\GameConstants\Season\SeasonInterface;
 
 class Request
 {
@@ -13,10 +14,10 @@ class Request
     private $apiKey;
 
     /**
-     * Region
-     * @var \LolAPI\Region\RegionInterface
+     * Regional endpoint
+     * @var RegionalEndpointInterface
      */
-    private $region;
+    private $regionalEndpoint;
 
     /**
      * Summoner ID
@@ -26,28 +27,28 @@ class Request
 
     /**
      * Season
-     * @var null|string
+     * @var SeasonInterface|null
      */
     private $season;
 
     /**
-     * Request
+     * Stats.BySummoner request
      * @param APIKey $apiKey
-     * @param \LolAPI\Region\RegionInterface $region
-     * @param $summonerId
+     * @param RegionalEndpointInterface $regionalEndpoint
+     * @param int $summonerId
      */
-    public function __construct(APIKey $apiKey, RegionInterface $region, $summonerId)
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, $summonerId)
     {
         $this->apiKey = $apiKey;
-        $this->region = $region;
+        $this->regionalEndpoint = $regionalEndpoint;
         $this->summonerId = $summonerId;
     }
 
     /**
      * Specify season to search stats in
-     * @param $season
+     * @param SeasonInterface $season
      */
-    public function specifySeason($season)
+    public function specifySeason(SeasonInterface $season)
     {
         $this->season = $season;
     }
@@ -71,12 +72,12 @@ class Request
     }
 
     /**
-     * Returns region
-     * @return \LolAPI\Region\RegionInterface
+     * Returns regional endpoint
+     * @return RegionalEndpointInterface
      */
-    public function getRegion()
+    public function getRegionalEndpoint()
     {
-        return $this->region;
+        return $this->regionalEndpoint;
     }
 
     /**
@@ -90,7 +91,7 @@ class Request
 
     /**
      * Returns season
-     * @return null|string
+     * @return null|SeasonInterface
      */
     public function getSeason()
     {

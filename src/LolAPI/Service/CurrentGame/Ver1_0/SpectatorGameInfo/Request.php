@@ -2,8 +2,7 @@
 namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
 use LolAPI\APIKey;
-use LolAPI\GameConstants\Platform\PlatformInterface;
-use LolAPI\Region\RegionInterface;
+use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
 
 class Request
 {
@@ -14,10 +13,10 @@ class Request
     private $apiKey;
 
     /**
-     * Region
-     * @var RegionInterface
+     * Regional endpoint
+     * @var RegionalEndpointInterface
      */
-    private $region;
+    private $regionalEndpoint;
 
     /**
      * Summoner ID
@@ -26,17 +25,16 @@ class Request
     private $summonerId;
 
     /**
-     * Platform ID
-     * @var \LolAPI\GameConstants\Platform\PlatformInterface
+     * CurrentGame.SpectatorGameInfo request
+     * @param APIKey $apiKey
+     * @param RegionalEndpointInterface $regionalEndpoint
+     * @param int $summonerId
      */
-    private $platformId;
-
-    public function __construct(APIKey $apiKey, RegionInterface $region, $summonerId, PlatformInterface $platformId)
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, $summonerId)
     {
         $this->apiKey = $apiKey;
-        $this->region = $region;
+        $this->regionalEndpoint = $regionalEndpoint;
         $this->summonerId = $summonerId;
-        $this->platformId = $platformId;
     }
 
     /**
@@ -49,12 +47,12 @@ class Request
     }
 
     /**
-     * Returns region
-     * @return RegionInterface
+     * Returns regional endpoint
+     * @return RegionalEndpointInterface
      */
-    public function getRegion()
+    public function getRegionalEndpoint()
     {
-        return $this->region;
+        return $this->regionalEndpoint;
     }
 
     /**
@@ -64,14 +62,5 @@ class Request
     public function getSummonerId()
     {
         return $this->summonerId;
-    }
-
-    /**
-     * Returns platform ID
-     * @return \LolAPI\GameConstants\Platform\PlatformInterface
-     */
-    public function getPlatformId()
-    {
-        return $this->platformId;
     }
 }

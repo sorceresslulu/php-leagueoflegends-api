@@ -64,15 +64,20 @@ class Query
      * Execute query
      * @return QueryResult
      * @throws LolAPIException
+     * @throws \Exception
      */
     public function execute()
     {
         $request = $this->getRequest();
 
-        $serviceUrl = sprintf(
-            'http://status.leagueoflegends.com/shards/%s',
-            rawurlencode(strtolower($request->getRegion()->getCode()))
-        );
+        if($request->getRegionalEndpoint()->hasRegionCode()) {
+            $serviceUrl = sprintf(
+                'http://status.leagueoflegends.com/shards/%s',
+                rawurlencode(strtolower($request->getRegionalEndpoint()->getRegionCode()))
+            );
+        }else{
+            throw new \Exception(sprintf("Query cannot be executed for regional endpoint `%s`", $request->getRegionalEndpoint()->getPlatformId()));
+        }
 
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, array());
 

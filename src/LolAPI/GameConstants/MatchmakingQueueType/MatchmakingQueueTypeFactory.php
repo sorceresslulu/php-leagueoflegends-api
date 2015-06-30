@@ -1,9 +1,9 @@
 <?php
 namespace LolAPI\GameConstants\MatchmakingQueueType;
 
-use LolAPI\GameConstants\GameMode\Modes\ARAM;
-use LolAPI\GameConstants\GameMode\Modes\Ascension;
 use LolAPI\GameConstants\MatchmakingQueue\Normal3x3;
+use LolAPI\GameConstants\MatchmakingQueueType\QueueTypes\ARAM5x5;
+use LolAPI\GameConstants\MatchmakingQueueType\QueueTypes\Ascension5x5;
 use LolAPI\GameConstants\MatchmakingQueueType\QueueTypes\Bot5x5;
 use LolAPI\GameConstants\MatchmakingQueueType\QueueTypes\Bot5x5Beginner;
 use LolAPI\GameConstants\MatchmakingQueueType\QueueTypes\Bot5x5Intermediate;
@@ -92,7 +92,7 @@ class MatchmakingQueueTypeFactory
                 return new Custom();
 
             case MatchmakingQueueInterface::QUEUE_TYPE_ARAM_5x5:
-                return new ARAM();
+                return new ARAM5x5();
 
             case MatchmakingQueueInterface::QUEUE_TYPE_ODIN_5x5_BLIND:
                 return new ODIN5x5Blind();
@@ -155,7 +155,7 @@ class MatchmakingQueueTypeFactory
                 return new NightmareBot5x5Rank5();
 
             case MatchmakingQueueInterface::QUEUE_TYPE_ASCENSION_5x5:
-                return new Ascension();
+                return new Ascension5x5();
 
             case MatchmakingQueueInterface::QUEUE_TYPE_HEXAKILL:
                 return new Hexakill();

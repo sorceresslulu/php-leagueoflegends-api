@@ -2,7 +2,7 @@
 namespace LolAPI\Service\Champion\Ver1_2\Champion;
 
 use LolAPI\APIKey;
-use LolAPI\Region\RegionInterface;
+use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
 
 class Request
 {
@@ -13,10 +13,10 @@ class Request
     private $apiKey;
 
     /**
-     * Region
-     * @var RegionInterface
+     * Regional endpoint
+     * @var RegionalEndpointInterface
      */
-    private $region;
+    private $regionalEndpoint;
 
     /**
      * Champion ID
@@ -24,14 +24,16 @@ class Request
      */
     private $championId;
 
-    public function __construct(APIKey $apiKey, RegionInterface $region, $championId)
+    /**
+     * Champion.Champion request
+     * @param APIKey $apiKey
+     * @param RegionalEndpointInterface $regionalEndpoint
+     * @param int $championId
+     */
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, $championId)
     {
-        if(!(is_int($championId)) || $championId < 0) {
-            throw new \InvalidArgumentException;
-        }
-
         $this->apiKey = $apiKey;
-        $this->region = $region;
+        $this->regionalEndpoint = $regionalEndpoint;
         $this->championId = $championId;
     }
 
@@ -45,12 +47,12 @@ class Request
     }
 
     /**
-     * Returns region
-     * @return \LolAPI\Region\RegionInterface
+     * Returns regional endpoint
+     * @return RegionalEndpointInterface
      */
-    public function getRegion()
+    public function getRegionalEndpoint()
     {
-        return $this->region;
+        return $this->regionalEndpoint;
     }
 
     /**

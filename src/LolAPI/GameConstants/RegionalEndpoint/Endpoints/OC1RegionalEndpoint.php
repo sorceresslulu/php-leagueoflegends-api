@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\GameConstants\RegionalEndpoints\Endpoints;
+namespace LolAPI\GameConstants\RegionalEndpoint\Endpoints;
 
 class OC1RegionalEndpoint extends AbstractRegionalEndpoint
 {

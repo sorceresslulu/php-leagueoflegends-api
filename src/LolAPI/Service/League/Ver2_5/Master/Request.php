@@ -3,7 +3,7 @@ namespace LolAPI\Service\League\Ver2_5\Master;
 
 use LolAPI\APIKey;
 use LolAPI\GameConstants\LeagueQueueType\LeagueQueueTypeInterface;
-use LolAPI\Region\RegionInterface;
+use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
 
 class Request
 {
@@ -14,10 +14,10 @@ class Request
     private $apiKey;
 
     /**
-     * Region
-     * @var RegionInterface
+     * Regional endpoint
+     * @var RegionalEndpointInterface
      */
-    private $region;
+    private $regionalEndpoint;
 
     /**
      * League Queue Type
@@ -26,17 +26,18 @@ class Request
     private $leagueQueueType;
 
     /**
-     * Request
+     * League.Challenger request
      * @param APIKey $apiKey
-     * @param RegionInterface $region
+     * @param RegionalEndpointInterface $regionalEndpoint
      * @param LeagueQueueTypeInterface $leagueQueueType
      */
-    public function __construct(APIKey $apiKey, RegionInterface $region, LeagueQueueTypeInterface $leagueQueueType)
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, LeagueQueueTypeInterface $leagueQueueType)
     {
         $this->apiKey = $apiKey;
-        $this->region = $region;
+        $this->regionalEndpoint = $regionalEndpoint;
         $this->leagueQueueType = $leagueQueueType;
     }
+
 
     /**
      * Returns API key
@@ -48,12 +49,12 @@ class Request
     }
 
     /**
-     * Returns region
-     * @return RegionInterface
+     * Returns regional endpoint
+     * @return RegionalEndpointInterface
      */
-    public function getRegion()
+    public function getRegionalEndpoint()
     {
-        return $this->region;
+        return $this->regionalEndpoint;
     }
 
     /**

@@ -2,7 +2,7 @@
 namespace LolAPI\Util\GenericRequests;
 
 use LolAPI\APIKey;
-use LolAPI\Region\RegionInterface;
+use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
 
 class GenericTeamIdsRequest
 {
@@ -13,10 +13,10 @@ class GenericTeamIdsRequest
     private $apiKey;
 
     /**
-     * Region
-     * @var RegionInterface
+     * Regional endpoint
+     * @var RegionalEndpointInterface
      */
-    private $region;
+    private $regionalEndpoint;
 
     /**
      * Team IDs
@@ -25,15 +25,15 @@ class GenericTeamIdsRequest
     private $teamIds = array();
 
     /**
-     * Request
+     * Generic request with regional endpoint, api_key and team IDs
      * @param APIKey $apiKey
-     * @param RegionInterface $region
-     * @param string[] $teamIds
+     * @param RegionalEndpointInterface $regionalEndpoint
+     * @param array $teamIds
      */
-    public function __construct(APIKey $apiKey, RegionInterface $region, array $teamIds)
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, array $teamIds)
     {
         $this->apiKey = $apiKey;
-        $this->region = $region;
+        $this->regionalEndpoint = $regionalEndpoint;
         $this->teamIds = $teamIds;
     }
 
@@ -47,12 +47,12 @@ class GenericTeamIdsRequest
     }
 
     /**
-     * Returns region
-     * @return RegionInterface
+     * Returns regional endpoint
+     * @return RegionalEndpointInterface
      */
-    public function getRegion()
+    public function getRegionalEndpoint()
     {
-        return $this->region;
+        return $this->regionalEndpoint;
     }
 
     /**

@@ -2,21 +2,21 @@
 namespace LolAPI\Service\Champion\Ver1_2\ChampionList;
 
 use LolAPI\APIKey;
-use LolAPI\Region\RegionInterface;
+use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
 
 class Request
 {
     /**
-     * APIKey
+     * API Key
      * @var APIKey
      */
     private $apiKey;
 
     /**
-     * Region
-     * @var \LolAPI\Region\RegionInterface
+     * Regional endpoint
+     * @var RegionalEndpointInterface
      */
-    private $region;
+    private $regionalEndpoint;
 
     /**
      * Optional filter param to retrieve only free to play champions.
@@ -24,11 +24,17 @@ class Request
      */
     private $freeToPlay = null;
 
-    function __construct(APIKey $APIKey, RegionInterface $region, $freeToPlay = null)
+    /**
+     * Champion.ChampionList request
+     * @param APIKey $apiKey
+     * @param RegionalEndpointInterface $regionalEndpoint
+     * @param bool|null $freeToPlay
+     */
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, $freeToPlay = null)
     {
-        $this->apiKey = $APIKey;
+        $this->apiKey = $apiKey;
+        $this->regionalEndpoint = $regionalEndpoint;
         $this->freeToPlay = $freeToPlay;
-        $this->region = $region;
     }
 
     /**
@@ -40,22 +46,30 @@ class Request
         return $this->apiKey;
     }
 
+    /**
+     * Returns regional endpoint
+     * @return RegionalEndpointInterface
+     */
+    public function getRegionalEndpoint()
+    {
+        return $this->regionalEndpoint;
+    }
+
+    /**
+     * Returns true if user specified to fetch only free2play champions
+     * @return bool
+     */
     public function fetchFreeToPlayChampionsOnly()
     {
         return $this->freeToPlay === true;
     }
 
+    /**
+     * Returns true if user specified to fetch only NOT free2play champions
+     * @return bool
+     */
     public function fetchNotFreeToPlayChampionsOnly()
     {
         return $this->freeToPlay === false;
-    }
-
-    /**
-     * Returns region
-     * @return RegionInterface
-     */
-    public function getRegion()
-    {
-        return $this->region;
     }
 }

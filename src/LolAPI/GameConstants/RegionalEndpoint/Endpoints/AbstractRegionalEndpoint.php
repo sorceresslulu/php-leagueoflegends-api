@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\GameConstants\RegionalEndpoints\Endpoints;
+namespace LolAPI\GameConstants\RegionalEndpoint\Endpoints;
 
 use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
 

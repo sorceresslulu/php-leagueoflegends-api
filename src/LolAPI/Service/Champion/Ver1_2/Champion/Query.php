@@ -61,6 +61,7 @@ class Query
      * Execute query
      * @return QueryResult
      * @throws LolAPIException
+     * @throws \Exception
      */
     public function execute()
     {
@@ -71,12 +72,16 @@ class Query
             'id' => $request->getChampionId()
         );
 
-        $serviceUrl = sprintf(
-            'https://%s.api.pvp.net/api/lol/%s/v1.2/champion/%d',
-            rawurlencode($request->getRegion()->getDomain()),
-            rawurlencode($request->getRegion()->getDirectory()),
-            rawurlencode($request->getChampionId())
-        );
+        if($request->getRegionalEndpoint()->hasRegionCode()) {
+            $serviceUrl = sprintf(
+                'https://%s/api/lol/%s/v1.2/champion/%d',
+                rawurlencode($request->getRegionalEndpoint()->getHost()),
+                rawurlencode(strtolower($request->getRegionalEndpoint()->getRegionCode())),
+                rawurlencode($request->getChampionId())
+            );
+        }else{
+            throw new \Exception(sprintf("Query cannot be executed for regional endpoint `%s`", $request->getRegionalEndpoint()->getPlatformId()));
+        }
 
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 

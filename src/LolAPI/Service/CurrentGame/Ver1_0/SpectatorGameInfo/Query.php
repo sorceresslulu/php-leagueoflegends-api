@@ -66,6 +66,8 @@ class Query
      * @param PlatformFactory $platformFactory
      * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
      * @param MapIdFactory $mapIdFactory
+     * @param GameTypeFactory $gameTypeFactory
+     * @param GameModeFactory $gameModeFactory
      */
     public function __construct(
         HandlerInterface $lolAPIHandler,
@@ -99,9 +101,9 @@ class Query
         );
 
         $serviceUrl = sprintf(
-            'https://%s.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/%s/%d',
-            rawurlencode($request->getRegion()->getDomain()),
-            rawurlencode($request->getPlatformId()->getCurrentGamePathParam()),
+            'https://%s/observer-mode/rest/consumer/getSpectatorGameInfo/%s/%d',
+            rawurlencode($request->getRegionalEndpoint()->getHost()),
+            rawurlencode(strtolower($request->getRegionalEndpoint()->getPlatformId())),
             rawurlencode($request->getSummonerId())
         );
 

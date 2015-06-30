@@ -2,17 +2,17 @@
 namespace LolAPI\GameConstants\RegionalEndpoint;
 
 use LolAPI\GameConstants\RegionalEndpoint\Endpoints\BR1RegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\EUN1RegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\EUW1RegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\GlobalRegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\KRRegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\LA1RegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\LA2RegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\NA1RegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\OC1RegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\PBE1RegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\RURegionalEndpoint;
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\TR1RegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\EUN1RegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\EUW1RegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\GlobalRegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\KRRegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\LA1RegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\LA2RegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\NA1RegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\OC1RegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\PBE1RegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\RURegionalEndpoint;
+use LolAPI\GameConstants\RegionalEndpoint\Endpoints\TR1RegionalEndpoint;
 
 class RegionalEndpointFactory implements RegionalEndpointFactoryInterface
 {

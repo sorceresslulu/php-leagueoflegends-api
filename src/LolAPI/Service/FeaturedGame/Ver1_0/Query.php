@@ -100,9 +100,8 @@ class Query
         );
 
         $serviceUrl = sprintf(
-            'https://%s.api.pvp.net/observer-mode/rest/featured',
-            rawurlencode($request->getRegion()->getDomain()),
-            rawurlencode($request->getRegion()->getDirectory())
+            'https://%s/observer-mode/rest/featured',
+            rawurlencode($request->getRegionalEndpoint()->getHost())
         );
 
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);

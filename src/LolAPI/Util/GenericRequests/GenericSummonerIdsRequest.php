@@ -2,12 +2,10 @@
 namespace LolAPI\Util\GenericRequests;
 
 use LolAPI\APIKey;
-use LolAPI\Region\RegionInterface;
+use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
 
 class GenericSummonerIdsRequest
 {
-    const MAX_SUMMONER_IDS_ALLOWED = 40;
-
     /**
      * APIKey
      * @var APIKey
@@ -15,10 +13,10 @@ class GenericSummonerIdsRequest
     private $apiKey;
 
     /**
-     * Region where to retrieve the data.
-     * @var \LolAPI\Region\RegionInterface
+     * Regional endpoint
+     * @var RegionalEndpointInterface
      */
-    private $region;
+    private $regionalEndpoint;
 
     /**
      * Summoner Ids
@@ -28,25 +26,15 @@ class GenericSummonerIdsRequest
     private $summonerIds;
 
     /**
-     * Request
+     * Generic request with region, api_key and summoner Id's
      * @param APIKey $apiKey
-     * @param \LolAPI\Region\RegionInterface $region
+     * @param RegionalEndpointInterface $regionalEndpoint
      * @param array $summonerIds
      */
-    function __construct(APIKey $apiKey, RegionInterface $region, array $summonerIds)
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, array $summonerIds)
     {
-        if(count($summonerIds) == 0 || count($summonerIds) >= self::MAX_SUMMONER_IDS_ALLOWED) {
-            throw new \InvalidArgumentException(sprintf("Only 1..%d Id's allowed", self::MAX_SUMMONER_IDS_ALLOWED));
-        }
-
-        foreach($summonerIds as $summonerId) {
-            if(!(is_int($summonerId)) || $summonerId <= 0) {
-                throw new \InvalidArgumentException;
-            }
-        }
-
         $this->apiKey = $apiKey;
-        $this->region = $region;
+        $this->regionalEndpoint = $regionalEndpoint;
         $this->summonerIds = $summonerIds;
     }
 
@@ -59,14 +47,13 @@ class GenericSummonerIdsRequest
         return $this->apiKey;
     }
 
-
     /**
-     * Returns region where to retrieve the data.
-     * @return \LolAPI\Region\RegionInterface
+     * Returns regional endpoint
+     * @return RegionalEndpointInterface
      */
-    public function getRegion()
+    public function getRegionalEndpoint()
     {
-        return $this->region;
+        return $this->regionalEndpoint;
     }
 
     /**

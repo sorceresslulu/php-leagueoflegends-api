@@ -2,7 +2,7 @@
 namespace LolAPI\Service\Game\Ver1_3\Recent;
 
 use LolAPI\APIKey;
-use LolAPI\Region\RegionInterface;
+use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
 
 class Request
 {
@@ -13,10 +13,10 @@ class Request
     private $apiKey;
 
     /**
-     * Region
-     * @var RegionInterface
+     * Regional endpoint
+     * @var RegionalEndpointInterface
      */
-    private $region;
+    private $regionalEndpoint;
 
     /**
      * Summoner ID
@@ -25,15 +25,15 @@ class Request
     private $summonerId;
 
     /**
-     * Request
+     * Game.Recent request
      * @param APIKey $apiKey
-     * @param RegionInterface $region
-     * @param int $summonerId
+     * @param RegionalEndpointInterface $regionalEndpoint
+     * @param $summonerId
      */
-    public function __construct(APIKey $apiKey, RegionInterface $region, $summonerId)
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, $summonerId)
     {
         $this->apiKey = $apiKey;
-        $this->region = $region;
+        $this->regionalEndpoint = $regionalEndpoint;
         $this->summonerId = $summonerId;
     }
 
@@ -47,12 +47,12 @@ class Request
     }
 
     /**
-     * Returns region
-     * @return RegionInterface
+     * Returns regional endpoint
+     * @return RegionalEndpointInterface
      */
-    public function getRegion()
+    public function getRegionalEndpoint()
     {
-        return $this->region;
+        return $this->regionalEndpoint;
     }
 
     /**

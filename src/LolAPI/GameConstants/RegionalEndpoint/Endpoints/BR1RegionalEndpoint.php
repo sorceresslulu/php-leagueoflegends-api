@@ -1,8 +1,6 @@
 <?php
 namespace LolAPI\GameConstants\RegionalEndpoint\Endpoints;
 
-use LolAPI\GameConstants\RegionalEndpoints\Endpoints\AbstractRegionalEndpoint;
-
 class BR1RegionalEndpoint extends AbstractRegionalEndpoint
 {
     /**

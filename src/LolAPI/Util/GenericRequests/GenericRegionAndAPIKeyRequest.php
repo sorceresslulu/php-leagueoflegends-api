@@ -2,7 +2,7 @@
 namespace LolAPI\Util\GenericRequests;
 
 use LolAPI\APIKey;
-use LolAPI\Region\RegionInterface;
+use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
 
 class GenericRegionAndAPIKeyRequest
 {
@@ -13,15 +13,20 @@ class GenericRegionAndAPIKeyRequest
     private $apiKey;
 
     /**
-     * Region
-     * @var \LolAPI\Region\RegionInterface
+     * Regional endpoint
+     * @var RegionalEndpointInterface
      */
-    private $region;
+    private $regionalEndpoint;
 
-    public function __construct(APIKey $apiKey, RegionInterface $region)
+    /**
+     * Generic region + api_key request
+     * @param APIKey $apiKey
+     * @param RegionalEndpointInterface $regionalEndpoint
+     */
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint)
     {
         $this->apiKey = $apiKey;
-        $this->region = $region;
+        $this->regionalEndpoint = $regionalEndpoint;
     }
 
     /**
@@ -34,11 +39,11 @@ class GenericRegionAndAPIKeyRequest
     }
 
     /**
-     * Returns region
-     * @return \LolAPI\Region\RegionInterface
+     * Returns regional endpoint
+     * @return RegionalEndpointInterface
      */
-    public function getRegion()
+    public function getRegionalEndpoint()
     {
-        return $this->region;
+        return $this->regionalEndpoint;
     }
 }
