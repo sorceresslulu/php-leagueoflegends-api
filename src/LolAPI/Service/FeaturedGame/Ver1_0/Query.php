@@ -11,6 +11,7 @@ use LolAPI\Handler\HandlerInterface;
 use LolAPI\Exceptions\ForbiddenException;
 use LolAPI\Exceptions\RateLimitExceedException;
 use LolAPI\Exceptions\UnknownResponseException;
+use LolAPI\Handler\ResponseInterface;
 
 class Query
 {
@@ -28,67 +29,20 @@ class Query
      */
     private $request;
 
-    /**
-     * Platform Factory
-     * @var PlatformFactory
-     */
-    private $platformFactory;
-
-    /**
-     * MatchmakingQueueType Factory
-     * @var MatchmakingQueueTypeFactory
-     */
-    private $matchmakingQueueTypeFactory;
-
-    /**
-     * MapId Factory
-     * @var MapIdFactory
-     */
-    private $mapIdFactory;
-
-    /**
-     * GameType Factory
-     * @var GameTypeFactory
-     */
-    private $gameTypeFactory;
-
-    /**
-     * GameMode Factory
-     * @var GameModeFactory
-     */
-    private $gameModeFactory;
 
     /**
      * FeaturedGames query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
-     * @param PlatformFactory $platformFactory
-     * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
-     * @param MapIdFactory $mapIdFactory
-     * @param GameTypeFactory $gameTypeFactory
-     * @param GameModeFactory $gameModeFactory
      */
-    public function __construct(
-        HandlerInterface $lolAPIHandler,
-        Request $request,
-        PlatformFactory $platformFactory,
-        MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
-        MapIdFactory $mapIdFactory,
-        GameTypeFactory $gameTypeFactory,
-        GameModeFactory $gameModeFactory
-    ){
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request){
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
-        $this->platformFactory = $platformFactory;
-        $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
-        $this->mapIdFactory = $mapIdFactory;
-        $this->gameTypeFactory = $gameTypeFactory;
-        $this->gameModeFactory = $gameModeFactory;
     }
 
     /**
      * Execute Query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      */
     public function execute()
@@ -107,15 +61,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            $queryResultBuilder = new QueryResultBuilder(
-                $this->getPlatformFactory(),
-                $this->getMatchmakingQueueTypeFactory(),
-                $this->getMapIdFactory(),
-                $this->getGameTypeFactory(),
-                $this->getGameModeFactory()
-            );
-
-            return $queryResultBuilder->build($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -143,48 +89,5 @@ class Query
     protected function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * Returns Platform Factory
-     * @return PlatformFactory
-     */
-    protected function getPlatformFactory()
-    {
-        return $this->platformFactory;
-    }
-
-    /**
-     * Returns MatchmakingQueueType Factory
-     * @return MatchmakingQueueTypeFactory
-     */
-    protected function getMatchmakingQueueTypeFactory()
-    {
-        return $this->matchmakingQueueTypeFactory;
-    }
-
-    /**
-     * Returns MapId Factory
-     * @return MapIdFactory
-     */
-    protected function getMapIdFactory()
-    {
-        return $this->mapIdFactory;
-    }
-
-    /**
-     * @return GameTypeFactory
-     */
-    protected function getGameTypeFactory()
-    {
-        return $this->gameTypeFactory;
-    }
-
-    /**
-     * @return GameModeFactory
-     */
-    protected function getGameModeFactory()
-    {
-        return $this->gameModeFactory;
     }
 }

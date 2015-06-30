@@ -12,7 +12,7 @@ use LolAPI\Exceptions\UnknownResponseException;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\League\Ver2_5\ByTeamIds\DTO\TeamDTO;
-use LolAPI\Service\League\Ver2_5\Component\DTOBuilder;
+use LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder;
 
 class Query
 {
@@ -31,27 +31,19 @@ class Query
     private $request;
 
     /**
-     * League DTO builder
-     * @var DTOBuilder
-     */
-    private $DTOBuilder;
-
-    /**
      * League.ByTeamIds query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
-     * @param DTOBuilder $DTOBuilder
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request, DTOBuilder $DTOBuilder)
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
-        $this->DTOBuilder = $DTOBuilder;
     }
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -77,7 +69,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -91,32 +83,6 @@ class Query
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Builds and returns QueryResult object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    protected function createQueryResult(ResponseInterface $response)
-    {
-        $jsonResponse = $response->parse();
-        $teamDTOs = array();
-
-        foreach($jsonResponse as $teamId => $jsonLeagues) {
-            $leagues = array();
-
-            foreach($jsonLeagues as $jsonLeague) {
-                $leagues[] = $this->getDTOBuilder()->buildLeagueDTO($jsonLeague);
-            }
-
-            $teamDTOs[] = new TeamDTO(
-                $teamId,
-                $leagues
-            );
-        }
-
-        return new QueryResult($response, $teamDTOs);
     }
 
     /**
@@ -135,14 +101,5 @@ class Query
     protected function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * Returns DTO Builder
-     * @return DTOBuilder
-     */
-    public function getDTOBuilder()
-    {
-        return $this->DTOBuilder;
     }
 }

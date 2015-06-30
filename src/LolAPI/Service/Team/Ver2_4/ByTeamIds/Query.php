@@ -31,35 +31,19 @@ class Query
     private $request;
 
     /**
-     * GameMode Factory
-     * @var GameModeFactory
-     */
-    private $gameModeFactory;
-
-    /**
-     * MapId Factory
-     * @var MapIdFactory
-     */
-    private $mapIdFactory;
-
-    /**
      * Team.BySummonerIdsIds
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
-     * @param GameModeFactory $gameModeFactory
-     * @param MapIdFactory $mapIdFactory
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request, GameModeFactory $gameModeFactory, MapIdFactory $mapIdFactory)
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
-        $this->gameModeFactory = $gameModeFactory;
-        $this->mapIdFactory = $mapIdFactory;
     }
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      * @throws |Exception
      */
@@ -85,7 +69,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -99,21 +83,6 @@ class Query
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Create and returns query result object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    protected function createQueryResult(ResponseInterface $response)
-    {
-        $queryResultBuilder = new QueryResultBuilder(
-            $this->getGameModeFactory(),
-            $this->getMapIdFactory()
-        );
-
-        return $queryResultBuilder->build($response);
     }
 
     /**
@@ -132,23 +101,5 @@ class Query
     protected function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * Returns GameMode Factory
-     * @return GameModeFactory
-     */
-    protected function getGameModeFactory()
-    {
-        return $this->gameModeFactory;
-    }
-
-    /**
-     * Returns MapId Factory
-     * @return MapIdFactory
-     */
-    protected function getMapIdFactory()
-    {
-        return $this->mapIdFactory;
     }
 }

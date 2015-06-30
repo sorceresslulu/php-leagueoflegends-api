@@ -12,9 +12,9 @@ use LolAPI\Exceptions\ServiceUnavailableException;
 use LolAPI\Exceptions\StatsDataNotFoundException;
 use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
-use LolAPI\Service\Stats\Ver1_3\Summary\QueryResult\AggregatedStatsDto;
-use LolAPI\Service\Stats\Ver1_3\Summary\QueryResult\PlayerStatsSummaryDto;
-use LolAPI\Service\Stats\Ver1_3\Summary\QueryResult\PlayerStatsSummaryListDto;
+use LolAPI\Service\Stats\Ver1_3\Summary\DTO\AggregatedStatsDto;
+use LolAPI\Service\Stats\Ver1_3\Summary\DTO\PlayerStatsSummaryDto;
+use LolAPI\Service\Stats\Ver1_3\Summary\DTO\PlayerStatsSummaryListDto;
 
 class Query
 {
@@ -32,23 +32,17 @@ class Query
      */
     private $request;
 
-    /**
-     * PlayerStatSummaryType Factory
-     * @var PlayerStatSummaryTypeFactory
-     */
-    private $playerStatSummaryTypeFactory;
+
 
     /**
      * Stats.Summary Query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
-     * @param PlayerStatSummaryTypeFactory $playerStatSummaryTypeFactory
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request, PlayerStatSummaryTypeFactory $playerStatSummaryTypeFactory)
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
-        $this->playerStatSummaryTypeFactory = $playerStatSummaryTypeFactory;
     }
 
     /**
@@ -70,17 +64,8 @@ class Query
     }
 
     /**
-     * Returns PlayerStatSummaryType factory
-     * @return PlayerStatSummaryTypeFactory
-     */
-    protected function getPlayerStatSummaryTypeFactory()
-    {
-        return $this->playerStatSummaryTypeFactory;
-    }
-
-    /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -110,7 +95,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response, $this->getPlayerStatSummaryTypeFactory());
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -124,31 +109,5 @@ class Query
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
             }
         }
-    }
-
-
-    /**
-     * Builds and returns QueryResult object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    private function createQueryResult(ResponseInterface $response, PlayerStatSummaryTypeFactory $playerStatSummaryTypeFactory)
-    {
-        $jsonResponse = $response->parse();
-        $playerStatSummaries = array();
-
-        foreach($jsonResponse['playerStatSummaries'] as $arrPlayerStatSummaries) {
-            $playerStatSummaries[] = new PlayerStatsSummaryDto(
-                $playerStatSummaryTypeFactory->createFromStringCode($arrPlayerStatSummaries['playerStatSummaryType']),
-                new AggregatedStatsDto($arrPlayerStatSummaries['aggregatedStats']),
-                isset($arrPlayerStatSummaries['losses']) ? $arrPlayerStatSummaries['losses'] : null,
-                $arrPlayerStatSummaries['wins'],
-                $arrPlayerStatSummaries['playerStatSummaryType']
-            );
-        }
-
-        $playerStatsSummaryListDTO = new PlayerStatsSummaryListDto((int) $jsonResponse['summonerId'], $playerStatSummaries);
-
-        return new QueryResult($response, $playerStatsSummaryListDTO);
     }
 }

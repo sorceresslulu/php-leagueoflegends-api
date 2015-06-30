@@ -17,50 +17,14 @@ class Service
     private $lolAPIHandler;
 
     /**
-     * TeamSide Factory
-     * @var TeamSideFactory
+     * Game.Recent service
+     * @param $lolAPIHandler
      */
-    private $teamSideFactory;
-
-    /**
-     * GameType Factory
-     * @var GameTypeFactory
-     */
-    private $gameTypeFactory;
-
-    /**
-     * GameMode Factory
-     * @var GameModeFactory
-     */
-    private $gameModeFactory;
-
-    /**
-     * SubType Factory
-     * @var SubTypeFactory
-     */
-    private $subTypeFactory;
-
-    /**
-     * MapId Factory
-     * @var MapIdFactory
-     */
-    private $mapIdFactory;
-
-    public function __construct(
-        HandlerInterface $lolAPIHandler,
-        TeamSideFactory $teamSideFactory,
-        GameTypeFactory $gameTypeFactory,
-        GameModeFactory $gameModeFactory,
-        SubTypeFactory $subTypeFactory,
-        MapIdFactory $mapIdFactory
-    ){
+    public function __construct($lolAPIHandler)
+    {
         $this->lolAPIHandler = $lolAPIHandler;
-        $this->teamSideFactory = $teamSideFactory;
-        $this->gameTypeFactory = $gameTypeFactory;
-        $this->gameModeFactory = $gameModeFactory;
-        $this->subTypeFactory = $subTypeFactory;
-        $this->mapIdFactory = $mapIdFactory;
     }
+
 
     /**
      * Create and returns a new Game.Recent query
@@ -69,15 +33,7 @@ class Service
      */
     public function createQuery(Request $request)
     {
-        return new Query(
-            $this->getLolAPIHandler(),
-            $request,
-            $this->getTeamSideFactory(),
-            $this->getGameTypeFactory(),
-            $this->getGameModeFactory(),
-            $this->getSubTypeFactory(),
-            $this->getMapIdFactory()
-        );
+        return new Query($this->getLolAPIHandler(), $request);
     }
 
     /**
@@ -87,50 +43,5 @@ class Service
     protected function getLolAPIHandler()
     {
         return $this->lolAPIHandler;
-    }
-
-    /**
-     * Returns TeamSide Factory
-     * @return TeamSideFactory
-     */
-    protected function getTeamSideFactory()
-    {
-        return $this->teamSideFactory;
-    }
-
-    /**
-     * returns GameType Factory
-     * @return GameTypeFactory
-     */
-    protected function getGameTypeFactory()
-    {
-        return $this->gameTypeFactory;
-    }
-
-    /**
-     * Returns GameMode Factory
-     * @return GameModeFactory
-     */
-    protected function getGameModeFactory()
-    {
-        return $this->gameModeFactory;
-    }
-
-    /**
-     * Returns SubType Factory
-     * @return SubTypeFactory
-     */
-    protected function getSubTypeFactory()
-    {
-        return $this->subTypeFactory;
-    }
-
-    /**
-     * Returns MapId Factory
-     * @return MapIdFactory
-     */
-    public function getMapIdFactory()
-    {
-        return $this->mapIdFactory;
     }
 }

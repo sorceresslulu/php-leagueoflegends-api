@@ -59,7 +59,7 @@ class Query
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -85,7 +85,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -99,44 +99,5 @@ class Query
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Build and returns QueryResult object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    private function createQueryResult(ResponseInterface $response)
-    {
-        $jsonResponse = $response->parse();
-        $runePagesDTOs = array();
-
-        foreach($jsonResponse as $summonerId => $arrRunePages) {
-            $pages = array();
-
-            foreach($arrRunePages['pages'] as $page) {
-                $slots = array();
-
-                if(isset($page['slots'])) {
-                    foreach($page['slots'] as $slot) {
-                        $slots[] = new QueryResult\RuneSlotDto(
-                            (int) $slot['runeId'],
-                            (int) $slot['runeSlotId']
-                        );
-                    }
-                }
-
-                $pages[] = new QueryResult\RunePageDto(
-                    (int) $page['id'],
-                    (bool) $page['current'],
-                    $page['name'],
-                    $slots
-                );
-            }
-
-            $runePagesDTOs[] = new QueryResult\RunePagesDto((int) $summonerId, $pages);
-        }
-
-        return new QueryResult($response, $runePagesDTOs);
     }
 }

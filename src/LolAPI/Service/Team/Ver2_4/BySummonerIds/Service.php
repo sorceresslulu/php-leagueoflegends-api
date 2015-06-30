@@ -13,30 +13,13 @@ class Service
      */
     private $lolAPIHandler;
 
-
-    /**
-     * GameMode Factory
-     * @var GameModeFactory
-     */
-    private $gameModeFactory;
-
-    /**
-     * MapId Factory
-     * @var MapIdFactory
-     */
-    private $mapIdFactory;
-
     /**
      * Team.BySummonerIdsIds
      * @param HandlerInterface $lolAPIHandler
-     * @param GameModeFactory $gameModeFactory
-     * @param MapIdFactory $mapIdFactory
      */
-    public function __construct(HandlerInterface $lolAPIHandler, GameModeFactory $gameModeFactory, MapIdFactory $mapIdFactory)
+    public function __construct(HandlerInterface $lolAPIHandler)
     {
         $this->lolAPIHandler = $lolAPIHandler;
-        $this->gameModeFactory = $gameModeFactory;
-        $this->mapIdFactory = $mapIdFactory;
     }
 
     /**
@@ -46,12 +29,7 @@ class Service
      */
     public function createQuery(Request $request)
     {
-        return new Query(
-            $this->getLolAPIHandler(),
-            $request,
-            $this->getGameModeFactory(),
-            $this->getMapIdFactory()
-        );
+        return new Query($this->getLolAPIHandler(), $request);
     }
 
     /**
@@ -61,23 +39,5 @@ class Service
     protected function getLolAPIHandler()
     {
         return $this->lolAPIHandler;
-    }
-
-    /**
-     * Returns GameMode Factory
-     * @return GameModeFactory
-     */
-    protected function getGameModeFactory()
-    {
-        return $this->gameModeFactory;
-    }
-
-    /**
-     * Returns MapId Factory
-     * @return MapIdFactory
-     */
-    protected function getMapIdFactory()
-    {
-        return $this->mapIdFactory;
     }
 }

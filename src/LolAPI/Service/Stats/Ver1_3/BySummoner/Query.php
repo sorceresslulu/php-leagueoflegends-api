@@ -11,9 +11,9 @@ use LolAPI\Exceptions\ServiceUnavailableException;
 use LolAPI\Exceptions\StatsDataNotFoundException;
 use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
-use LolAPI\Service\Stats\Ver1_3\BySummoner\QueryResult\AggregatedStatsDto;
-use LolAPI\Service\Stats\Ver1_3\BySummoner\QueryResult\ChampionStatsDto;
-use LolAPI\Service\Stats\Ver1_3\BySummoner\QueryResult\RankedStatsDto;
+use LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\AggregatedStatsDto;
+use LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\ChampionStatsDto;
+use LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\RankedStatsDto;
 
 class Query
 {
@@ -62,7 +62,7 @@ class Query
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -92,7 +92,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -106,31 +106,5 @@ class Query
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Builds and returns QueryResult object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    private function createQueryResult(ResponseInterface $response)
-    {
-        $jsonResponse = $response->parse();
-        $champions = array();
-
-        foreach($jsonResponse['champions'] as $arrChampion) {
-            $champions[] = new ChampionStatsDto(
-                (int) $arrChampion['id'],
-                new AggregatedStatsDto($arrChampion['stats'])
-            );
-        }
-
-        $rankedStatsDTO = new RankedStatsDto(
-            (int) $jsonResponse['summonerId'],
-            (int) $jsonResponse['modifyDate'],
-            $champions
-        );
-
-        return new QueryResult($response, $rankedStatsDTO);
     }
 }

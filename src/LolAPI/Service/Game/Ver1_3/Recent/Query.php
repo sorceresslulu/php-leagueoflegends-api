@@ -34,66 +34,19 @@ class Query
     private $request;
 
     /**
-     * TeamSide Factory
-     * @var TeamSideFactory
-     */
-    private $teamSideFactory;
-
-    /**
-     * GameType Factory
-     * @var GameTypeFactory
-     */
-    private $gameTypeFactory;
-
-    /**
-     * GameMode Factory
-     * @var GameModeFactory
-     */
-    private $gameModeFactory;
-
-    /**
-     * SubType Factory
-     * @var SubTypeFactory
-     */
-    private $subTypeFactory;
-
-    /**
-     * MapId Factory
-     * @var MapIdFactory
-     */
-    private $mapIdFactory;
-
-    /**
      * Game.Recent Query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
-     * @param TeamSideFactory $teamSideFactory
-     * @param GameTypeFactory $gameTypeFactory
-     * @param GameModeFactory $gameModeFactory
-     * @param SubTypeFactory $subTypeFactory
-     * @param MapIdFactory $mapIdFactory
      */
-    public function __construct(
-        HandlerInterface $lolAPIHandler,
-        Request $request,
-        TeamSideFactory $teamSideFactory,
-        GameTypeFactory $gameTypeFactory,
-        GameModeFactory $gameModeFactory,
-        SubTypeFactory $subTypeFactory,
-        MapIdFactory $mapIdFactory
-    ){
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
-        $this->teamSideFactory = $teamSideFactory;
-        $this->gameTypeFactory = $gameTypeFactory;
-        $this->gameModeFactory = $gameModeFactory;
-        $this->subTypeFactory = $subTypeFactory;
-        $this->mapIdFactory = $mapIdFactory;
     }
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -120,7 +73,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -134,24 +87,6 @@ class Query
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Create and returns QueryResult object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    protected function createQueryResult(ResponseInterface $response)
-    {
-        $queryResultBuilder = new QueryResultBuilder(
-            $this->getTeamSideFactory(),
-            $this->getGameTypeFactory(),
-            $this->getGameModeFactory(),
-            $this->getSubTypeFactory(),
-            $this->getMapIdFactory()
-        );
-
-        return $queryResultBuilder->build($response);
     }
 
     /**
@@ -170,50 +105,5 @@ class Query
     protected function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * Returns TeamSide Factory
-     * @return TeamSideFactory
-     */
-    protected function getTeamSideFactory()
-    {
-        return $this->teamSideFactory;
-    }
-
-    /**
-     * returns GameType Factory
-     * @return GameTypeFactory
-     */
-    protected function getGameTypeFactory()
-    {
-        return $this->gameTypeFactory;
-    }
-
-    /**
-     * Returns GameMode Factory
-     * @return GameModeFactory
-     */
-    protected function getGameModeFactory()
-    {
-        return $this->gameModeFactory;
-    }
-
-    /**
-     * Returns SubType Factory
-     * @return SubTypeFactory
-     */
-    protected function getSubTypeFactory()
-    {
-        return $this->subTypeFactory;
-    }
-
-    /**
-     * Returns MapId Factory
-     * @return MapIdFactory
-     */
-    protected function getMapIdFactory()
-    {
-        return $this->mapIdFactory;
     }
 }

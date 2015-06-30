@@ -4,7 +4,7 @@ namespace LolAPI\Service\Summoner\Ver1_4\Name;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Exceptions\LolAPIException;
-use LolAPI\Service\Summoner\Ver1_4\Name\QueryResult\SummonerDTO;
+use LolAPI\Service\Summoner\Ver1_4\Name\DTO\SummonerDTO;
 use LolAPI\Exceptions\BadRequestException;
 use LolAPI\Exceptions\SummonerNotFoundException;
 use LolAPI\Exceptions\InternalServerException;
@@ -60,7 +60,7 @@ class Query
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -87,7 +87,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -101,25 +101,5 @@ class Query
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Build and returns QueryResult object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    private function createQueryResult(ResponseInterface $response)
-    {
-        $jsonResponse = $response->parse();
-        $summonerDTOs = array();
-
-        foreach($jsonResponse as $summonerId => $summonerName) {
-            $summonerDTOs[] = new SummonerDTO(
-                (int) $summonerId,
-                $summonerName
-            );
-        }
-
-        return new QueryResult($response, $summonerDTOs);
     }
 }

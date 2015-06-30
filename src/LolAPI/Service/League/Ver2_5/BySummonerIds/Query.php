@@ -11,8 +11,6 @@ use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\League\Ver2_5\BySummonerIds\DTO\SummonerDTO;
-use LolAPI\Service\League\Ver2_5\Component\DTOBuilder;
 
 class Query
 {
@@ -31,34 +29,25 @@ class Query
     private $request;
 
     /**
-     * League DTO builder
-     * @var DTOBuilder
-     */
-    private $DTOBuilder;
-
-    /**
      * League.BySummonerIds query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
-     * @param DTOBuilder $DTOBuilder
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request, DTOBuilder $DTOBuilder)
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
-        $this->DTOBuilder = $DTOBuilder;
     }
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
     public function execute()
     {
         $request = $this->getRequest();
-
 
         $urlParams = array(
             'api_key' => $request->getApiKey()->toParam()
@@ -78,7 +67,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -92,40 +81,6 @@ class Query
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Builds and returns QueryResult object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    protected function createQueryResult(ResponseInterface $response)
-    {
-        $jsonResponse = $response->parse();
-        $summonerDTOs = array();
-
-        foreach($jsonResponse as $summonerId => $jsonLeagues) {
-            $leaguesTeam = array();
-            $leaguePlayer = array();
-
-            foreach($jsonLeagues as $jsonLeague) {
-                $league = $this->getDTOBuilder()->buildLeagueDTO($jsonLeague);
-
-                if($league->getQueue()->forSolo()) {
-                    $leaguePlayer[] = $league;
-                }else if($league->getQueue()->forTeam()) {
-                    $leaguesTeam[] = $league;
-                }
-            }
-
-            $summonerDTOs[] = new SummonerDTO(
-                (int) $summonerId,
-                $leaguePlayer,
-                $leaguesTeam
-            );
-        }
-
-        return new QueryResult($response, $summonerDTOs);
     }
 
     /**
@@ -144,14 +99,5 @@ class Query
     protected function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * Returns DTO Builder
-     * @return DTOBuilder
-     */
-    public function getDTOBuilder()
-    {
-        return $this->DTOBuilder;
     }
 }

@@ -7,7 +7,7 @@ use LolAPI\Exceptions\ForbiddenException;
 use LolAPI\Exceptions\LolAPIException;
 use LolAPI\Exceptions\RateLimitExceedException;
 use LolAPI\Exceptions\UnknownResponseException;
-use LolAPI\Service\LolStatus\Ver1_0\Shards\QueryResult\Shard;
+use LolAPI\Service\LolStatus\Ver1_0\Shards\DTO\ShardDTO;
 
 class Query
 {
@@ -38,7 +38,7 @@ class Query
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      */
     public function execute()
@@ -46,7 +46,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, "http://status.leagueoflegends.com/shards", array());
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -56,28 +56,5 @@ class Query
                 case 429: throw new RateLimitExceedException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Builds and returns QueryResult object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    private function createQueryResult(ResponseInterface $response)
-    {
-        $jsonResponse = $response->parse();
-        $shards = array();
-
-        foreach($jsonResponse as $arrShard) {
-            $shards[] = new Shard(
-                $arrShard['hostname'],
-                $arrShard['locales'],
-                $arrShard['name'],
-                $arrShard['region_tag'],
-                $arrShard['slug']
-            );
-        }
-
-        return new QueryResult($response, $shards);
     }
 }

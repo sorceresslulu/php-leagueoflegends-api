@@ -14,7 +14,7 @@ $testFunc = function()
         new LolAPI\GameConstants\LeagueTier\UnknownTierPolicy\ThrowsOutOfBoundsExceptionPolicy()
     );
 
-    $processQueryResult = function(LolAPI\Service\League\Ver2_5\Challenger\QueryResult $queryResult)
+    $processQueryResult = function(\LolAPI\Service\League\Ver2_5\Challenger\DTO\ChallengerDTO $queryResult)
     {
         if ($queryResult->getLeagueQueueType()->forSolo()) {
             printLeaguePlayerDTO($queryResult->getChallengerLeaguePlayersDTO());

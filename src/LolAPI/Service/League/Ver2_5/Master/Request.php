@@ -26,7 +26,7 @@ class Request
     private $leagueQueueType;
 
     /**
-     * League.Challenger request
+     * League.Master request
      * @param APIKey $apiKey
      * @param RegionalEndpointInterface $regionalEndpoint
      * @param LeagueQueueTypeInterface $leagueQueueType
@@ -37,7 +37,6 @@ class Request
         $this->regionalEndpoint = $regionalEndpoint;
         $this->leagueQueueType = $leagueQueueType;
     }
-
 
     /**
      * Returns API key

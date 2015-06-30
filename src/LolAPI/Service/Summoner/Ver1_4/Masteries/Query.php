@@ -4,9 +4,9 @@ namespace LolAPI\Service\Summoner\Ver1_4\Masteries;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Exceptions\LolAPIException;
-use LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult\MasteryDTO;
-use LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult\MasteryPageDTO;
-use LolAPI\Service\Summoner\Ver1_4\Masteries\QueryResult\MasteryPagesDTO;
+use LolAPI\Service\Summoner\Ver1_4\Masteries\DTO\MasteryDTO;
+use LolAPI\Service\Summoner\Ver1_4\Masteries\DTO\MasteryPageDTO;
+use LolAPI\Service\Summoner\Ver1_4\Masteries\DTO\MasteryPagesDTO;
 use LolAPI\Exceptions\BadRequestException;
 use LolAPI\Exceptions\SummonerNotFoundException;
 use LolAPI\Exceptions\InternalServerException;
@@ -62,7 +62,7 @@ class Query
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -88,7 +88,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -102,47 +102,5 @@ class Query
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Build and returns QueryResult object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    private function createQueryResult(ResponseInterface $response)
-    {
-        $jsonResponse = $response->parse();
-        $summonerDTOs = array();
-
-        foreach($jsonResponse as $summonerId => $arrMasteryPages) {
-            $pages = array();
-
-            foreach($arrMasteryPages['pages'] as $arrMasteryPage) {
-                $masteries = array();
-
-                if(isset($arrMasteryPage['masteries'])) { // Riot pls mark optional fields in your API documentation
-                    foreach($arrMasteryPage['masteries'] as $arrMastery) {
-                        $masteries[] = new MasteryDTO(
-                            (int) $arrMastery['id'],
-                            (int) $arrMastery['rank']
-                        );
-                    }
-
-                    $pages[] = new MasteryPageDTO(
-                        (int) $arrMasteryPage['id'],
-                        (bool) $arrMasteryPage['current'],
-                        $masteries,
-                        $arrMasteryPage['name']
-                    );
-                }
-            }
-
-            $summonerDTOs[] = new MasteryPagesDTO(
-                (int) $summonerId,
-                $pages
-            );
-        }
-
-        return new QueryResult($response, $summonerDTOs);
     }
 }

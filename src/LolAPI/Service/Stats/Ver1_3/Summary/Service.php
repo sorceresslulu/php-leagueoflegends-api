@@ -13,19 +13,12 @@ class Service
     private $lolAPIHandler;
 
     /**
-     * PlayerStatSummaryType Factory
-     * @var PlayerStatSummaryTypeFactory
-     */
-    private $playerStatSummaryTypeFactory;
-
-    /**
      * Service
      * @param HandlerInterface $lolAPIHandler
      */
-    function __construct(HandlerInterface $lolAPIHandler, PlayerStatSummaryTypeFactory $playerStatSummaryTypeFactory)
+    function __construct(HandlerInterface $lolAPIHandler)
     {
         $this->lolAPIHandler = $lolAPIHandler;
-        $this->playerStatSummaryTypeFactory = $playerStatSummaryTypeFactory;
     }
 
     /**
@@ -38,22 +31,12 @@ class Service
     }
 
     /**
-     * Returns PlayerStatSummaryType Factory
-     * @return PlayerStatSummaryTypeFactory
-     */
-    protected function getPlayerStatSummaryTypeFactory()
-    {
-        return $this->playerStatSummaryTypeFactory;
-    }
-
-
-    /**
      * Create and returns Stats.Summary query
      * @param Request $request
      * @return Query
      */
     public function createQuery(Request $request)
     {
-        return new Query($this->getAPIHandler(), $request, $this->getPlayerStatSummaryTypeFactory());
+        return new Query($this->getAPIHandler(), $request);
     }
 }

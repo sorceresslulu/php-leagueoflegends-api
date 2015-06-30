@@ -11,7 +11,8 @@ use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\League\Ver2_5\Component\DTOBuilder;
+use LolAPI\Service\League\Ver2_5\Master\DTO\MasterDTO;
+use LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder;
 
 class Query
 {
@@ -30,28 +31,21 @@ class Query
     private $request;
 
     /**
-     * League DTO builder
-     * @var DTOBuilder
-     */
-    private $DTOBuilder;
-
-    /**
      * League.Master query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
-     * @param DTOBuilder $DTOBuilder
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request, DTOBuilder $DTOBuilder)
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
-        $this->DTOBuilder = $DTOBuilder;
     }
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
+     * @throws \Exception
      */
     public function execute()
     {
@@ -76,7 +70,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -91,20 +85,6 @@ class Query
             }
         }
     }
-
-    /**
-     * Builds and returns query result
-     * @param ResponseInterface $response
-     * @return QueryResult
-     * @throws \Exception
-     */
-    protected function  createQueryResult(ResponseInterface $response)
-    {
-        $leagueDTO = $this->getDTOBuilder()->buildLeagueDTO($response->parse());
-
-        return new QueryResult($response, $leagueDTO->getQueue(), $leagueDTO);
-    }
-
 
     /**
      * Returns Lol API handler
@@ -122,14 +102,5 @@ class Query
     protected function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * Returns DTO Builder
-     * @return DTOBuilder
-     */
-    public function getDTOBuilder()
-    {
-        return $this->DTOBuilder;
     }
 }

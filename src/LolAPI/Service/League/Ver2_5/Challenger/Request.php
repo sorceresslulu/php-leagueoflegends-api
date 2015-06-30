@@ -38,7 +38,6 @@ class Request
         $this->leagueQueueType = $leagueQueueType;
     }
 
-
     /**
      * Returns API key
      * @return APIKey

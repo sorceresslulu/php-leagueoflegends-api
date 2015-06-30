@@ -3,7 +3,7 @@ namespace LolAPI\Service\Champion\Ver1_2\Champion;
 
 use LolAPI\Handler\HandlerInterface;
 use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\Champion\Ver1_2\ChampionList\QueryResult\ChampionDTO;
+use LolAPI\Service\Champion\Ver1_2\ChampionList\DTO\ChampionDTO;
 use LolAPI\Exceptions\BadRequestException;
 use LolAPI\Exceptions\ChampionNotFoundException;
 use LolAPI\Exceptions\InternalServerException;
@@ -59,7 +59,7 @@ class Query
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -86,7 +86,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec(self::QUERY_TYPE, $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -100,23 +100,5 @@ class Query
                 case 503: throw new ServiceUnavailableException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Builds and returns QueryResult object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    private function createQueryResult(ResponseInterface $response) {
-        $jsonResponse = $response->parse();
-
-        return new QueryResult($response, new ChampionDTO(
-            (int) $jsonResponse['id'],
-            (bool) $jsonResponse['active'],
-            (bool) $jsonResponse['botEnabled'],
-            (bool) $jsonResponse['botMmEnabled'],
-            (bool) $jsonResponse['freeToPlay'],
-            (bool) $jsonResponse['rankedPlayEnabled']
-        ));
     }
 }

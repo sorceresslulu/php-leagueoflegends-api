@@ -30,66 +30,19 @@ class Query
     private $request;
 
     /**
-     * Platform Factory
-     * @var \LolAPI\GameConstants\Platform\PlatformFactory
-     */
-    private $platformFactory;
-
-    /**
-     * MatchmakingQueueType Factory
-     * @var MatchmakingQueueTypeFactory
-     */
-    private $matchmakingQueueTypeFactory;
-
-    /**
-     * MapId Factory
-     * @var MapIdFactory
-     */
-    private $mapIdFactory;
-
-    /**
-     * GameType Factory
-     * @var GameTypeFactory
-     */
-    private $gameTypeFactory;
-
-    /**
-     * GameMode Factory
-     * @var GameModeFactory
-     */
-    private $gameModeFactory;
-
-    /**
      * CurrentGame.SpectatorGameInfo query
      * @param HandlerInterface $lolAPIHandler
      * @param Request $request
-     * @param PlatformFactory $platformFactory
-     * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
-     * @param MapIdFactory $mapIdFactory
-     * @param GameTypeFactory $gameTypeFactory
-     * @param GameModeFactory $gameModeFactory
      */
-    public function __construct(
-        HandlerInterface $lolAPIHandler,
-        Request $request,
-        PlatformFactory $platformFactory,
-        MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
-        MapIdFactory $mapIdFactory,
-        GameTypeFactory $gameTypeFactory,
-        GameModeFactory $gameModeFactory
-    ){
+    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
-        $this->platformFactory = $platformFactory;
-        $this->matchmakingQueueTypeFactory =$matchmakingQueueTypeFactory;
-        $this->mapIdFactory = $mapIdFactory;
-        $this->gameTypeFactory = $gameTypeFactory;
-        $this->gameModeFactory = $gameModeFactory;
     }
 
     /**
      * Execute query
-     * @return QueryResult
+     * @return ResponseInterface
      * @throws LolAPIException
      */
     public function execute()
@@ -110,7 +63,7 @@ class Query
         $response = $this->getLolAPIHandler()->exec("current-game-ver1.0-spectator-game-info", $serviceUrl, $urlParams);
 
         if($response->isSuccessful()) {
-            return $this->createQueryResult($response);
+            return $response;
         }else{
             switch($response->getHttpCode()) {
                 default:
@@ -122,24 +75,6 @@ class Query
                 case 404: throw new SpectatorGameInfoNotFoundException($response->getHttpCode());
             }
         }
-    }
-
-    /**
-     * Create and returns query result object
-     * @param ResponseInterface $response
-     * @return QueryResult
-     */
-    protected function createQueryResult(ResponseInterface $response)
-    {
-        $queryResultBuilder = new QueryResultBuilder(
-            $this->getPlatformFactory(),
-            $this->getMatchmakingQueueTypeFactory(),
-            $this->getMapIdFactory(),
-            $this->getGameTypeFactory(),
-            $this->getGameModeFactory()
-        );
-
-        return $queryResultBuilder->build($response);
     }
 
     /**
@@ -158,50 +93,5 @@ class Query
     protected function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * Returns platform factory
-     * @return PlatformFactory
-     */
-    protected function getPlatformFactory()
-    {
-        return $this->platformFactory;
-    }
-
-    /**
-     * Returns MatchmakingQueueType Factory
-     * @return MatchmakingQueueTypeFactory
-     */
-    protected function getMatchmakingQueueTypeFactory()
-    {
-        return $this->matchmakingQueueTypeFactory;
-    }
-
-    /**
-     * Returns MapId Factory
-     * @return MapIdFactory
-     */
-    protected function getMapIdFactory()
-    {
-        return $this->mapIdFactory;
-    }
-
-    /**
-     * Returns GameType Factory
-     * @return GameTypeFactory
-     */
-    protected function getGameTypeFactory()
-    {
-        return $this->gameTypeFactory;
-    }
-
-    /**
-     * Returns GameMode Factory
-     * @return GameModeFactory
-     */
-    protected function getGameModeFactory()
-    {
-        return $this->gameModeFactory;
     }
 }
