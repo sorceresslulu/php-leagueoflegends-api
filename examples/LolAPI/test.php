@@ -27,6 +27,8 @@ $tests = array(
     (__DIR__).'/services/summoner/ver1.4/Runes.php',
     (__DIR__).'/services/team/ver2.4/TBySummonerIds.php',
     (__DIR__).'/services/team/ver2.4/TByTeamIds.php',
+    (__DIR__).'/services/match/ver2.2/ByMatchId.php',
+    (__DIR__).'/services/match-history/ver2.2/BySummonerId.php',
 );
 
 $done = false;
