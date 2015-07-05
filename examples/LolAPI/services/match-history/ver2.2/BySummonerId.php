@@ -11,6 +11,8 @@ $testFunc = function() {
     $request = new LolAPI\Service\MatchHistory\Ver2_2\BySummonerId\Request($apiKey, $regionEndpoint, $config['summonerId']);
     $query = $service->createQuery($request);
     $response = $query->execute();
+
+    var_dump($response->parse());
 };
 
 if (!count(debug_backtrace())) {

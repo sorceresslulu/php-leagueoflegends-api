@@ -29,6 +29,7 @@ $tests = array(
     (__DIR__).'/services/team/ver2.4/TByTeamIds.php',
     (__DIR__).'/services/match/ver2.2/ByMatchId.php',
     (__DIR__).'/services/match-history/ver2.2/BySummonerId.php',
+    (__DIR__).'/services/lol-static-data/ver1.2/Rune.php',
 );
 
 $done = false;
