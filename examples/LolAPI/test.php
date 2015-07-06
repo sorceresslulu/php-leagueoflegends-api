@@ -41,4 +41,11 @@ $testRunnerInstance->runTests(array(
     '\LolAPIExamples\Champion\ChampionListTest',
     '\LolAPIExamples\CurrentGame\SpectatorGameInfoTest',
     '\LolAPIExamples\FeaturedGames\FeaturedGamesTest',
+    '\LolAPIExamples\Game\RecentTest',
+    '\LolAPIExamples\League\BySummonerIdsTest',
+    '\LolAPIExamples\League\BySummonerIdsEntryTest',
+    '\LolAPIExamples\League\ByTeamIdsTest',
+    '\LolAPIExamples\League\ByTeamIdsEntryTest',
+    '\LolAPIExamples\League\ChallengerTest',
+    '\LolAPIExamples\League\MasterTest',
 ));
