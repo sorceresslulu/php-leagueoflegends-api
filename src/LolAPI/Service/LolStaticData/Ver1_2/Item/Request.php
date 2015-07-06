@@ -21,7 +21,7 @@ class Request
     /**
      * Locale code for returned data (e.g., en_US, es_ES).
      * If not specified, the default locale for the region is used.
-     * @var string
+     * @var string|null
      */
     private $locale;
 
@@ -29,7 +29,7 @@ class Request
      * Data dragon version for returned data.
      * If not specified, the latest version for the region is used.
      * List of valid versions can be obtained from the /versions endpoint.
-     * @var string
+     * @var string|null
      */
     private $version;
 
@@ -76,17 +76,22 @@ class Request
 
     /**
      * Returns locale code for returned data (e.g., en_US, es_ES).
-     * @see \LolAPI\Service\Ver1_2\Item\Request::locale
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Item\Request::locale
      * @return string
+     * @throws \Exception
      */
     public function getLocale()
     {
+        if(!($this->isLocaleSpecified())) {
+            throw new \Exception('Locale is not specified');
+        }
+
         return $this->locale;
     }
 
     /**
      * Specify locale code for returned data (e.g., en_US, es_ES).
-     * @see \LolAPI\Service\Ver1_2\Item\Request::locale
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Item\Request::locale
      * @param string $locale
      */
     public function specifyLocale($locale)
@@ -96,7 +101,7 @@ class Request
 
     /**
      * Returns true if locale is specified
-     * @see \LolAPI\Service\Ver1_2\Item\Request::locale
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Item\Request::locale
      * @return bool
      */
     public function isLocaleSpecified()
@@ -106,18 +111,23 @@ class Request
 
     /**
      * Returns data dragon version for returned data.
-     * @see \LolAPI\Service\Ver1_2\Item\Request::version
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Item\Request::version
      * @return string
+     * @throws \Exception
      */
     public function getVersion()
     {
+        if(!($this->isVersionSpecified())) {
+            throw new \Exception('Version is not specified');
+        }
+
         return $this->version;
     }
 
     /**
      * Specify data dragon version for returned data.
      * @param string $version
-     * @see \LolAPI\Service\Ver1_2\Item\Request::version
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Item\Request::version
      */
     public function specifyVersion($version)
     {
@@ -126,7 +136,7 @@ class Request
 
     /**
      * Returns true if version is specified
-     * @see \LolAPI\Service\Ver1_2\Item\Request::version
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Item\Request::version
      * @return bool
      */
     public function isVersionSpecified()
@@ -136,17 +146,22 @@ class Request
 
     /**
      * Returns tags to return additional data.
-     * @see \LolAPI\Service\Ver1_2\Item\Request::itemListData
-     * @return string[]
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Item\Request::itemListData
+     * @return \string[]
+     * @throws \Exception
      */
     public function getItemListData()
     {
+        if(!($this->isItemListDataSpecified())) {
+            throw new \Exception('ItemListData is not specified');
+        }
+
         return $this->itemListData;
     }
 
     /**
      * Specify tags to return additional data.
-     * @see \LolAPI\Service\Ver1_2\Item\Request::itemListData
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Item\Request::itemListData
      * @param array $itemListData
      */
     public function specifyItemListData(array $itemListData)
@@ -156,7 +171,7 @@ class Request
 
     /**
      * Returns true if  tags to return additional data are specified
-     * @see \LolAPI\Service\Ver1_2\Item\Request::itemListData
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Item\Request::itemListData
      * @return bool
      */
     public function isItemListDataSpecified()

@@ -1,7 +1,8 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\Item;
+namespace LolAPI\Service\LolStaticData\Ver1_2\ChampionById;
 
 use LolAPI\Exceptions\BadRequestException;
+use LolAPI\Exceptions\ChampionNotFoundException;
 use LolAPI\Exceptions\InternalServerException;
 use LolAPI\Exceptions\LolAPIException;
 use LolAPI\Exceptions\RateLimitExceedException;
@@ -13,7 +14,7 @@ use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Query
 {
-    const QUERY_TYPE = 'lol-static-data-ver1.2-item';
+    const QUERY_TYPE = 'lol-static-data-ver1.2-champion-by-id';
 
     /**
      * Lol API Handler
@@ -57,8 +58,8 @@ class Query
             $urlParams['locale'] = $request->getLocale();
         }
 
-        if($request->isItemListDataSpecified()) {
-            $urlParams['itemListData'] = implode($request->getItemListData());
+        if($request->isChampDataSpecified()) {
+            $urlParams['champData'] = implode($request->getChampData());
         }
 
         if($request->isVersionSpecified()) {
@@ -67,9 +68,10 @@ class Query
 
         if ($request->getRegionalEndpoint()->hasRegionCode()) {
             $serviceUrl = sprintf(
-                'https://%s/api/lol/static-data/%s/v1.2/item',
+                'https://%s/api/lol/static-data/%s/v1.2/champion/%d',
                 $globalEndpoint->getHost(),
-                strtolower($request->getRegionalEndpoint()->getRegionCode())
+                strtolower($request->getRegionalEndpoint()->getRegionCode()),
+                $request->getChampionId()
             );
         } else {
             throw new \Exception(sprintf("Query cannot be executed for regional endpoint `%s`", $request->getRegionalEndpoint()->getPlatformId()));
@@ -86,6 +88,7 @@ class Query
 
                 case 400: throw new BadRequestException($response);
                 case 401: throw new UnauthorizedException($response);
+                case 404: throw new ChampionNotFoundException($response);
                 case 429: throw new RateLimitExceedException($response); // Note: Requests to this API will not be counted in your Rate Limit.
                 case 500: throw new InternalServerException($response);
                 case 503: throw new ServiceUnavailableException($response);
@@ -110,6 +113,4 @@ class Query
     {
         return $this->request;
     }
-
-
 }

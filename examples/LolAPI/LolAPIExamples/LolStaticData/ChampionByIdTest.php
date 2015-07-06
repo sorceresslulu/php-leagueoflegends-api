@@ -1,18 +1,22 @@
 <?php
 namespace LolAPIExamples\LolStaticData;
 
-use LolAPI\Service\LolStaticData\Ver1_2\Rune\Request;
-use LolAPI\Service\LolStaticData\Ver1_2\Rune\Service;
+use LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Request;
+use LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Service;
 use LolAPIExamples\ExampleTest;
 
-class RuneTest extends ExampleTest
+class ChampionByIdTest extends ExampleTest
 {
     public function testExample()
     {
         $config = $this->getConfig();
         $service = new Service($this->getLolAPIHandler());
+        $request = new Request(
+            $this->getApiKey(),
+            $this->getRegionalEndpoint(),
+            $config['championId']
+        );
 
-        $request = new Request($this->getApiKey(), $this->getRegionalEndpoint(), $config['runeId']);
         $query = $service->createQuery($request);
         $response = $query->execute();
 

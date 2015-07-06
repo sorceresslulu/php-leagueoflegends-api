@@ -13,6 +13,7 @@ class Service
 
     /**
      * LolStaticData.Rune service
+     * @see https://developer.riotgames.com/api/methods#!/968/3321
      * @param LolAPIHandlerInterface $lolAPIHandler
      */
     public function __construct(LolAPIHandlerInterface $lolAPIHandler)

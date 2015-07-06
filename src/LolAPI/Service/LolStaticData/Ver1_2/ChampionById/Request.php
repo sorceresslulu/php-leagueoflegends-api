@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\Rune;
+namespace LolAPI\Service\LolStaticData\Ver1_2\ChampionById;
 
 use LolAPI\APIKey;
 use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
@@ -19,10 +19,10 @@ class Request
     private $regionalEndpoint;
 
     /**
-     * Rune ID
+     * Champion ID
      * @var int
      */
-    private $runeId;
+    private $championId;
 
     /**
      * Locale code for returned data (e.g., en_US, es_ES).
@@ -41,27 +41,27 @@ class Request
 
     /**
      * Tags to return additional data.
-     * Only id, name, rune, and description are returned by default if this parameter isn't specified.
+     * Only id, key, name, and title are returned by default if this parameter isn't specified.
      * To return all additional data, use the tag 'all'.
      *
-     * Available options: all, colloq, consumeOnFull, consumed, depth, from, gold, hideFromAll, image,
-     * inStore, into, maps, requiredChampion, sanitizedChampion, specialRecipe, stacks, stats
+     * Available options: all allytips altimages blurb enemytips image info lore partype passive recommended
+     * skins spells stats tags
      *
      * @var string[]|null
      */
-    private $runeData;
+    private $champData;
 
     /**
-     * LolStaticData.Rune request
+     * LolStaticData.ChampionById request
      * @param APIKey $apiKey
      * @param RegionalEndpointInterface $regionalEndpoint
-     * @param int $runeId
+     * @param int $championId
      */
-    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, $runeId)
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, $championId)
     {
         $this->apiKey = $apiKey;
         $this->regionalEndpoint = $regionalEndpoint;
-        $this->runeId = $runeId;
+        $this->championId = $championId;
     }
 
     /**
@@ -83,17 +83,17 @@ class Request
     }
 
     /**
-     * Returns rune ID
+     * Returns champion ID
      * @return int
      */
-    public function getRuneId()
+    public function getChampionId()
     {
-        return $this->runeId;
+        return $this->championId;
     }
 
     /**
      * Returns locale code for returned data (e.g., en_US, es_ES).
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\Rune\Request::locale
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Request::locale
      * @return string
      * @throws \Exception
      */
@@ -108,7 +108,7 @@ class Request
 
     /**
      * Specify locale code for returned data (e.g., en_US, es_ES).
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\Rune\Request::locale
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Request::locale
      * @param string $locale
      */
     public function specifyLocale($locale)
@@ -118,7 +118,7 @@ class Request
 
     /**
      * Returns true if locale is specified
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\Rune\Request::locale
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Request::locale
      * @return bool
      */
     public function isLocaleSpecified()
@@ -128,7 +128,7 @@ class Request
 
     /**
      * Returns data dragon version for returned data.
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\Rune\Request::version
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Request::version
      * @return string
      * @throws \Exception
      */
@@ -144,7 +144,7 @@ class Request
     /**
      * Specify data dragon version for returned data.
      * @param string $version
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\Rune\Request::version
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Request::version
      */
     public function specifyVersion($version)
     {
@@ -153,7 +153,7 @@ class Request
 
     /**
      * Returns true if version is specified
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\Rune\Request::version
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Request::version
      * @return bool
      */
     public function isVersionSpecified()
@@ -163,36 +163,36 @@ class Request
 
     /**
      * Returns tags to return additional data.
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\Rune\Request::runeData
-     * @return \string[]
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Request::champData
+     * @return null|\string[]
      * @throws \Exception
      */
-    public function getRuneData()
+    public function getChampData()
     {
-        if(!($this->isRuneDataSpecified())) {
-            throw new \Exception("RuneData is not specified");
+        if(!($this->isChampDataSpecified())) {
+            throw new \Exception("Champ data is not specified");
         }
 
-        return $this->runeData;
+        return $this->champData;
+    }
+
+    /**
+     * Returns true if tags to return additional data are specified
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Request::champData
+     * @return bool
+     */
+    public function isChampDataSpecified()
+    {
+        return $this->champData !== null;
     }
 
     /**
      * Specify tags to return additional data.
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\Rune\Request::runeData
-     * @param string[] $runeData
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\ChampionById\Request::champData
+     * @param string[] $champData
      */
-    public function specifyRuneData(array $runeData)
+    public function setChampData(array $champData)
     {
-        $this->runeData = $runeData;
-    }
-
-    /**
-     * Returns true if  tags to return additional data are specified
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\Rune\Request::runeData
-     * @return bool
-     */
-    public function isRuneDataSpecified()
-    {
-        return $this->runeData !== null;
+        $this->champData = $champData;
     }
 }
