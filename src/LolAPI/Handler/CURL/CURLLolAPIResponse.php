@@ -1,6 +1,7 @@
 <?php
 namespace LolAPI\Handler\CURL;
 
+use LolAPI\Handler\LolAPIParseException;
 use LolAPI\Handler\LolAPIResponseInterface;
 
 class CURLLolAPIResponse implements LolAPIResponseInterface
@@ -49,14 +50,14 @@ class CURLLolAPIResponse implements LolAPIResponseInterface
     /**
      * Returns response as array
      * @return array
-     * @throws \Exception
+     * @throws LolAPIParseException
      */
     public function parse()
     {
         $result = json_decode($this->getResponse(), true);
 
         if(json_last_error()) {
-            throw new \Exception('Failed to parse JSON');
+            throw new LolAPIParseException('Failed to parse JSON');
         }
 
         return $result;

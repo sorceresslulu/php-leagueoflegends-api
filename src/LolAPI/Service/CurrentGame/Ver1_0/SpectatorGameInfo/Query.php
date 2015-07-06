@@ -62,12 +62,12 @@ class Query
         }else{
             switch($response->getHttpCode()) {
                 default:
-                    throw new UnknownResponseException($response->getHttpCode());
+                    throw new UnknownResponseException($response);
 
-                case 401: throw new UnauthorizedException($response->getHttpCode());
-                case 403: throw new ForbiddenException($response->getHttpCode());
-                case 429: throw new RateLimitExceedException($response->getHttpCode());
-                case 404: throw new SpectatorGameInfoNotFoundException($response->getHttpCode());
+                case 401: throw new UnauthorizedException($response);
+                case 403: throw new ForbiddenException($response);
+                case 429: throw new RateLimitExceedException($response);
+                case 404: throw new SpectatorGameInfoNotFoundException($response);
             }
         }
     }

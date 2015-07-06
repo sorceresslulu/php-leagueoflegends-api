@@ -27,8 +27,9 @@ class TestRunner
                     println("Rate limit exceed, waiting for 10 seconds", 1);
                     sleep(10);
                 }catch(\LolAPI\Exceptions\LolAPIException $e)  {
-                    println(sprintf("Error, HTTP code: %d", $e->getCode()), 1);
+                    println(sprintf("Error, HTTP code: %d, message: %s", $e->getCode(), $e->getMessage()), 1);
                     println("Failed", 1);
+                    die();
                 }
             }
         }

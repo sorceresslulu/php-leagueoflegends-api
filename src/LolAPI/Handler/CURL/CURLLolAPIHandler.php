@@ -4,7 +4,7 @@ namespace LolAPI\Handler\CURL;
 use LolAPI\Handler\LolAPIHandlerInterface;
 use LolAPI\Handler\LolAPIResponseInterface;
 
-class CURLLolAPILolAPIHandler implements LolAPIHandlerInterface
+class CURLLolAPIHandler implements LolAPIHandlerInterface
 {
     /**
      * Execute RIOT API call

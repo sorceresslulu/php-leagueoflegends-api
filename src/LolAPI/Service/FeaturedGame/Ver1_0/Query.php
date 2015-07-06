@@ -60,10 +60,10 @@ class Query
         }else{
             switch($response->getHttpCode()) {
                 default:
-                    throw new UnknownResponseException($response->getHttpCode());
+                    throw new UnknownResponseException($response);
 
-                case 403: throw new ForbiddenException($response->getHttpCode());
-                case 429: throw new RateLimitExceedException($response->getHttpCode());
+                case 403: throw new ForbiddenException($response);
+                case 429: throw new RateLimitExceedException($response);
             }
         }
     }

@@ -4,7 +4,7 @@ namespace LolAPIExamples;
 use LolAPI\APIKey;
 use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointFactory;
 use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
-use LolAPI\Handler\CURL\CURLLolAPILolAPIHandler;
+use LolAPI\Handler\CURL\CURLLolAPIHandler;
 use LolAPI\Handler\LolAPIHandlerInterface;
 
 abstract class ExampleTest implements TestInterface
@@ -52,7 +52,7 @@ abstract class ExampleTest implements TestInterface
         $this->apiKey = new APIKey($config['apiKey']);
         $this->regionalEndpoint = $regionEndpointsFactory->createFromPlatformId($config['platformId']);
         $this->outputEnabled = $enableOutput;
-        $this->lolAPIHandler = new CURLLolAPILolAPIHandler();
+        $this->lolAPIHandler = new CURLLolAPIHandler();
     }
 
     /**

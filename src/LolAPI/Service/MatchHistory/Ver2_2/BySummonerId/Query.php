@@ -94,15 +94,15 @@ class Query
         }else{
             switch($response->getHttpCode()) {
                 default:
-                    throw new UnknownResponseException($response->getHttpCode());
+                    throw new UnknownResponseException($response);
 
-                case 400: throw new BadRequestException($response->getHttpCode());
-                case 401: throw new UnauthorizedException($response->getHttpCode());
-                case 404: throw new GameNotFoundException($response->getHttpCode());
-                case 422: throw new SummonerDoesntPlayedSince2013Exception($response->getHttpCode());
-                case 429: throw new RateLimitExceedException($response->getHttpCode());
-                case 500: throw new InternalServerException($response->getHttpCode());
-                case 503: throw new ServiceUnavailableException($response->getHttpCode());
+                case 400: throw new BadRequestException($response);
+                case 401: throw new UnauthorizedException($response);
+                case 404: throw new GameNotFoundException($response);
+                case 422: throw new SummonerDoesntPlayedSince2013Exception($response);
+                case 429: throw new RateLimitExceedException($response);
+                case 500: throw new InternalServerException($response);
+                case 503: throw new ServiceUnavailableException($response);
             }
         }
     }
