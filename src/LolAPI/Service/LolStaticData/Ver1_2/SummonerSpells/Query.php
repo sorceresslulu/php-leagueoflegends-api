@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\Items;
+namespace LolAPI\Service\LolStaticData\Ver1_2\SummonerSpells;
 
 use LolAPI\Exceptions\BadRequestException;
 use LolAPI\Exceptions\InternalServerException;
@@ -14,7 +14,7 @@ use LolAPI\Handler\LolAPIResponseInterface;
 
 class Query
 {
-    const QUERY_TYPE = 'lol-static-data-ver1.2-items';
+    const QUERY_TYPE = 'lol-static-data-ver1.2-summoner-spells';
 
     /**
      * Lol API Handler
@@ -29,7 +29,7 @@ class Query
     private $request;
 
     /**
-     * LolStaticData.Items request
+     * LolStaticData.SummonerSpells request
      * @param LolAPIHandlerInterface $lolAPIHandler
      * @param Request $request
      */
@@ -58,17 +58,21 @@ class Query
             $urlParams['locale'] = $request->getLocale();
         }
 
-        if($request->isItemListDataSpecified()) {
-            $urlParams['itemListData'] = implode($request->getItemListData());
+        if($request->isSpellDataSpecified()) {
+            $urlParams['spellData'] = implode($request->getSpellData());
         }
 
         if($request->isVersionSpecified()) {
             $urlParams['version'] = $request->getVersion();
         }
 
+        if($request->isDataByIdFlagSpecified()) {
+            $urlParams['dataById'] = $request->isDataByIdEnabled() ? "true" : "false";
+        }
+
         if ($request->getRegionalEndpoint()->hasRegionCode()) {
             $serviceUrl = sprintf(
-                'https://%s/api/lol/static-data/%s/v1.2/item',
+                'https://%s/api/lol/static-data/%s/v1.2/summoner-spell',
                 $globalEndpoint->getHost(),
                 strtolower($request->getRegionalEndpoint()->getRegionCode())
             );
