@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\SummonerSpells;
+namespace LolAPI\Service\LolStaticData\Ver1_2\SummonerSpellById;
 
 use LolAPI\APIKey;
 use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
@@ -7,6 +7,12 @@ use LolAPI\Service\LolStaticData\Component\DataDragonRequest;
 
 class Request extends DataDragonRequest
 {
+    /**
+     * Summoner Spell Id
+     * @var int
+     */
+    private $summonerSpellId;
+
     /**
      * If specified as true, the returned data map will use the champions' IDs as the keys.
      * If not specified or specified as false, the returned data map will use the champions' keys instead.
@@ -30,11 +36,22 @@ class Request extends DataDragonRequest
      * LolStaticData.SummonerSpells request
      * @param APIKey $apiKey
      * @param RegionalEndpointInterface $regionalEndpoint
+     * @param int $summonerSpellId
      */
-    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint)
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, $summonerSpellId)
     {
         $this->apiKey = $apiKey;
         $this->regionalEndpoint = $regionalEndpoint;
+        $this->summonerSpellId = $summonerSpellId;
+    }
+
+    /**
+     * Returns summonerSpellId
+     * @return int
+     */
+    public function getSummonerSpellId()
+    {
+        return $this->summonerSpellId;
     }
 
     /**
