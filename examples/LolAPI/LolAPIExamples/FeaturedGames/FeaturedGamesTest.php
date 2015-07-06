@@ -1,52 +1,68 @@
 <?php
+namespace LolAPIExamples\FeaturedGames;
 
+use LolAPI\GameConstants\GameMode\GameModeFactory;
+use LolAPI\GameConstants\GameType\GameTypeFactory;
+use LolAPI\GameConstants\MapId\MapIdFactory;
+use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
+use LolAPI\GameConstants\Platform\PlatformFactory;
+use LolAPI\GameConstants\Platform\UnknownPlatformPolicy\ThrowOutOfBoundsExceptionPolicy;
+use LolAPI\Handler\ResponseInterface;
+use LolAPI\Service\FeaturedGame\Ver1_0\DTO\FeaturedGames;
 use LolAPI\Service\FeaturedGame\Ver1_0\DTOBuilder;
+use LolAPI\Service\FeaturedGame\Ver1_0\Request;
+use LolAPI\Service\FeaturedGame\Ver1_0\Service;
+use LolAPIExamples\ExampleTest;
 
-$testFunc = function()
+class FeaturedGamesTest extends ExampleTest
 {
-    $config = getConfig();
-    $apiKey = new \LolAPI\APIKey($config['apiKey']);
-    $regionEndpointsFactory = new \LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointFactory();
-    $regionEndpoint = $regionEndpointsFactory->createFromPlatformId($config['platformId']);
+    public function testExample()
+    {
+        $service = new Service($this->getLolAPIHandler());
 
-    $platformFactory = new \LolAPI\GameConstants\Platform\PlatformFactory(
-        new \LolAPI\GameConstants\Platform\UnknownPlatformPolicy\ThrowOutOfBoundsExceptionPolicy()
-    );
+        $request = new Request($this->getApiKey(), $this->getRegionalEndpoint());
+        $query = $service->createQuery($request);
+        $response = $query->execute();
 
-    $matchmakingQueueTypeFactory = new \LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory(
-        new \LolAPI\GameConstants\MatchmakingQueueType\UnknownMQTPolicy\ThrowOutOfBoundsExceptionPolicy()
-    );
+        if($this->isOutputEnabled()) {
+            $this->processRequest($this->buildDTO($response));
+        }
+    }
 
-    $mapIdFactory = new \LolAPI\GameConstants\MapId\MapIdFactory(
-        new \LolAPI\GameConstants\MapId\UnknownMapIdPolicy\ThrowOutOfBoundsExceptionPolicy()
-    );
+    private function buildDTO(ResponseInterface $response)
+    {
+        $platformFactory = new PlatformFactory(
+            new ThrowOutOfBoundsExceptionPolicy()
+        );
 
-    $gameTypeFactory = new \LolAPI\GameConstants\GameType\GameTypeFactory(
-        new \LolAPI\GameConstants\GameType\UnknownGameTypePolicy\ThrowOutOfBoundsExceptionPolicy()
-    );
+        $matchmakingQueueTypeFactory = new MatchmakingQueueTypeFactory(
+            new \LolAPI\GameConstants\MatchmakingQueueType\UnknownMQTPolicy\ThrowOutOfBoundsExceptionPolicy()
+        );
 
-    $gameModeFactory = new \LolAPI\GameConstants\GameMode\GameModeFactory(
-        new \LolAPI\GameConstants\GameMode\UnknownGameModePolicy\ThrowOutOfBoundsExceptionPolicy()
-    );
+        $mapIdFactory = new MapIdFactory(
+            new \LolAPI\GameConstants\MapId\UnknownMapIdPolicy\ThrowOutOfBoundsExceptionPolicy()
+        );
 
-    $apiHandler = new LolAPI\Handler\CURL\Handler();
-    $service = new LolAPI\Service\FeaturedGame\Ver1_0\Service($apiHandler);
+        $gameTypeFactory = new GameTypeFactory(
+            new \LolAPI\GameConstants\GameType\UnknownGameTypePolicy\ThrowOutOfBoundsExceptionPolicy()
+        );
 
-    $request = new LolAPI\Service\FeaturedGame\Ver1_0\Request($apiKey, $regionEndpoint);
-    $query = $service->createQuery($request);
-    $response = $query->execute();
+        $gameModeFactory = new GameModeFactory(
+            new \LolAPI\GameConstants\GameMode\UnknownGameModePolicy\ThrowOutOfBoundsExceptionPolicy()
+        );
 
-    $dtoBuilder = new DTOBuilder(
-        $platformFactory,
-        $matchmakingQueueTypeFactory,
-        $mapIdFactory,
-        $gameTypeFactory,
-        $gameModeFactory
-    );
+        $dtoBuilder = new DTOBuilder(
+            $platformFactory,
+            $matchmakingQueueTypeFactory,
+            $mapIdFactory,
+            $gameTypeFactory,
+            $gameModeFactory
+        );
 
-    $dto = $dtoBuilder->buildDTO($response);
+        return $dtoBuilder->buildDTO($response);
+    }
 
-    $processQueryResult = function(LolAPI\Service\FeaturedGame\Ver1_0\DTO\FeaturedGames $featuredGames)
+    private function processRequest(FeaturedGames $featuredGames)
     {
         println(sprintf("ClientRefreshInterval: %d", $featuredGames->getClientRefreshInterval()));
 
@@ -95,15 +111,5 @@ $testFunc = function()
 
             println('----------', 1);
         }
-    };
-
-    $processQueryResult($dto);
-};
-
-if (!count(debug_backtrace())) {
-    require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
-
-        $testFunc();
-}else{
-    return $testFunc;
+    }
 }

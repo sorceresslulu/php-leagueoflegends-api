@@ -4,55 +4,41 @@
  */
 require_once (__DIR__).'/bootstrap/bootstrap.php';
 
-$tests = array(
-    (__DIR__).'/services/champion/ver1.2/Champion.php',
-    (__DIR__).'/services/champion/ver1.2/ChampionList.php',
-    (__DIR__).'/services/current-game/ver1.0/SpectatorGameInfo.php',
-    (__DIR__).'/services/featured-games/ver1.0/FeaturedGames.php',
-    (__DIR__).'/services/game/ver1.3/Recent.php',
-    (__DIR__).'/services/league/ver2.5/BySummonerIds.php',
-    (__DIR__).'/services/league/ver2.5/BySummonerIdsEntry.php',
-    (__DIR__).'/services/league/ver2.5/ByTeamIds.php',
-    (__DIR__).'/services/league/ver2.5/ByTeamIdsEntry.php',
-    (__DIR__).'/services/league/ver2.5/Challenger.php',
-    (__DIR__).'/services/league/ver2.5/Master.php',
-    (__DIR__).'/services/lol-status/ver1.0/ShardsStatus.php',
-    (__DIR__).'/services/lol-status/ver1.0/ShardStatus.php',
-    (__DIR__).'/services/stats/ver1.3/BySummoner.php',
-    (__DIR__).'/services/stats/ver1.3/Summary.php',
-    (__DIR__).'/services/summoner/ver1.4/ByIds.php',
-    (__DIR__).'/services/summoner/ver1.4/ByName.php',
-    (__DIR__).'/services/summoner/ver1.4/Masteries.php',
-    (__DIR__).'/services/summoner/ver1.4/Name.php',
-    (__DIR__).'/services/summoner/ver1.4/Runes.php',
-    (__DIR__).'/services/team/ver2.4/TBySummonerIds.php',
-    (__DIR__).'/services/team/ver2.4/TByTeamIds.php',
-    (__DIR__).'/services/match/ver2.2/ByMatchId.php',
-    (__DIR__).'/services/match-history/ver2.2/BySummonerId.php',
-    (__DIR__).'/services/lol-static-data/ver1.2/Rune.php',
-);
+class TestRunner
+{
+    public function runTests(array $testClassNames)
+    {
+        foreach($testClassNames as $testIndex => $testClassName) {
+            println(sprintf("[%d/%d] Test `%s`", $testIndex, count($testClassNames), $testClassName));
 
-$done = false;
+            /** @var \LolAPIExamples\ExampleTest $test */
+            $test = new $testClassName();
+            $done = false;
 
-foreach($tests as $index => $script) {
-    $done = false;
-    $testFunc = include $script;
+            while($done === false) {
+                try {
+                    $test->disableOutput();
+                    $test->testExample();
 
-    if(is_callable($testFunc)) {
-        while(!$done) {
-            try {
-                echo sprintf("Run script [%d/%d] %s", $index, count($tests), $script), " ...";
+                    $done = true;
 
-                ob_start(); $testFunc(); ob_end_clean();
-                $done = true;
-                echo " done\n";
-            }catch(\LolAPI\Exceptions\RateLimitExceedException $e) {
-                ob_end_clean();
-                echo "rate limit exceed, waiting for 10 seconds\n";
-                sleep(10);
+                    println("Success", 1);
+                }catch(\LolAPI\Exceptions\RateLimitExceedException $e) {
+                    println("Rate limit exceed, waiting for 10 seconds", 1);
+                    sleep(10);
+                }catch(\LolAPI\Exceptions\LolAPIException $e)  {
+                    println(sprintf("Error, HTTP code: %d", $e->getCode()), 1);
+                    println("Failed", 1);
+                }
             }
         }
-    }else{
-        throw new \Exception("Test not found");
     }
 }
+
+$testRunnerInstance = new TestRunner();
+$testRunnerInstance->runTests(array(
+    '\LolAPIExamples\Champion\ChampionTest',
+    '\LolAPIExamples\Champion\ChampionListTest',
+    '\LolAPIExamples\CurrentGame\SpectatorGameInfoTest',
+    '\LolAPIExamples\FeaturedGames\FeaturedGamesTest',
+));
