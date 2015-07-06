@@ -90,6 +90,7 @@ function testMain() {
         '\LolAPIExamples\LolStaticData\LanguageStringsTest',
         '\LolAPIExamples\LolStaticData\SummonerSpellsTest',
         '\LolAPIExamples\LolStaticData\RealmTest',
+        '\LolAPIExamples\LolStaticData\MapTest',
         '\LolAPIExamples\LolStatus\ShardsTest',
         '\LolAPIExamples\LolStatus\ShardStatusTest',
         '\LolAPIExamples\Match\ByMatchIdTest',
