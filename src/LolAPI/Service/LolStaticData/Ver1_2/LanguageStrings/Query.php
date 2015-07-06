@@ -1,7 +1,8 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\Item;
+namespace LolAPI\Service\LolStaticData\Ver1_2\LanguageStrings;
 
 use LolAPI\Exceptions\BadRequestException;
+use LolAPI\Exceptions\ChampionNotFoundException;
 use LolAPI\Exceptions\InternalServerException;
 use LolAPI\Exceptions\LolAPIException;
 use LolAPI\Exceptions\RateLimitExceedException;
@@ -13,7 +14,7 @@ use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Query
 {
-    const QUERY_TYPE = 'lol-static-data-ver1.2-item';
+    const QUERY_TYPE = 'lol-static-data-ver1.2-language-strings';
 
     /**
      * Lol API Handler
@@ -28,7 +29,7 @@ class Query
     private $request;
 
     /**
-     * LolStaticData.Item request
+     * LolStaticData.LanguageStrings request
      * @param LolAPIHandlerInterface $lolAPIHandler
      * @param Request $request
      */
@@ -57,17 +58,13 @@ class Query
             $urlParams['locale'] = $request->getLocale();
         }
 
-        if($request->isItemListDataSpecified()) {
-            $urlParams['itemListData'] = implode($request->getItemListData());
-        }
-
         if($request->isVersionSpecified()) {
             $urlParams['version'] = $request->getVersion();
         }
 
         if ($request->getRegionalEndpoint()->hasRegionCode()) {
             $serviceUrl = sprintf(
-                'https://%s/api/lol/static-data/%s/v1.2/item',
+                'https://%s/api/lol/static-data/%s/v1.2/language-strings',
                 $globalEndpoint->getHost(),
                 strtolower($request->getRegionalEndpoint()->getRegionCode())
             );
@@ -86,6 +83,7 @@ class Query
 
                 case 400: throw new BadRequestException($response);
                 case 401: throw new UnauthorizedException($response);
+                case 404: throw new ChampionNotFoundException($response);
                 case 429: throw new RateLimitExceedException($response); // Note: Requests to this API will not be counted in your Rate Limit.
                 case 500: throw new InternalServerException($response);
                 case 503: throw new ServiceUnavailableException($response);
@@ -110,6 +108,4 @@ class Query
     {
         return $this->request;
     }
-
-
 }

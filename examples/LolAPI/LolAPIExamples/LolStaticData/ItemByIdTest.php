@@ -1,11 +1,11 @@
 <?php
 namespace LolAPIExamples\LolStaticData;
 
-use LolAPI\Service\LolStaticData\Ver1_2\Item\Request;
-use LolAPI\Service\LolStaticData\Ver1_2\Item\Service;
+use LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request;
+use LolAPI\Service\LolStaticData\Ver1_2\ItemById\Service;
 use LolAPIExamples\ExampleTest;
 
-class ItemTest extends ExampleTest
+class ItemByIdTest extends ExampleTest
 {
     public function testExample()
     {
