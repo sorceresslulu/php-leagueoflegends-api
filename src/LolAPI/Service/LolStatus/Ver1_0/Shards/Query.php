@@ -1,13 +1,12 @@
 <?php
 namespace LolAPI\Service\LolStatus\Ver1_0\Shards;
 
-use LolAPI\Handler\HandlerInterface;
-use LolAPI\Handler\ResponseInterface;
 use LolAPI\Exceptions\ForbiddenException;
 use LolAPI\Exceptions\LolAPIException;
 use LolAPI\Exceptions\RateLimitExceedException;
 use LolAPI\Exceptions\UnknownResponseException;
-use LolAPI\Service\LolStatus\Ver1_0\Shards\DTO\ShardDTO;
+use LolAPI\Handler\LolAPIHandlerInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 
 class Query
 {
@@ -15,21 +14,21 @@ class Query
 
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
     /**
      * LolStatus.shards query
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      */
-    public function __construct(HandlerInterface $lolAPIHandler)
+    public function __construct(LolAPIHandlerInterface $lolAPIHandler)
     {
         $this->lolAPIHandler = $lolAPIHandler;
     }
 
     /**
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     private function getLolAPIHandler()
     {
@@ -38,7 +37,7 @@ class Query
 
     /**
      * Execute query
-     * @return ResponseInterface
+     * @return LolAPIResponseInterface
      * @throws LolAPIException
      */
     public function execute()

@@ -4,8 +4,8 @@ namespace LolAPIExamples;
 use LolAPI\APIKey;
 use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointFactory;
 use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
-use LolAPI\Handler\CURL\Handler;
-use LolAPI\Handler\HandlerInterface;
+use LolAPI\Handler\CURL\CURLLolAPILolAPIHandler;
+use LolAPI\Handler\LolAPIHandlerInterface;
 
 abstract class ExampleTest implements TestInterface
 {
@@ -35,7 +35,7 @@ abstract class ExampleTest implements TestInterface
 
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
@@ -52,7 +52,7 @@ abstract class ExampleTest implements TestInterface
         $this->apiKey = new APIKey($config['apiKey']);
         $this->regionalEndpoint = $regionEndpointsFactory->createFromPlatformId($config['platformId']);
         $this->outputEnabled = $enableOutput;
-        $this->lolAPIHandler = new Handler();
+        $this->lolAPIHandler = new CURLLolAPILolAPIHandler();
     }
 
     /**
@@ -110,7 +110,7 @@ abstract class ExampleTest implements TestInterface
 
     /**
      * Returns Lol API Handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     protected function getLolAPIHandler()
     {

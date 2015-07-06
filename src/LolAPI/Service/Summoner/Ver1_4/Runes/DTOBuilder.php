@@ -1,17 +1,17 @@
 <?php
 namespace LolAPI\Service\Summoner\Ver1_4\Runes;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Summoner\Ver1_4\Runes\DTO\RunesDTO;
 
 class DTOBuilder
 {
     /**
      * Builds and returns Summoner.Runes DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return RunesDTO
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $runePagesDTOs = array();

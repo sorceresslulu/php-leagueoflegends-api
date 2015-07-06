@@ -4,7 +4,7 @@ namespace LolAPIExamples\League;
 use LolAPI\GameConstants\LeagueQueueType\LeagueQueueTypeFactory;
 use LolAPI\GameConstants\LeagueQueueType\UnknownLQTypePolicy\ThrowsOutOfBoundsExceptionPolicy;
 use LolAPI\GameConstants\LeagueTier\LeagueTierFactory;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\League\Ver2_5\ByTeamIdsEntry\DTO\TeamDTOs;
 use LolAPI\Service\League\Ver2_5\ByTeamIdsEntry\DTOBuilder;
 use LolAPI\Service\League\Ver2_5\ByTeamIdsEntry\Request;
@@ -32,7 +32,7 @@ class ByTeamIdsEntryTest extends ExampleTest
         }
     }
 
-    private function buildDTO(ResponseInterface $response)
+    private function buildDTO(LolAPIResponseInterface $response)
     {
         $leagueQueueTypeFactory = new LeagueQueueTypeFactory(
             new ThrowsOutOfBoundsExceptionPolicy()

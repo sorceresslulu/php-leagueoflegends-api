@@ -1,21 +1,21 @@
 <?php
 namespace LolAPI\Service\LolStaticData\Ver1_2\Rune;
 
-use LolAPI\Handler\HandlerInterface;
+use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Service
 {
     /**
      * Lol API handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
     /**
      * LolStaticData.Rune service
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      */
-    public function __construct(HandlerInterface $lolAPIHandler)
+    public function __construct(LolAPIHandlerInterface $lolAPIHandler)
     {
         $this->lolAPIHandler = $lolAPIHandler;
     }
@@ -33,7 +33,7 @@ class Service
 
     /**
      * Returns Lol API handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     protected function getLolAPIHandler()
     {

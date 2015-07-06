@@ -7,7 +7,7 @@ use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MapId\UnknownMapIdPolicy\ThrowOutOfBoundsExceptionPolicy;
 use LolAPI\GameConstants\SubType\SubTypeFactory;
 use LolAPI\GameConstants\TeamSide\TeamSideFactory;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Game\Ver1_3\Recent\DTO\RecentGamesDTO;
 use LolAPI\Service\Game\Ver1_3\Recent\DTOBuilder;
 use LolAPI\Service\Game\Ver1_3\Recent\Request;
@@ -30,7 +30,7 @@ class RecentTest extends ExampleTest
         }
     }
 
-    private function buildDTO(ResponseInterface $response)
+    private function buildDTO(LolAPIResponseInterface $response)
     {
         $mapIdFactory = new MapIdFactory(
             new ThrowOutOfBoundsExceptionPolicy()

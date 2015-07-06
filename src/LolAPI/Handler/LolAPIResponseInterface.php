@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\Handler;
 
-interface ResponseInterface
+interface LolAPIResponseInterface
 {
     /**
      * Returns HTTP code

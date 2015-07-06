@@ -3,7 +3,7 @@ namespace LolAPIExamples\Stats;
 
 use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeFactory;
 use LolAPI\GameConstants\PlayerStatSummaryType\UnknownPSSPolicyInterface\ThrowOutOfBoundsExceptionPolicy;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Stats\Ver1_3\Summary\DTOBuilder;
 use LolAPI\Service\Stats\Ver1_3\Summary\Request;
 use LolAPI\Service\Stats\Ver1_3\Summary\Service;
@@ -25,7 +25,7 @@ class SummaryTest extends ExampleTest
         }
     }
 
-    private function buildDTO(ResponseInterface $response)
+    private function buildDTO(LolAPIResponseInterface $response)
     {
         $playerStatSummaryTypeFactory = new PlayerStatSummaryTypeFactory(
             new ThrowOutOfBoundsExceptionPolicy()

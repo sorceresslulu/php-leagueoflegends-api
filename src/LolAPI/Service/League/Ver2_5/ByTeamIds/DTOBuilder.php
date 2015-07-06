@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\Service\League\Ver2_5\ByTeamIds;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\League\Ver2_5\ByTeamIds\DTO\TeamDTO;
 use LolAPI\Service\League\Ver2_5\ByTeamIds\DTO\TeamDTOs;
 use LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder;
@@ -25,11 +25,11 @@ class DTOBuilder
 
     /**
      * Builds and returns League.ByTeamIds DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return TeamDTOs
      * @throws \Exception
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $teamDTOs = array();

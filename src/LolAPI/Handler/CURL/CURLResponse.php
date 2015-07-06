@@ -1,9 +1,9 @@
 <?php
 namespace LolAPI\Handler\CURL;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 
-class Response implements ResponseInterface
+class CURLLolAPIResponse implements LolAPIResponseInterface
 {
     /**
      * HTTP Code

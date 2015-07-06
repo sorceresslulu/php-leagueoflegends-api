@@ -1,18 +1,13 @@
 <?php
 namespace LolAPI\Service\Game\Ver1_3\Recent;
 
-use LolAPI\GameConstants\GameMode\GameModeFactory;
-use LolAPI\GameConstants\GameType\GameTypeFactory;
-use LolAPI\GameConstants\MapId\MapIdFactory;
-use LolAPI\GameConstants\SubType\SubTypeFactory;
-use LolAPI\GameConstants\TeamSide\TeamSideFactory;
-use LolAPI\Handler\HandlerInterface;
+use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Service
 {
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
@@ -38,7 +33,7 @@ class Service
 
     /**
      * Returns Lol API Handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     protected function getLolAPIHandler()
     {

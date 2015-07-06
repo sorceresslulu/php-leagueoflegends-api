@@ -6,7 +6,7 @@ use LolAPI\GameConstants\GameType\GameTypeFactoryInterface;
 use LolAPI\GameConstants\MapId\MapIdFactoryInterface;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactoryInterface;
 use LolAPI\GameConstants\Platform\PlatformFactoryInterface;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\DTO\BannedChampion;
 use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\DTO\CurrentGameInfoDTO;
 use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\DTO\CurrentGameParticipant;
@@ -40,10 +40,10 @@ class DTOBuilder
 
     /**
      * Builds and returns CurrentGame.SpectatorGameInfo DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return \LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\DTO\CurrentGameInfoDTO
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         return $this->buildCurrentGameInfoDTO($response->parse());
     }

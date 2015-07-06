@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\Service\Summoner\Ver1_4\Masteries;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Summoner\Ver1_4\Masteries\DTO\MasteriesDTO;
 use LolAPI\Service\Summoner\Ver1_4\Masteries\DTO\MasteryDTO;
 use LolAPI\Service\Summoner\Ver1_4\Masteries\DTO\MasteryPageDTO;
@@ -9,7 +9,7 @@ use LolAPI\Service\Summoner\Ver1_4\Masteries\DTO\MasteryPagesDTO;
 
 class DTOBuilder
 {
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $summonerDTOs = array();

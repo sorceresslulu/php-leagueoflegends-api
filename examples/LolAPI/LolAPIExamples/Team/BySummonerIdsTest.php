@@ -4,7 +4,7 @@ namespace LolAPIExamples\Team;
 use LolAPI\GameConstants\GameMode\GameModeFactory;
 use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MapId\UnknownMapIdPolicy\ThrowOutOfBoundsExceptionPolicy;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Team\Ver2_4\BySummonerIds\DTO\BySummonerIdsDTO;
 use LolAPI\Service\Team\Ver2_4\BySummonerIds\DTOBuilder;
 use LolAPI\Service\Team\Ver2_4\BySummonerIds\Request;
@@ -27,7 +27,7 @@ class BySummonerIdsTest extends ExampleTest
         }
     }
 
-    private function buildDTO(ResponseInterface $response)
+    private function buildDTO(LolAPIResponseInterface $response)
     {
         $mapIdFactory = new MapIdFactory(
             new ThrowOutOfBoundsExceptionPolicy()

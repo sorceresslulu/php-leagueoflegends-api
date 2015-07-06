@@ -1,7 +1,7 @@
 <?php
 namespace LolAPIExamples\Stats;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\RankedStatsDto;
 use LolAPI\Service\Stats\Ver1_3\BySummoner\DTOBuilder;
 use LolAPI\Service\Stats\Ver1_3\BySummoner\Request;
@@ -25,7 +25,7 @@ class BySummonerTest extends ExampleTest
         }
     }
 
-    private function buildDTO(ResponseInterface $response)
+    private function buildDTO(LolAPIResponseInterface $response)
     {
         $dtoBuilder = new DTOBuilder();
 

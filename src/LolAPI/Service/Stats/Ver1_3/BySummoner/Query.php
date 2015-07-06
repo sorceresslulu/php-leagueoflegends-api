@@ -1,8 +1,6 @@
 <?php
 namespace LolAPI\Service\Stats\Ver1_3\BySummoner;
 
-use LolAPI\Handler\HandlerInterface;
-use LolAPI\Handler\ResponseInterface;
 use LolAPI\Exceptions\BadRequestException;
 use LolAPI\Exceptions\InternalServerException;
 use LolAPI\Exceptions\LolAPIException;
@@ -11,9 +9,8 @@ use LolAPI\Exceptions\ServiceUnavailableException;
 use LolAPI\Exceptions\StatsDataNotFoundException;
 use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
-use LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\AggregatedStatsDto;
-use LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\ChampionStatsDto;
-use LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\RankedStatsDto;
+use LolAPI\Handler\LolAPIHandlerInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 
 class Query
 {
@@ -21,7 +18,7 @@ class Query
 
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
@@ -33,10 +30,10 @@ class Query
 
     /**
      * Stats.BySummoner query
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      * @param Request $request
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    public function __construct(LolAPIHandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
@@ -44,7 +41,7 @@ class Query
 
     /**
      * Returns Lol API Handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     private function getLolAPIHandler()
     {
@@ -62,7 +59,7 @@ class Query
 
     /**
      * Execute query
-     * @return ResponseInterface
+     * @return LolAPIResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */

@@ -3,7 +3,7 @@ namespace LolAPI\Service\Team\Ver2_4\ByTeamIds;
 
 use LolAPI\GameConstants\GameMode\GameModeFactoryInterface;
 use LolAPI\GameConstants\MapId\MapIdFactoryInterface;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Team\Ver2_4\ByTeamIds\DTO\ByTeamIdsDTO;
 use LolAPI\Service\Team\Ver2_4\Component\TeamDTOBuilder;
 
@@ -34,10 +34,10 @@ class DTOBuilder
 
     /**
      * Builds and returns Team.ByTeamIds DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return ByTeamIdsDTO
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $teamDTOBuilder = new TeamDTOBuilder($this->getGameModeFactory(), $this->getMapIdFactory());

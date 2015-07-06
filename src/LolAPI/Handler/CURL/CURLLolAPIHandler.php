@@ -1,10 +1,10 @@
 <?php
 namespace LolAPI\Handler\CURL;
 
-use LolAPI\Handler\HandlerInterface;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIHandlerInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 
-class Handler implements HandlerInterface
+class CURLLolAPILolAPIHandler implements LolAPIHandlerInterface
 {
     /**
      * Execute RIOT API call
@@ -12,7 +12,7 @@ class Handler implements HandlerInterface
      * @param string $queryType Query Type. For gateway/caching purposes
      * @param string $serviceURL Service URL
      * @param array $params Params
-     * @return ResponseInterface
+     * @return LolAPIResponseInterface
      */
     public function exec($queryType, $serviceURL, array $params)
     {
@@ -33,7 +33,7 @@ class Handler implements HandlerInterface
 
         $response = curl_exec($curlHandler);
 
-        return new Response(
+        return new CURLLolAPIResponse(
             (int) curl_getinfo($curlHandler, CURLINFO_HTTP_CODE),
             $response
         );

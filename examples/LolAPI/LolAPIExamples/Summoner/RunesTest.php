@@ -1,7 +1,7 @@
 <?php
 namespace LolAPIExamples\Summoner;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Summoner\Ver1_4\Runes\DTO\RunesDTO;
 use LolAPI\Service\Summoner\Ver1_4\Runes\DTOBuilder;
 use LolAPI\Service\Summoner\Ver1_4\Runes\Request;
@@ -28,7 +28,7 @@ class RunesTest extends ExampleTest
         }
     }
 
-    private function buildDTO(ResponseInterface $response)
+    private function buildDTO(LolAPIResponseInterface $response)
     {
         $dtoBuilder = new DTOBuilder();
 

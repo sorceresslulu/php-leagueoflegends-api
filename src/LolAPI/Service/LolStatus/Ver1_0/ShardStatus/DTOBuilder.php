@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\Service\LolStatus\Ver1_0\ShardStatus;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\DTO\Incident;
 use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\DTO\Message;
 use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\DTO\Severity\SeverityFactory;
@@ -14,10 +14,10 @@ class DTOBuilder
 {
     /**
      * Builds and returns LolStatus.ShardStatus DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return ShardStatus
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $services = array();

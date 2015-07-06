@@ -1,25 +1,20 @@
 <?php
 namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
-use LolAPI\GameConstants\GameMode\GameModeFactory;
-use LolAPI\GameConstants\GameType\GameTypeFactory;
-use LolAPI\GameConstants\MapId\MapIdFactory;
-use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
-use LolAPI\Handler\HandlerInterface;
-use LolAPI\Handler\ResponseInterface;
 use LolAPI\Exceptions\ForbiddenException;
 use LolAPI\Exceptions\LolAPIException;
 use LolAPI\Exceptions\RateLimitExceedException;
 use LolAPI\Exceptions\SpectatorGameInfoNotFoundException;
 use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
-use LolAPI\GameConstants\Platform\PlatformFactory;
+use LolAPI\Handler\LolAPIHandlerInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 
 class Query
 {
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
@@ -31,10 +26,10 @@ class Query
 
     /**
      * CurrentGame.SpectatorGameInfo query
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      * @param Request $request
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    public function __construct(LolAPIHandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
@@ -42,7 +37,7 @@ class Query
 
     /**
      * Execute query
-     * @return ResponseInterface
+     * @return LolAPIResponseInterface
      * @throws LolAPIException
      */
     public function execute()
@@ -79,7 +74,7 @@ class Query
 
     /**
      * Returns Lol API Handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     protected function getLolAPIHandler()
     {

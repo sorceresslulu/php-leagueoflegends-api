@@ -1,13 +1,13 @@
 <?php
 namespace LolAPI\Service\Champion\Ver1_2\ChampionList;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Champion\Ver1_2\ChampionList\DTO\ChampionDTO;
 use LolAPI\Service\Champion\Ver1_2\ChampionList\DTO\ChampionListDTO;
 
 class DTOBuilder
 {
-    public function buildDTO(ResponseInterface $response) {
+    public function buildDTO(LolAPIResponseInterface $response) {
         $parsedResponse = $response->parse();
         $champions = array();
 

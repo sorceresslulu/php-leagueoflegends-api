@@ -2,7 +2,7 @@
 namespace LolAPI\Service\Stats\Ver1_3\Summary;
 
 use LolAPI\GameConstants\PlayerStatSummaryType\PSSTypeFactoryInterface;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Stats\Ver1_3\Summary\DTO\AggregatedStatsDto;
 use LolAPI\Service\Stats\Ver1_3\Summary\DTO\PlayerStatsSummaryDto;
 use LolAPI\Service\Stats\Ver1_3\Summary\DTO\PlayerStatsSummaryListDto;
@@ -27,10 +27,10 @@ class DTOBuilder
 
     /**
      * Builds and returns Stats.Summary DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return PlayerStatsSummaryListDto
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $playerStatSummaries = array();

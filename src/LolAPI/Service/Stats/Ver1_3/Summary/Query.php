@@ -1,9 +1,6 @@
 <?php
 namespace LolAPI\Service\Stats\Ver1_3\Summary;
 
-use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeFactory;
-use LolAPI\Handler\HandlerInterface;
-use LolAPI\Handler\ResponseInterface;
 use LolAPI\Exceptions\BadRequestException;
 use LolAPI\Exceptions\InternalServerException;
 use LolAPI\Exceptions\LolAPIException;
@@ -12,9 +9,8 @@ use LolAPI\Exceptions\ServiceUnavailableException;
 use LolAPI\Exceptions\StatsDataNotFoundException;
 use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
-use LolAPI\Service\Stats\Ver1_3\Summary\DTO\AggregatedStatsDto;
-use LolAPI\Service\Stats\Ver1_3\Summary\DTO\PlayerStatsSummaryDto;
-use LolAPI\Service\Stats\Ver1_3\Summary\DTO\PlayerStatsSummaryListDto;
+use LolAPI\Handler\LolAPIHandlerInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 
 class Query
 {
@@ -22,7 +18,7 @@ class Query
 
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
@@ -36,10 +32,10 @@ class Query
 
     /**
      * Stats.Summary Query
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      * @param Request $request
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    public function __construct(LolAPIHandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
@@ -47,7 +43,7 @@ class Query
 
     /**
      * Returns Lol API Handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     protected function getLolAPIHandler()
     {
@@ -65,7 +61,7 @@ class Query
 
     /**
      * Execute query
-     * @return ResponseInterface
+     * @return LolAPIResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */

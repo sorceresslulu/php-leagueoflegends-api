@@ -1,7 +1,7 @@
 <?php
 namespace LolAPIExamples\Summoner;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Summoner\Ver1_4\Name\DTO\NameDTO;
 use LolAPI\Service\Summoner\Ver1_4\Name\DTOBuilder;
 use LolAPI\Service\Summoner\Ver1_4\Name\Request;
@@ -29,7 +29,7 @@ class NameTest extends ExampleTest
         }
     }
 
-    private function buildDTO(ResponseInterface $response)
+    private function buildDTO(LolAPIResponseInterface $response)
     {
         $dtoBuilder = new DTOBuilder();
 

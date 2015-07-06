@@ -1,9 +1,9 @@
 <?php
 namespace LolAPI\Service\League\Ver2_5\Master;
 
-use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\League\Ver2_5\Master\DTO\MasterDTO;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder;
+use LolAPI\Service\League\Ver2_5\Master\DTO\MasterDTO;
 
 class DTOBuilder
 {
@@ -24,10 +24,10 @@ class DTOBuilder
 
     /**
      * Builds and returns League.Master DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return MasterDTO
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $leagueDTO = $this->getLeagueDTOBuilder()->buildLeagueDTO($response->parse());
 

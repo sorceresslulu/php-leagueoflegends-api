@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\Service\Stats\Ver1_3\BySummoner;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\AggregatedStatsDto;
 use LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\ChampionStatsDto;
 use LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\RankedStatsDto;
@@ -10,10 +10,10 @@ class DTOBuilder
 {
     /**
      * Builds and returns Stats.BySummoner DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return \LolAPI\Service\Stats\Ver1_3\BySummoner\DTO\RankedStatsDto
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $champions = array();

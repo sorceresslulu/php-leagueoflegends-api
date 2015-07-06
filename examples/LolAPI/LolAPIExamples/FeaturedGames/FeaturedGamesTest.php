@@ -7,7 +7,7 @@ use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
 use LolAPI\GameConstants\Platform\PlatformFactory;
 use LolAPI\GameConstants\Platform\UnknownPlatformPolicy\ThrowOutOfBoundsExceptionPolicy;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\FeaturedGame\Ver1_0\DTO\FeaturedGames;
 use LolAPI\Service\FeaturedGame\Ver1_0\DTOBuilder;
 use LolAPI\Service\FeaturedGame\Ver1_0\Request;
@@ -29,7 +29,7 @@ class FeaturedGamesTest extends ExampleTest
         }
     }
 
-    private function buildDTO(ResponseInterface $response)
+    private function buildDTO(LolAPIResponseInterface $response)
     {
         $platformFactory = new PlatformFactory(
             new ThrowOutOfBoundsExceptionPolicy()

@@ -1,24 +1,21 @@
 <?php
 namespace LolAPI\Service\League\Ver2_5\ByTeamIds;
 
-use LolAPI\GameConstants\LeagueQueueType\LeagueQueueTypeFactory;
-use LolAPI\GameConstants\LeagueTier\LeagueTierFactory;
-use LolAPI\Handler\HandlerInterface;
-use LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder;
+use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Service
 {
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
     /**
      * League.ByTeamIds service
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      */
-    public function __construct(HandlerInterface $lolAPIHandler) {
+    public function __construct(LolAPIHandlerInterface $lolAPIHandler) {
         $this->lolAPIHandler = $lolAPIHandler;
     }
 
@@ -34,7 +31,7 @@ class Service
 
     /**
      * Returns Lol API handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     protected function getLolAPIHandler()
     {

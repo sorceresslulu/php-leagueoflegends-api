@@ -8,7 +8,7 @@ use LolAPI\GameConstants\MapId\MapIdFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
 use LolAPI\GameConstants\MatchmakingQueueType\UnknownMQTPolicy\ThrowOutOfBoundsExceptionPolicy;
 use LolAPI\GameConstants\Platform\PlatformFactory;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\DTO\CurrentGameInfoDTO;
 use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\DTOBuilder;
 use LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo\Request;
@@ -40,7 +40,7 @@ class SpectatorGameInfoTest extends ExampleTest
         }
     }
 
-    private function generateDTO(ResponseInterface $response)
+    private function generateDTO(LolAPIResponseInterface $response)
     {
         $platformFactory = new PlatformFactory(new \LolAPI\GameConstants\Platform\UnknownPlatformPolicy\DefaultPolicy());
 

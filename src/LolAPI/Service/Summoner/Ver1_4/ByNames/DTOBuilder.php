@@ -1,17 +1,17 @@
 <?php
 namespace LolAPI\Service\Summoner\Ver1_4\ByNames;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Summoner\Ver1_4\ByNames\DTO\ByNamesDTO;
 
 class DTOBuilder
 {
     /**
      * Builds and returns Summoner.ByIds DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return \LolAPI\Service\Summoner\Ver1_4\ByNames\DTO\ByNamesDTO
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $summonerDTOs = array();

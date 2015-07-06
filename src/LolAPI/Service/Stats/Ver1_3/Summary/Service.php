@@ -1,29 +1,28 @@
 <?php
 namespace LolAPI\Service\Stats\Ver1_3\Summary;
 
-use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeFactory;
-use LolAPI\Handler\HandlerInterface;
+use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Service
 {
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
     /**
      * Service
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      */
-    function __construct(HandlerInterface $lolAPIHandler)
+    function __construct(LolAPIHandlerInterface $lolAPIHandler)
     {
         $this->lolAPIHandler = $lolAPIHandler;
     }
 
     /**
      * Returns Lol API Handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     protected function getAPIHandler()
     {

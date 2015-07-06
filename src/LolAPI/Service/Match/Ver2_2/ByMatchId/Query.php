@@ -9,8 +9,8 @@ use LolAPI\Exceptions\RateLimitExceedException;
 use LolAPI\Exceptions\ServiceUnavailableException;
 use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
-use LolAPI\Handler\HandlerInterface;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIHandlerInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 
 class Query
 {
@@ -18,7 +18,7 @@ class Query
 
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
@@ -30,10 +30,10 @@ class Query
 
     /**
      * Match.ByMatchId request
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      * @param Request $request
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    public function __construct(LolAPIHandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
@@ -41,7 +41,7 @@ class Query
 
     /**
      * Execute query
-     * @return ResponseInterface
+     * @return LolAPIResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -90,7 +90,7 @@ class Query
 
     /**
      * Returns Lol API Handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     protected function getLolAPIHandler()
     {

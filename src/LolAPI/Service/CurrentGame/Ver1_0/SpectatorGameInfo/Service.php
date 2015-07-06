@@ -1,21 +1,21 @@
 <?php
 namespace LolAPI\Service\CurrentGame\Ver1_0\SpectatorGameInfo;
 
-use LolAPI\Handler\HandlerInterface;
+use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Service
 {
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
     /**
      * CurrentGame.SpectatorGameInfo Service
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      */
-    function __construct(HandlerInterface $lolAPIHandler)
+    function __construct(LolAPIHandlerInterface $lolAPIHandler)
     {
         $this->lolAPIHandler = $lolAPIHandler;
     }
@@ -32,7 +32,7 @@ class Service
 
     /**
      * Returns Lol API Handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     protected function getLolAPIHandler()
     {

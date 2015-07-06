@@ -10,7 +10,7 @@ use LolAPI\Exceptions\ServiceUnavailableException;
 use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
 use LolAPI\GameConstants\RegionalEndpoint\Endpoints\GlobalRegionalEndpoint;
-use LolAPI\Handler\HandlerInterface;
+use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Query
 {
@@ -18,7 +18,7 @@ class Query
 
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
@@ -30,10 +30,10 @@ class Query
 
     /**
      * LolStaticData.Rune query
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      * @param Request $request
      */
-    public function __construct(HandlerInterface $lolAPIHandler, Request $request)
+    public function __construct(LolAPIHandlerInterface $lolAPIHandler, Request $request)
     {
         $this->lolAPIHandler = $lolAPIHandler;
         $this->request = $request;
@@ -41,7 +41,7 @@ class Query
 
     /**
      * Execute query
-     * @return \LolAPI\Handler\ResponseInterface
+     * @return \LolAPI\Handler\LolAPIResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -98,7 +98,7 @@ class Query
 
     /**
      * Lol API Handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     protected function getLolAPIHandler()
     {

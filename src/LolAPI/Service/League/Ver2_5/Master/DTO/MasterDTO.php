@@ -2,7 +2,6 @@
 namespace LolAPI\Service\League\Ver2_5\Master\DTO;
 
 use LolAPI\GameConstants\LeagueQueueType\LeagueQueueTypeInterface;
-use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\League\Ver2_5\Component\DTO\League\Player\LeaguePlayersDTO;
 use LolAPI\Service\League\Ver2_5\Component\DTO\League\Team\LeagueTeamsDTO;
 

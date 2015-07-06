@@ -1,28 +1,28 @@
 <?php
 namespace LolAPI\Service\Match\Ver2_2\ByMatchId;
 
-use LolAPI\Handler\HandlerInterface;
+use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Service
 {
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
     /**
      * Match.ByMatchId service
-     * @param HandlerInterface $lolAPIHandler
+     * @param LolAPIHandlerInterface $lolAPIHandler
      */
-    public function __construct(HandlerInterface $lolAPIHandler)
+    public function __construct(LolAPIHandlerInterface $lolAPIHandler)
     {
         $this->lolAPIHandler = $lolAPIHandler;
     }
 
     /**
      * Returns lol API handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     public function getLolAPIHandler()
     {

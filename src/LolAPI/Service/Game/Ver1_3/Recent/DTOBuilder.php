@@ -6,7 +6,7 @@ use LolAPI\GameConstants\GameType\GameTypeFactoryInterface;
 use LolAPI\GameConstants\MapId\MapIdFactoryInterface;
 use LolAPI\GameConstants\SubType\SubTypeFactoryInterface;
 use LolAPI\GameConstants\TeamSide\TeamSideFactoryInterface;
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\Game\Ver1_3\Recent\DTO\GameDTO;
 use LolAPI\Service\Game\Ver1_3\Recent\DTO\PlayerDTO;
 use LolAPI\Service\Game\Ver1_3\Recent\DTO\RawStatsDTO;
@@ -68,10 +68,10 @@ class DTOBuilder
 
     /**
      * Builds and returns Game.Recent DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return RecentGamesDTO
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $games = array();

@@ -1,9 +1,6 @@
 <?php
 namespace LolAPI\Service\Champion\Ver1_2\Champion;
 
-use LolAPI\Handler\HandlerInterface;
-use LolAPI\Handler\ResponseInterface;
-use LolAPI\Service\Champion\Ver1_2\ChampionList\DTO\ChampionDTO;
 use LolAPI\Exceptions\BadRequestException;
 use LolAPI\Exceptions\ChampionNotFoundException;
 use LolAPI\Exceptions\InternalServerException;
@@ -12,6 +9,8 @@ use LolAPI\Exceptions\RateLimitExceedException;
 use LolAPI\Exceptions\ServiceUnavailableException;
 use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
+use LolAPI\Handler\LolAPIHandlerInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 
 class Query
 {
@@ -19,7 +18,7 @@ class Query
 
     /**
      * Lol API Handler
-     * @var HandlerInterface
+     * @var LolAPIHandlerInterface
      */
     private $lolAPIHandler;
 
@@ -31,17 +30,17 @@ class Query
 
     /**
      * Champion.Champion query
-     * @param HandlerInterface $handler
+     * @param LolAPIHandlerInterface $handler
      * @param Request $request
      */
-    public function __construct(HandlerInterface $handler, Request $request) {
+    public function __construct(LolAPIHandlerInterface $handler, Request $request) {
         $this->lolAPIHandler = $handler;
         $this->request = $request;
     }
 
     /**
      * Returns Lol API Handler
-     * @return HandlerInterface
+     * @return LolAPIHandlerInterface
      */
     private function getLolAPIHandler()
     {
@@ -59,7 +58,7 @@ class Query
 
     /**
      * Execute query
-     * @return ResponseInterface
+     * @return LolAPIResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */

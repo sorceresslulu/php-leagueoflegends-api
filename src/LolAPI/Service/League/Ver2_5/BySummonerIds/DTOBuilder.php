@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\Service\League\Ver2_5\BySummonerIds;
 
-use LolAPI\Handler\ResponseInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 use LolAPI\Service\League\Ver2_5\BySummonerIds\DTO\SummonerDTO;
 use LolAPI\Service\League\Ver2_5\BySummonerIds\DTO\SummonerDTOs;
 use LolAPI\Service\League\Ver2_5\Component\LeagueDTOBuilder;
@@ -25,11 +25,11 @@ class DTOBuilder
 
     /**
      * Builds and returns League.BySummonerIds DTO
-     * @param ResponseInterface $response
+     * @param LolAPIResponseInterface $response
      * @return SummonerDTOs
      * @throws \Exception
      */
-    public function buildDTO(ResponseInterface $response)
+    public function buildDTO(LolAPIResponseInterface $response)
     {
         $parsedResponse = $response->parse();
         $summonerDTOs = array();
