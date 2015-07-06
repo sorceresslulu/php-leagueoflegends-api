@@ -1,23 +1,31 @@
 <?php
+namespace LolAPIExamples\LolStatus;
+
+use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\DTO\ShardStatus;
 use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\DTOBuilder;
+use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\Request;
+use LolAPI\Service\LolStatus\Ver1_0\ShardStatus\Service;
+use LolAPIExamples\ExampleTest;
 
-$testFunc = function()
+class ShardStatusTest extends ExampleTest
 {
-    $config = getConfig();
-    $regionEndpointsFactory = new \LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointFactory();
-    $regionEndpoint = $regionEndpointsFactory->createFromPlatformId($config['platformId']);
+    public function testExample()
+    {
+        $service = new Service($this->getLolAPIHandler());
 
-    $apiHandler = new LolAPI\Handler\CURL\Handler();
-    $service = new LolAPI\Service\LolStatus\Ver1_0\ShardStatus\Service($apiHandler);
+        $request = new Request($this->getRegionalEndpoint());
+        $query = $service->createQuery($request);
+        $response = $query->execute();
 
-    $request = new LolAPI\Service\LolStatus\Ver1_0\ShardStatus\Request($regionEndpoint);
-    $query = $service->createQuery($request);
-    $response = $query->execute();
+        $dtoBuilder = new DTOBuilder();
+        $dto = $dtoBuilder->buildDTO($response);
 
-    $dtoBuilder = new DTOBuilder();
-    $dto = $dtoBuilder->buildDTO($response);
+        if($this->isOutputEnabled()) {
+            $this->processResult($dto);
+        }
+    }
 
-    $processQueryResult = function(\LolAPI\Service\LolStatus\Ver1_0\ShardStatus\DTO\ShardStatus $shardStatus) {
+    private function processResult(ShardStatus $shardStatus) {
         println("Shard status");
         println(sprintf("Name: %s", $shardStatus->getName()), 1);
         println(sprintf("Hostname: %s", $shardStatus->getHostname()), 1);
@@ -66,15 +74,6 @@ $testFunc = function()
 
             println(' ', 2);
         }
-    };
+    }
 
-    $processQueryResult($dto);
-};
-
-if (!count(debug_backtrace())) {
-    require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
-
-    $testFunc();
-}else{
-    return $testFunc;
 }

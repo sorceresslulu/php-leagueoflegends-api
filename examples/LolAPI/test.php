@@ -48,4 +48,7 @@ $testRunnerInstance->runTests(array(
     '\LolAPIExamples\League\ByTeamIdsEntryTest',
     '\LolAPIExamples\League\ChallengerTest',
     '\LolAPIExamples\League\MasterTest',
+    '\LolAPIExamples\LolStaticData\RuneTest',
+    '\LolAPIExamples\LolStatus\ShardsTest',
+    '\LolAPIExamples\LolStatus\ShardStatusTest',
 ));
