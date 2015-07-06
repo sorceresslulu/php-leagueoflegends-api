@@ -81,6 +81,7 @@ function testMain() {
         '\LolAPIExamples\League\ChallengerTest',
         '\LolAPIExamples\League\MasterTest',
         '\LolAPIExamples\LolStaticData\RuneTest',
+        '\LolAPIExamples\LolStaticData\VersionsTest',
         '\LolAPIExamples\LolStatus\ShardsTest',
         '\LolAPIExamples\LolStatus\ShardStatusTest',
         '\LolAPIExamples\Match\ByMatchIdTest',

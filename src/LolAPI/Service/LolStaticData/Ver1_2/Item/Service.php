@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\Versions;
+namespace LolAPI\Service\LolStaticData\Ver1_2\Item;
 
 use LolAPI\Handler\LolAPIHandlerInterface;
 
@@ -12,7 +12,7 @@ class Service
     private $lolAPIHandler;
 
     /**
-     * LolStaticData.Versions service
+     * LolStaticData.Item service
      * @param LolAPIHandlerInterface $lolAPIHandler
      */
     public function __construct(LolAPIHandlerInterface $lolAPIHandler)
@@ -21,7 +21,7 @@ class Service
     }
 
     /**
-     * Create and returns a new LolStaticData.Versions query
+     * Create and returns a new LolStaticData.item query
      * Requests to this API will not be counted in your Rate Limit.
      * @param Request $request
      * @return Query
