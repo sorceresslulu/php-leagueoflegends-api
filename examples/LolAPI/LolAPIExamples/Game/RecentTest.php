@@ -26,7 +26,7 @@ class RecentTest extends ExampleTest
         $response = $query->execute();
 
         if($this->isOutputEnabled()) {
-            $this->processRequest($this->buildDTO($response));
+            $this->processResult($this->buildDTO($response));
         }
     }
 
@@ -63,7 +63,7 @@ class RecentTest extends ExampleTest
         return $dtoBuilder->buildDTO($response);
     }
 
-    private function processRequest(RecentGamesDTO $dto)
+    private function processResult(RecentGamesDTO $dto)
     {
         println(sprintf("Recent games for summoner (%d)", $dto->getSummonerId()));
 

@@ -25,7 +25,7 @@ class FeaturedGamesTest extends ExampleTest
         $response = $query->execute();
 
         if($this->isOutputEnabled()) {
-            $this->processRequest($this->buildDTO($response));
+            $this->processResult($this->buildDTO($response));
         }
     }
 
@@ -62,7 +62,7 @@ class FeaturedGamesTest extends ExampleTest
         return $dtoBuilder->buildDTO($response);
     }
 
-    private function processRequest(FeaturedGames $featuredGames)
+    private function processResult(FeaturedGames $featuredGames)
     {
         println(sprintf("ClientRefreshInterval: %d", $featuredGames->getClientRefreshInterval()));
 

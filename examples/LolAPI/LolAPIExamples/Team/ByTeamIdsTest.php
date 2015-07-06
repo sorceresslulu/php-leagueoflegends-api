@@ -1,33 +1,48 @@
 <?php
+namespace LolAPIExamples\Team;
+
+use LolAPI\GameConstants\GameMode\GameModeFactory;
+use LolAPI\GameConstants\MapId\MapIdFactory;
+use LolAPI\GameConstants\MapId\UnknownMapIdPolicy\ThrowOutOfBoundsExceptionPolicy;
+use LolAPI\Handler\ResponseInterface;
+use LolAPI\Service\Team\Ver2_4\ByTeamIds\DTO\ByTeamIdsDTO;
 use LolAPI\Service\Team\Ver2_4\ByTeamIds\DTOBuilder;
+use LolAPI\Service\Team\Ver2_4\ByTeamIds\Request;
+use LolAPI\Service\Team\Ver2_4\ByTeamIds\Service;
+use LolAPIExamples\ExampleTest;
 
-$testFunc = function()
+class ByTeamIdsTest extends ExampleTest
 {
-    $config = getConfig();
-    $apiKey = new \LolAPI\APIKey($config['apiKey']);
-    $regionEndpointsFactory = new \LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointFactory();
-    $regionEndpoint = $regionEndpointsFactory->createFromPlatformId($config['platformId']);
+    public function testExample()
+    {
+        $config = $this->getConfig();
+        $service = new Service($this->getLolAPIHandler());
 
-    $mapIdFactory = new \LolAPI\GameConstants\MapId\MapIdFactory(
-        new \LolAPI\GameConstants\MapId\UnknownMapIdPolicy\ThrowOutOfBoundsExceptionPolicy()
-    );
+        $request = new Request($this->getApiKey(), $this->getRegionalEndpoint(), array($config['teamId']));
+        $query = $service->createQuery($request);
+        $response = $query->execute();
 
-    $gameModeFactory = new \LolAPI\GameConstants\GameMode\GameModeFactory(
-        new \LolAPI\GameConstants\GameMode\UnknownGameModePolicy\ThrowOutOfBoundsExceptionPolicy()
-    );
+        if($this->isOutputEnabled()) {
+            $this->processResult($this->buildDTO($response));
+        }
+    }
 
-    $apiHandler = new LolAPI\Handler\CURL\Handler();
+    private function buildDTO(ResponseInterface $response)
+    {
+        $mapIdFactory = new MapIdFactory(
+            new ThrowOutOfBoundsExceptionPolicy()
+        );
 
-    $service = new LolAPI\Service\Team\Ver2_4\ByTeamIds\Service($apiHandler);
+        $gameModeFactory = new GameModeFactory(
+            new \LolAPI\GameConstants\GameMode\UnknownGameModePolicy\ThrowOutOfBoundsExceptionPolicy()
+        );
 
-    $request = new LolAPI\Service\Team\Ver2_4\ByTeamIds\Request($apiKey, $regionEndpoint, array($config['teamId']));
-    $query = $service->createQuery($request);
-    $response = $query->execute();
+        $dtoBuilder = new DTOBuilder($gameModeFactory, $mapIdFactory);
 
-    $dtoBuilder = new DTOBuilder($gameModeFactory, $mapIdFactory);
-    $dto = $dtoBuilder->buildDTO($response);
+        return $dtoBuilder->buildDTO($response);
+    }
 
-    $processQueryResult = function(LolAPI\Service\Team\Ver2_4\ByTeamIds\DTO\ByTeamIdsDTO $dto)
+    private function processResult(ByTeamIdsDTO $dto)
     {
         foreach ($dto->getTeamDTOs() as $teamDTO) {
             println(sprintf("FullId: %s", $teamDTO->getFullId()), 1);
@@ -90,15 +105,5 @@ $testFunc = function()
             }
 
         }
-    };
-
-    $processQueryResult($dto);
-};
-
-if (!count(debug_backtrace())) {
-    require_once __DIR__ . '/../../../bootstrap/bootstrap.php';
-
-    $testFunc();
-}else{
-    return $testFunc;
+    }
 }

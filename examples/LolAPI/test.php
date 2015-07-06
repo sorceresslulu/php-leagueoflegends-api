@@ -9,7 +9,7 @@ class TestRunner
     public function runTests(array $testClassNames)
     {
         foreach($testClassNames as $testIndex => $testClassName) {
-            println(sprintf("[%d/%d] Test `%s`", $testIndex, count($testClassNames), $testClassName));
+            println(sprintf("[%d/%d] Test `%s`", $testIndex + 1, count($testClassNames), $testClassName));
 
             /** @var \LolAPIExamples\ExampleTest $test */
             $test = new $testClassName();
@@ -51,4 +51,14 @@ $testRunnerInstance->runTests(array(
     '\LolAPIExamples\LolStaticData\RuneTest',
     '\LolAPIExamples\LolStatus\ShardsTest',
     '\LolAPIExamples\LolStatus\ShardStatusTest',
+    '\LolAPIExamples\Match\ByMatchIdTest',
+    '\LolAPIExamples\MatchHistory\BySummonerIdTest',
+    '\LolAPIExamples\Stats\SummaryTest',
+    '\LolAPIExamples\Summoner\ByIdsTest',
+    '\LolAPIExamples\Summoner\ByNamesTest',
+    '\LolAPIExamples\Summoner\MasteriesTest',
+    '\LolAPIExamples\Summoner\NameTest',
+    '\LolAPIExamples\Summoner\RunesTest',
+    '\LolAPIExamples\Team\BySummonerIdsTest',
+    '\LolAPIExamples\Team\ByTeamIdsTest',
 ));

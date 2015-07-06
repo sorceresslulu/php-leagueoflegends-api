@@ -21,11 +21,11 @@ class ChampionListTest extends ExampleTest
         $dto = $dtoBuilder->buildDTO($response);
 
         if($this->isOutputEnabled()) {
-            $this->processRequest($dto);
+            $this->processResult($dto);
         }
     }
 
-    private function processRequest(ChampionListDTO $championDTOs) {
+    private function processResult(ChampionListDTO $championDTOs) {
         foreach($championDTOs->getChampionDTOs() as $championDTO) {
             println(sprintf("Champion #%d", $championDTO->getId()));
             println(sprintf("Active: %s", ($championDTO->isActive() ? 'true' : 'false')), 1);

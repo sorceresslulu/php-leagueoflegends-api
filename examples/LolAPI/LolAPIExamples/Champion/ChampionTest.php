@@ -20,11 +20,11 @@ class ChampionTest extends ExampleTest
         $dto = $dtoBuilder->buildDTO($response);
 
         if($this->isOutputEnabled()) {
-            $this->processRequest($dto);
+            $this->processResult($dto);
         }
     }
 
-    private function processRequest(ChampionDTO $championDTO) {
+    private function processResult(ChampionDTO $championDTO) {
         println(sprintf("Champion #%d", $championDTO->getId()));
         println(sprintf("Active: %s", ($championDTO->isActive() ? 'true' : 'false')), 1);
         println(sprintf("BotEnabled: %s", ($championDTO->isBotEnabled() ? 'true' : 'false')), 1);

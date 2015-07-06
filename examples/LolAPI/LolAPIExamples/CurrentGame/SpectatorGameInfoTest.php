@@ -33,7 +33,7 @@ class SpectatorGameInfoTest extends ExampleTest
             $response = $query->execute();
 
             if($this->isOutputEnabled()) {
-                $this->processRequest($this->generateDTO($response));
+                $this->processResult($this->generateDTO($response));
             }
         }catch(SpectatorGameInfoNotFoundException $e) {
             println("Current game is not available atm", 1);
@@ -65,7 +65,7 @@ class SpectatorGameInfoTest extends ExampleTest
         return $dtoBuilder->buildDTO($response);
    }
 
-    private function processRequest(CurrentGameInfoDTO $currentGameInfo)
+    private function processResult(CurrentGameInfoDTO $currentGameInfo)
     {
         println(sprintf("GameId: %s", $currentGameInfo->getGameId()), 1);
         println(sprintf("GameStartTime: %s", $currentGameInfo->getGameStartTime()), 1);
