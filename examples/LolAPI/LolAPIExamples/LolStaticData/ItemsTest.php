@@ -1,20 +1,18 @@
 <?php
 namespace LolAPIExamples\LolStaticData;
 
-use LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request;
-use LolAPI\Service\LolStaticData\Ver1_2\ItemById\Service;
+use LolAPI\Service\LolStaticData\Ver1_2\Items\Request;
+use LolAPI\Service\LolStaticData\Ver1_2\Items\Service;
 use LolAPIExamples\ExampleTest;
 
-class ItemByIdTest extends ExampleTest
+class ItemsTest extends ExampleTest
 {
     public function testExample()
     {
-        $config = $this->getConfig();
         $service = new Service($this->getLolAPIHandler());
         $request = new Request(
             $this->getApiKey(),
-            $this->getRegionalEndpoint(),
-            $config['itemId']
+            $this->getRegionalEndpoint()
         );
 
         $query = $service->createQuery($request);

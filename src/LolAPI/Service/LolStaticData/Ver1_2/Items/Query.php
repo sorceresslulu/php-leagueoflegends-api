@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\ItemById;
+namespace LolAPI\Service\LolStaticData\Ver1_2\Items;
 
 use LolAPI\Exceptions\BadRequestException;
 use LolAPI\Exceptions\InternalServerException;
@@ -10,10 +10,11 @@ use LolAPI\Exceptions\UnauthorizedException;
 use LolAPI\Exceptions\UnknownResponseException;
 use LolAPI\GameConstants\RegionalEndpoint\Endpoints\GlobalRegionalEndpoint;
 use LolAPI\Handler\LolAPIHandlerInterface;
+use LolAPI\Handler\LolAPIResponseInterface;
 
 class Query
 {
-    const QUERY_TYPE = 'lol-static-data-ver1.2-item-by-id';
+    const QUERY_TYPE = 'lol-static-data-ver1.2-items';
 
     /**
      * Lol API Handler
@@ -28,7 +29,7 @@ class Query
     private $request;
 
     /**
-     * LolStaticData.ItemById request
+     * LolStaticData.Items request
      * @param LolAPIHandlerInterface $lolAPIHandler
      * @param Request $request
      */
@@ -40,7 +41,7 @@ class Query
 
     /**
      * Execute query
-     * @return \LolAPI\Handler\LolAPIResponseInterface
+     * @return LolAPIResponseInterface
      * @throws LolAPIException
      * @throws \Exception
      */
@@ -67,10 +68,9 @@ class Query
 
         if ($request->getRegionalEndpoint()->hasRegionCode()) {
             $serviceUrl = sprintf(
-                'https://%s/api/lol/static-data/%s/v1.2/item/%d',
+                'https://%s/api/lol/static-data/%s/v1.2/item',
                 $globalEndpoint->getHost(),
-                strtolower($request->getRegionalEndpoint()->getRegionCode()),
-                $request->getItemId()
+                strtolower($request->getRegionalEndpoint()->getRegionCode())
             );
         } else {
             throw new \Exception(sprintf("Query cannot be executed for regional endpoint `%s`", $request->getRegionalEndpoint()->getPlatformId()));

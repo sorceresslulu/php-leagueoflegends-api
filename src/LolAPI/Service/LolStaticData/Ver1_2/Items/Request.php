@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\ItemById;
+namespace LolAPI\Service\LolStaticData\Ver1_2\Items;
 
 use LolAPI\APIKey;
 use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
@@ -34,12 +34,6 @@ class Request
     private $version;
 
     /**
-     * Item ID
-     * @var int
-     */
-    private $itemId;
-
-    /**
      * Tags to return additional data.
      * Only type, version, basic, data, id, name, plaintext, group, and description are returned by default if this parameter isn't specified.
      * To return all additional data, use the tag 'all'.
@@ -52,16 +46,14 @@ class Request
     private $itemListData;
 
     /**
-     * LolStaticData.ItemById request
+     * LolStaticData.Item request
      * @param APIKey $apiKey
      * @param RegionalEndpointInterface $regionalEndpoint
-     * @param int $itemId
      */
-    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, $itemId)
+    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint)
     {
         $this->apiKey = $apiKey;
         $this->regionalEndpoint = $regionalEndpoint;
-        $this->itemId = $itemId;
     }
 
     /**
@@ -83,17 +75,8 @@ class Request
     }
 
     /**
-     * Returns item ID
-     * @return int
-     */
-    public function getItemId()
-    {
-        return $this->itemId;
-    }
-
-    /**
      * Returns locale code for returned data (e.g., en_US, es_ES).
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request::locale
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Items\Request::locale
      * @return string
      * @throws \Exception
      */
@@ -108,7 +91,7 @@ class Request
 
     /**
      * Specify locale code for returned data (e.g., en_US, es_ES).
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request::locale
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Items\Request::locale
      * @param string $locale
      */
     public function specifyLocale($locale)
@@ -118,7 +101,7 @@ class Request
 
     /**
      * Returns true if locale is specified
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request::locale
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Items\Request::locale
      * @return bool
      */
     public function isLocaleSpecified()
@@ -128,7 +111,7 @@ class Request
 
     /**
      * Returns data dragon version for returned data.
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request::version
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Items\Request::version
      * @return string
      * @throws \Exception
      */
@@ -144,7 +127,7 @@ class Request
     /**
      * Specify data dragon version for returned data.
      * @param string $version
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request::version
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Items\Request::version
      */
     public function specifyVersion($version)
     {
@@ -153,7 +136,7 @@ class Request
 
     /**
      * Returns true if version is specified
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request::version
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Items\Request::version
      * @return bool
      */
     public function isVersionSpecified()
@@ -163,7 +146,7 @@ class Request
 
     /**
      * Returns tags to return additional data.
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request::itemListData
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Items\Request::itemListData
      * @return \string[]
      * @throws \Exception
      */
@@ -178,7 +161,7 @@ class Request
 
     /**
      * Specify tags to return additional data.
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request::itemListData
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Items\Request::itemListData
      * @param array $itemListData
      */
     public function specifyItemListData(array $itemListData)
@@ -188,7 +171,7 @@ class Request
 
     /**
      * Returns true if  tags to return additional data are specified
-     * @see \LolAPI\Service\LolStaticData\Ver1_2\ItemById\Request::itemListData
+     * @see \LolAPI\Service\LolStaticData\Ver1_2\Items\Request::itemListData
      * @return bool
      */
     public function isItemListDataSpecified()

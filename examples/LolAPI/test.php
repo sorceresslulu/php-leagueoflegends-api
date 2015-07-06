@@ -83,6 +83,7 @@ function testMain() {
         '\LolAPIExamples\LolStaticData\RuneTest',
         '\LolAPIExamples\LolStaticData\VersionsTest',
         '\LolAPIExamples\LolStaticData\ItemByIdTest',
+        '\LolAPIExamples\LolStaticData\ItemsTest',
         '\LolAPIExamples\LolStaticData\ChampionByIdTest',
         '\LolAPIExamples\LolStaticData\ChampionsTest',
         '\LolAPIExamples\LolStaticData\LanguageStringsTest',
