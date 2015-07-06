@@ -12,9 +12,9 @@ use LolAPI\GameConstants\SubType\SubTypes\Firstblood2x2;
 use LolAPI\GameConstants\SubType\SubTypes\Hexakill;
 use LolAPI\GameConstants\SubType\SubTypes\KingPoro;
 use LolAPI\GameConstants\SubType\SubTypes\NightmareBot;
-use LolAPI\GameConstants\SubType\SubTypes\Normal3x3;
 use LolAPI\GameConstants\SubType\SubTypes\None;
 use LolAPI\GameConstants\SubType\SubTypes\Normal;
+use LolAPI\GameConstants\SubType\SubTypes\Normal3x3;
 use LolAPI\GameConstants\SubType\SubTypes\ODINUnranked;
 use LolAPI\GameConstants\SubType\SubTypes\OneForAll5x5;
 use LolAPI\GameConstants\SubType\SubTypes\RankedSolo5x5;
@@ -24,7 +24,7 @@ use LolAPI\GameConstants\SubType\SubTypes\SR6x6;
 use LolAPI\GameConstants\SubType\SubTypes\URF;
 use LolAPI\GameConstants\SubType\SubTypes\URFBot;
 
-class SubTypeFactory
+class SubTypeFactory implements SubTypeFactoryInterface
 {
     /**
      * Policy for unknown SubTypes

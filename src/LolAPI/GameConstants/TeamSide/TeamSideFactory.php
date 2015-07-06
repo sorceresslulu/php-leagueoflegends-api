@@ -4,7 +4,7 @@ namespace LolAPI\GameConstants\TeamSide;
 use LolAPI\GameConstants\TeamSide\Sides\Blue;
 use LolAPI\GameConstants\TeamSide\Sides\Purple;
 
-class TeamSideFactory
+class TeamSideFactory implements TeamSideFactoryInterface
 {
     /**
      * Policy for unknown side

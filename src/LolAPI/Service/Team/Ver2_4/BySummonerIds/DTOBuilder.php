@@ -1,8 +1,8 @@
 <?php
 namespace LolAPI\Service\Team\Ver2_4\BySummonerIds;
 
-use LolAPI\GameConstants\GameMode\GameModeFactory;
-use LolAPI\GameConstants\MapId\MapIdFactory;
+use LolAPI\GameConstants\GameMode\GameModeFactoryInterface;
+use LolAPI\GameConstants\MapId\MapIdFactoryInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\Team\Ver2_4\BySummonerIds\DTO\BySummonerIdsDTO;
 use LolAPI\Service\Team\Ver2_4\BySummonerIds\DTO\SummonerDTO;
@@ -13,22 +13,22 @@ class DTOBuilder
 {
     /**
      * GameMode Factory
-     * @var GameModeFactory
+     * @var GameModeFactoryInterface
      */
     private $gameModeFactory;
 
     /**
      * MapId Factory
-     * @var MapIdFactory
+     * @var MapIdFactoryInterface
      */
     private $mapIdFactory;
 
     /**
      * Team.BySummonerIds DTO builder
-     * @param GameModeFactory $gameModeFactory
+     * @param GameModeFactoryInterface $gameModeFactory
      * @param $mapIdFactory
      */
-    public function __construct(GameModeFactory $gameModeFactory, MapIdFactory $mapIdFactory)
+    public function __construct(GameModeFactoryInterface $gameModeFactory, MapIdFactoryInterface $mapIdFactory)
     {
         $this->gameModeFactory = $gameModeFactory;
         $this->mapIdFactory = $mapIdFactory;
@@ -60,7 +60,7 @@ class DTOBuilder
 
     /**
      * Returns GameMode factory
-     * @return GameModeFactory
+     * @return GameModeFactoryInterface
      */
     protected function getGameModeFactory()
     {
@@ -69,7 +69,7 @@ class DTOBuilder
 
     /**
      * Returns MapId Factory
-     * @return MapIdFactory
+     * @return MapIdFactoryInterface
      */
     protected function getMapIdFactory()
     {

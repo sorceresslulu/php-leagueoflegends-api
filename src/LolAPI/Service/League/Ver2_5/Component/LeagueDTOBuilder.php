@@ -1,8 +1,8 @@
 <?php
 namespace LolAPI\Service\League\Ver2_5\Component;
 
-use LolAPI\GameConstants\LeagueQueueType\LeagueQueueTypeFactory;
-use LolAPI\GameConstants\LeagueTier\LeagueTierFactory;
+use LolAPI\GameConstants\LeagueQueueType\LeagueQueueTypeFactoryInterface;
+use LolAPI\GameConstants\LeagueTier\LeagueTierFactoryInterface;
 use LolAPI\Service\League\Ver2_5\Component\DTO\League\MiniSeriesDTO;
 use LolAPI\Service\League\Ver2_5\Component\DTO\League\Player\LeaguePlayerEntryDTO;
 use LolAPI\Service\League\Ver2_5\Component\DTO\League\Player\LeaguePlayersDTO;
@@ -13,22 +13,22 @@ class LeagueDTOBuilder
 {
     /**
      * LeagueQueueType Factory
-     * @var LeagueQueueTypeFactory
+     * @var LeagueQueueTypeFactoryInterface
      */
     private $leagueQueueTypeFactory;
 
     /**
      * LeagueTier Factory
-     * @var LeagueTierFactory
+     * @var LeagueTierFactoryInterface
      */
     private $leagueTierFactory;
 
     /**
      * LeagueDTO builder
-     * @param LeagueQueueTypeFactory $leagueQueueTypeFactory
-     * @param LeagueTierFactory $leagueTierFactory
+     * @param LeagueQueueTypeFactoryInterface $leagueQueueTypeFactory
+     * @param LeagueTierFactoryInterface $leagueTierFactory
      */
-    public function __construct(LeagueQueueTypeFactory $leagueQueueTypeFactory, LeagueTierFactory $leagueTierFactory)
+    public function __construct(LeagueQueueTypeFactoryInterface $leagueQueueTypeFactory, LeagueTierFactoryInterface $leagueTierFactory)
     {
         $this->leagueQueueTypeFactory = $leagueQueueTypeFactory;
         $this->leagueTierFactory = $leagueTierFactory;
@@ -37,7 +37,7 @@ class LeagueDTOBuilder
 
     /**
      * Returns LeagueQueueType Factory
-     * @return LeagueQueueTypeFactory
+     * @return LeagueQueueTypeFactoryInterface
      */
     public function getLeagueQueueTypeFactory()
     {
@@ -46,7 +46,7 @@ class LeagueDTOBuilder
 
     /**
      * Returs LeagueTier Factory
-     * @return LeagueTierFactory
+     * @return LeagueTierFactoryInterface
      */
     protected function getLeagueTierFactory()
     {

@@ -10,7 +10,7 @@ use LolAPI\GameConstants\MapId\Maps\TT2012;
 use LolAPI\GameConstants\MapId\Maps\TTOriginal;
 use LolAPI\GameConstants\MapId\Maps\TutorialMap;
 
-class MapIdFactory
+class MapIdFactory implements MapIdFactoryInterface
 {
     /**
      * Policy for unknown MapIds

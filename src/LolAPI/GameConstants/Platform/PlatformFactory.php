@@ -1,7 +1,6 @@
 <?php
 namespace LolAPI\GameConstants\Platform;
 
-use LolAPI\GameConstants\Platform\PlatformInterface;
 use LolAPI\GameConstants\Platform\Types\BR1;
 use LolAPI\GameConstants\Platform\Types\EUN1;
 use LolAPI\GameConstants\Platform\Types\EUW1;
@@ -10,12 +9,10 @@ use LolAPI\GameConstants\Platform\Types\LA1;
 use LolAPI\GameConstants\Platform\Types\LA2;
 use LolAPI\GameConstants\Platform\Types\NA1;
 use LolAPI\GameConstants\Platform\Types\OC1;
-use LolAPI\GameConstants\Platform\Types\TR1;
 use LolAPI\GameConstants\Platform\Types\RU;
-use LolAPI\GameConstants\Platform\Types\Unknown;
-use LolAPI\GameConstants\Platform\UnknownPlatformPolicyInterface;
+use LolAPI\GameConstants\Platform\Types\TR1;
 
-class PlatformFactory
+class PlatformFactory implements PlatformFactoryInterface
 {
     /**
      * Policy for unknown platforms

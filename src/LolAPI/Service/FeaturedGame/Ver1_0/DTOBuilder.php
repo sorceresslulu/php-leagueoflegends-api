@@ -1,11 +1,11 @@
 <?php
 namespace LolAPI\Service\FeaturedGame\Ver1_0;
 
-use LolAPI\GameConstants\GameMode\GameModeFactory;
-use LolAPI\GameConstants\GameType\GameTypeFactory;
-use LolAPI\GameConstants\MapId\MapIdFactory;
-use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactory;
-use LolAPI\GameConstants\Platform\PlatformFactory;
+use LolAPI\GameConstants\GameMode\GameModeFactoryInterface;
+use LolAPI\GameConstants\GameType\GameTypeFactoryInterface;
+use LolAPI\GameConstants\MapId\MapIdFactoryInterface;
+use LolAPI\GameConstants\MatchmakingQueueType\MatchmakingQueueTypeFactoryInterface;
+use LolAPI\GameConstants\Platform\PlatformFactoryInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\FeaturedGame\Ver1_0\DTO\BannedChampion;
 use LolAPI\Service\FeaturedGame\Ver1_0\DTO\FeaturedGameInfoDTO;
@@ -17,49 +17,49 @@ class DTOBuilder
 {
     /**
      * Platform Factory
-     * @var PlatformFactory
+     * @var PlatformFactoryInterface
      */
     private $platformFactory;
 
     /**
      * MatchmakingQueueType Factory
-     * @var MatchmakingQueueTypeFactory
+     * @var MatchmakingQueueTypeFactoryInterface
      */
     private $matchmakingQueueTypeFactory;
 
     /**
      * MapId Factory
-     * @var MapIdFactory
+     * @var MapIdFactoryInterface
      */
     private $mapIdFactory;
 
     /**
      * GameType Factory
-     * @var GameTypeFactory
+     * @var GameTypeFactoryInterface
      */
     private $gameTypeFactory;
 
     /**
      * GameMode Factory
-     * @var GameModeFactory
+     * @var GameModeFactoryInterface
      */
     private $gameModeFactory;
 
 
     /**
      * FeaturedGames DTO builder
-     * @param PlatformFactory $platformFactory
-     * @param MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory
-     * @param MapIdFactory $mapIdFactory
-     * @param GameTypeFactory $gameTypeFactory
-     * @param GameModeFactory $gameModeFactory
+     * @param PlatformFactoryInterface $platformFactory
+     * @param MatchmakingQueueTypeFactoryInterface $matchmakingQueueTypeFactory
+     * @param MapIdFactoryInterface $mapIdFactory
+     * @param GameTypeFactoryInterface $gameTypeFactory
+     * @param GameModeFactoryInterface $gameModeFactory
      */
     public function __construct(
-        PlatformFactory $platformFactory,
-        MatchmakingQueueTypeFactory $matchmakingQueueTypeFactory,
-        MapIdFactory $mapIdFactory,
-        GameTypeFactory $gameTypeFactory,
-        GameModeFactory $gameModeFactory
+        PlatformFactoryInterface $platformFactory,
+        MatchmakingQueueTypeFactoryInterface $matchmakingQueueTypeFactory,
+        MapIdFactoryInterface $mapIdFactory,
+        GameTypeFactoryInterface $gameTypeFactory,
+        GameModeFactoryInterface $gameModeFactory
     ){
         $this->platformFactory = $platformFactory;
         $this->matchmakingQueueTypeFactory = $matchmakingQueueTypeFactory;
@@ -188,7 +188,7 @@ class DTOBuilder
 
     /**
      * Returns Platform Factory
-     * @return PlatformFactory
+     * @return PlatformFactoryInterface
      */
     protected function getPlatformFactory()
     {
@@ -197,7 +197,7 @@ class DTOBuilder
 
     /**
      * Returns MatchmakingQueueType Factory
-     * @return MatchmakingQueueTypeFactory
+     * @return MatchmakingQueueTypeFactoryInterface
      */
     protected function getMatchmakingQueueTypeFactory()
     {
@@ -206,7 +206,7 @@ class DTOBuilder
 
     /**
      * Returns MapId Factory
-     * @return MapIdFactory
+     * @return MapIdFactoryInterface
      */
     protected function getMapIdFactory()
     {
@@ -214,7 +214,7 @@ class DTOBuilder
     }
 
     /**
-     * @return GameTypeFactory
+     * @return GameTypeFactoryInterface
      */
     protected function getGameTypeFactory()
     {
@@ -222,7 +222,7 @@ class DTOBuilder
     }
 
     /**
-     * @return GameModeFactory
+     * @return GameModeFactoryInterface
      */
     protected function getGameModeFactory()
     {

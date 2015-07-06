@@ -10,7 +10,7 @@ use LolAPI\GameConstants\GameMode\Modes\ODIN;
 use LolAPI\GameConstants\GameMode\Modes\OneForAll;
 use LolAPI\GameConstants\GameMode\Modes\Tutorial;
 
-class GameModeFactory
+class GameModeFactory implements GameModeFactoryInterface
 {
     /**
      * Policy for unknown GameMode

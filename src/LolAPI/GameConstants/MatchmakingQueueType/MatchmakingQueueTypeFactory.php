@@ -34,7 +34,7 @@ use LolAPI\GameConstants\MatchmakingQueueType\QueueTypes\RankedTeam5x5;
 use LolAPI\GameConstants\MatchmakingQueueType\QueueTypes\SR6x6;
 use LolAPI\GameConstants\MatchmakingQueueType\QueueTypes\URF5x5;
 
-class MatchmakingQueueTypeFactory
+class MatchmakingQueueTypeFactory implements MatchmakingQueueTypeFactoryInterface
 {
     /**
      * Policy for unknown MatchmakingQueueType

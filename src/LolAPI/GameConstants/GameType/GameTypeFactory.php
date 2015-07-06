@@ -5,7 +5,7 @@ use LolAPI\GameConstants\GameType\Types\Custom;
 use LolAPI\GameConstants\GameType\Types\Matched;
 use LolAPI\GameConstants\GameType\Types\Tutorial;
 
-class GameTypeFactory
+class GameTypeFactory implements GameTypeFactoryInterface
 {
     /**
      * Policy for unknown GameType

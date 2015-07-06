@@ -5,7 +5,7 @@ use LolAPI\GameConstants\LeagueQueueType\Types\RankedSolo5x5LQType;
 use LolAPI\GameConstants\LeagueQueueType\Types\RankedTeam3x3LQType;
 use LolAPI\GameConstants\LeagueQueueType\Types\RankedTeam5x5LQType;
 
-class LeagueQueueTypeFactory
+class LeagueQueueTypeFactory implements LeagueQueueTypeFactoryInterface
 {
     /**
      * Policy for unknown league queue type

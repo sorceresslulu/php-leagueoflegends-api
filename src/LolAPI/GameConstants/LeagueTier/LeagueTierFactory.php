@@ -9,7 +9,7 @@ use LolAPI\GameConstants\LeagueTier\Tiers\MasterTier;
 use LolAPI\GameConstants\LeagueTier\Tiers\PlatinumTier;
 use LolAPI\GameConstants\LeagueTier\Tiers\SilverTier;
 
-class LeagueTierFactory
+class LeagueTierFactory implements LeagueTierFactoryInterface
 {
     /**
      * Policy for unknown tiers

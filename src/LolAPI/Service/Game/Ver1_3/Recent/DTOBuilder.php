@@ -1,11 +1,11 @@
 <?php
 namespace LolAPI\Service\Game\Ver1_3\Recent;
 
-use LolAPI\GameConstants\GameMode\GameModeFactory;
-use LolAPI\GameConstants\GameType\GameTypeFactory;
-use LolAPI\GameConstants\MapId\MapIdFactory;
-use LolAPI\GameConstants\SubType\SubTypeFactory;
-use LolAPI\GameConstants\TeamSide\TeamSideFactory;
+use LolAPI\GameConstants\GameMode\GameModeFactoryInterface;
+use LolAPI\GameConstants\GameType\GameTypeFactoryInterface;
+use LolAPI\GameConstants\MapId\MapIdFactoryInterface;
+use LolAPI\GameConstants\SubType\SubTypeFactoryInterface;
+use LolAPI\GameConstants\TeamSide\TeamSideFactoryInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\Game\Ver1_3\Recent\DTO\GameDTO;
 use LolAPI\Service\Game\Ver1_3\Recent\DTO\PlayerDTO;
@@ -16,48 +16,48 @@ class DTOBuilder
 {
     /**
      * TeamSide Factory
-     * @var TeamSideFactory
+     * @var TeamSideFactoryInterface
      */
     private $teamSideFactory;
 
     /**
      * GameType Factory
-     * @var GameTypeFactory
+     * @var GameTypeFactoryInterface
      */
     private $gameTypeFactory;
 
     /**
      * GameMode Factory
-     * @var GameModeFactory
+     * @var GameModeFactoryInterface
      */
     private $gameModeFactory;
 
     /**
      * SubType Factory
-     * @var SubTypeFactory
+     * @var SubTypeFactoryInterface
      */
     private $subTypeFactory;
 
     /**
      * MapId Factory
-     * @var MapIdFactory
+     * @var MapIdFactoryInterface
      */
     private $mapIdFactory;
 
     /**
      * Game.Recent DTO builder
-     * @param TeamSideFactory $teamSideFactory
-     * @param GameTypeFactory $gameTypeFactory
-     * @param GameModeFactory $gameModeFactory
-     * @param SubTypeFactory $subTypeFactory
-     * @param MapIdFactory $mapIdFactory
+     * @param TeamSideFactoryInterface $teamSideFactory
+     * @param GameTypeFactoryInterface $gameTypeFactory
+     * @param GameModeFactoryInterface $gameModeFactory
+     * @param SubTypeFactoryInterface $subTypeFactory
+     * @param MapIdFactoryInterface $mapIdFactory
      */
     public function __construct(
-        TeamSideFactory $teamSideFactory,
-        GameTypeFactory $gameTypeFactory,
-        GameModeFactory $gameModeFactory,
-        SubTypeFactory $subTypeFactory,
-        MapIdFactory $mapIdFactory
+        TeamSideFactoryInterface $teamSideFactory,
+        GameTypeFactoryInterface $gameTypeFactory,
+        GameModeFactoryInterface $gameModeFactory,
+        SubTypeFactoryInterface $subTypeFactory,
+        MapIdFactoryInterface $mapIdFactory
     ){
         $this->teamSideFactory = $teamSideFactory;
         $this->gameTypeFactory = $gameTypeFactory;
@@ -133,7 +133,7 @@ class DTOBuilder
 
     /**
      * Returns TeamSide Factory
-     * @return TeamSideFactory
+     * @return TeamSideFactoryInterface
      */
     protected function getTeamSideFactory()
     {
@@ -142,7 +142,7 @@ class DTOBuilder
 
     /**
      * returns GameType Factory
-     * @return GameTypeFactory
+     * @return GameTypeFactoryInterface
      */
     protected function getGameTypeFactory()
     {
@@ -151,7 +151,7 @@ class DTOBuilder
 
     /**
      * Returns GameMode Factory
-     * @return GameModeFactory
+     * @return GameModeFactoryInterface
      */
     protected function getGameModeFactory()
     {
@@ -160,7 +160,7 @@ class DTOBuilder
 
     /**
      * Returns SubType Factory
-     * @return SubTypeFactory
+     * @return SubTypeFactoryInterface
      */
     protected function getSubTypeFactory()
     {
@@ -169,7 +169,7 @@ class DTOBuilder
 
     /**
      * Returns MapID Factory
-     * @return MapIdFactory
+     * @return MapIdFactoryInterface
      */
     public function getMapIdFactory()
     {

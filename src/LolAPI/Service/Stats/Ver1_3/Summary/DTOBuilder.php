@@ -1,7 +1,7 @@
 <?php
 namespace LolAPI\Service\Stats\Ver1_3\Summary;
 
-use LolAPI\GameConstants\PlayerStatSummaryType\PlayerStatSummaryTypeFactory;
+use LolAPI\GameConstants\PlayerStatSummaryType\PSSTypeFactoryInterface;
 use LolAPI\Handler\ResponseInterface;
 use LolAPI\Service\Stats\Ver1_3\Summary\DTO\AggregatedStatsDto;
 use LolAPI\Service\Stats\Ver1_3\Summary\DTO\PlayerStatsSummaryDto;
@@ -11,7 +11,7 @@ class DTOBuilder
 {
     /**
      * PlayerStatSummaryType Factory
-     * @var PlayerStatSummaryTypeFactory
+     * @var PSSTypeFactoryInterface
      */
     private $playerStatSummaryTypeFactory;
 
@@ -50,7 +50,7 @@ class DTOBuilder
 
     /**
      * Returns PlayerStatSummaryType factory
-     * @return PlayerStatSummaryTypeFactory
+     * @return PSSTypeFactoryInterface
      */
     protected function getPlayerStatSummaryTypeFactory()
     {

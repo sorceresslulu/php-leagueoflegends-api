@@ -12,16 +12,16 @@ use LolAPI\GameConstants\PlayerStatSummaryType\Types\KingPoro;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\NightmareBot;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\ODINUnranked;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\OneForAll5x5;
+use LolAPI\GameConstants\PlayerStatSummaryType\Types\RankedSolo5x5;
+use LolAPI\GameConstants\PlayerStatSummaryType\Types\RankedTeam3x3;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\RankedTeam5x5;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\SummonerRift6x6;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\Unranked;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\Unranked3x3;
-use LolAPI\GameConstants\PlayerStatSummaryType\Types\RankedSolo5x5;
-use LolAPI\GameConstants\PlayerStatSummaryType\Types\RankedTeam3x3;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\URF;
 use LolAPI\GameConstants\PlayerStatSummaryType\Types\URFBots;
 
-class PlayerStatSummaryTypeFactory
+class PlayerStatSummaryTypeFactory implements PSSTypeFactoryInterface
 {
     /**
      * Policy for unknown PlayerStatSummaryType
