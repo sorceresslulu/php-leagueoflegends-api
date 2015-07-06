@@ -1,11 +1,11 @@
 <?php
 namespace LolAPIExamples\LolStaticData;
 
-use LolAPI\Service\LolStaticData\Ver1_2\Rune\Request;
-use LolAPI\Service\LolStaticData\Ver1_2\Rune\Service;
+use LolAPI\Service\LolStaticData\Ver1_2\RuneById\Request;
+use LolAPI\Service\LolStaticData\Ver1_2\RuneById\Service;
 use LolAPIExamples\ExampleTest;
 
-class RuneTest extends ExampleTest
+class RuneByIdTest extends ExampleTest
 {
     public function testExample()
     {

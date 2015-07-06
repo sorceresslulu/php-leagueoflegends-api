@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\Rune;
+namespace LolAPI\Service\LolStaticData\Ver1_2\RuneById;
 
 use LolAPI\Handler\LolAPIHandlerInterface;
 
@@ -12,7 +12,7 @@ class Service
     private $lolAPIHandler;
 
     /**
-     * LolStaticData.Rune service
+     * LolStaticData.RuneById service
      * @see https://developer.riotgames.com/api/methods#!/968/3321
      * @param LolAPIHandlerInterface $lolAPIHandler
      */

@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\Rune;
+namespace LolAPI\Service\LolStaticData\Ver1_2\Runes;
 
 use LolAPI\APIKey;
 use LolAPI\GameConstants\RegionalEndpoint\RegionalEndpointInterface;
@@ -7,11 +7,6 @@ use LolAPI\Service\LolStaticData\Component\DataDragonRequest;
 
 class Request extends DataDragonRequest
 {
-    /**
-     * Rune ID
-     * @var int
-     */
-    private $runeId;
 
     /**
      * Tags to return additional data.
@@ -26,25 +21,14 @@ class Request extends DataDragonRequest
     private $runeData;
 
     /**
-     * LolStaticData.Rune request
-     * @param APIKey $apiKey
+     * LolStaticData.Runes request
+     * @param APIKey $APIKey
      * @param RegionalEndpointInterface $regionalEndpoint
-     * @param int $runeId
      */
-    public function __construct(APIKey $apiKey, RegionalEndpointInterface $regionalEndpoint, $runeId)
+    public function __construct(APIKey $APIKey, RegionalEndpointInterface $regionalEndpoint)
     {
-        $this->apiKey = $apiKey;
+        $this->apiKey = $APIKey;
         $this->regionalEndpoint = $regionalEndpoint;
-        $this->runeId = $runeId;
-    }
-
-    /**
-     * Returns rune ID
-     * @return int
-     */
-    public function getRuneId()
-    {
-        return $this->runeId;
     }
 
     /**

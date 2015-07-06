@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\Rune;
+namespace LolAPI\Service\LolStaticData\Ver1_2\RuneById;
 
 use LolAPI\Exceptions\BadRequestException;
 use LolAPI\Exceptions\InternalServerException;
@@ -14,7 +14,7 @@ use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Query
 {
-    const QUERY_TYPE = 'lol-status-ver1.0-rune';
+    const QUERY_TYPE = 'lol-status-ver1.0-rune-by-id';
 
     /**
      * Lol API Handler
@@ -29,7 +29,7 @@ class Query
     private $request;
 
     /**
-     * LolStaticData.Rune query
+     * LolStaticData.RuneById query
      * @param LolAPIHandlerInterface $lolAPIHandler
      * @param Request $request
      */
