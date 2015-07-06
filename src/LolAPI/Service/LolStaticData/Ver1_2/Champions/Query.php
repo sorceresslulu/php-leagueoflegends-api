@@ -1,5 +1,5 @@
 <?php
-namespace LolAPI\Service\LolStaticData\Ver1_2\ChampionById;
+namespace LolAPI\Service\LolStaticData\Ver1_2\Champions;
 
 use LolAPI\Exceptions\BadRequestException;
 use LolAPI\Exceptions\ChampionNotFoundException;
@@ -14,7 +14,7 @@ use LolAPI\Handler\LolAPIHandlerInterface;
 
 class Query
 {
-    const QUERY_TYPE = 'lol-static-data-ver1.2-champion-by-id';
+    const QUERY_TYPE = 'lol-static-data-ver1.2-champions';
 
     /**
      * Lol API Handler
@@ -29,7 +29,7 @@ class Query
     private $request;
 
     /**
-     * LolStaticData.ChampionById request
+     * LolStaticData.Champions request
      * @param LolAPIHandlerInterface $lolAPIHandler
      * @param Request $request
      */
@@ -66,12 +66,15 @@ class Query
             $urlParams['version'] = $request->getVersion();
         }
 
+        if($request->isDataByIdFlagSpecified()) {
+            $urlParams['dataById'] = $request->isDataByIdEnabled() ? "true" : "false";
+        }
+
         if ($request->getRegionalEndpoint()->hasRegionCode()) {
             $serviceUrl = sprintf(
-                'https://%s/api/lol/static-data/%s/v1.2/champion/%d',
+                'https://%s/api/lol/static-data/%s/v1.2/champion',
                 $globalEndpoint->getHost(),
-                strtolower($request->getRegionalEndpoint()->getRegionCode()),
-                $request->getChampionId()
+                strtolower($request->getRegionalEndpoint()->getRegionCode())
             );
         } else {
             throw new \Exception(sprintf("Query cannot be executed for regional endpoint `%s`", $request->getRegionalEndpoint()->getPlatformId()));
