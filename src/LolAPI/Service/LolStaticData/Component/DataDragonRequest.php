@@ -17,13 +17,6 @@ abstract class DataDragonRequest
      * @var RegionalEndpointInterface
      */
     protected $regionalEndpoint;
-
-    /**
-     * Champion ID
-     * @var int
-     */
-    protected $championId;
-
     /**
      * Locale code for returned data (e.g., en_US, es_ES).
      * If not specified, the default locale for the region is used.

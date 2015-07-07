@@ -20,6 +20,12 @@ class Request extends DataDragonRequest
     private $champData;
 
     /**
+     * Champion ID
+     * @var int
+     */
+    protected $championId;
+
+    /**
      * LolStaticData.ChampionById request
      * @param APIKey $apiKey
      * @param RegionalEndpointInterface $regionalEndpoint
